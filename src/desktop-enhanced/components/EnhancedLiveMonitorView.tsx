@@ -11,6 +11,7 @@ import { ResidentChip } from '../../desktop/components/ResidentChip';
 import { ResidentStatusGroup } from '../../desktop/components/ResidentStatusGroup';
 import { loadEnhancedLivePage } from '../data/mockData';
 import { COLUMN_WIDTHS } from '../../desktop/components/tableConstants';
+import { TimestampCell } from '../../desktop/components/TimestampCell';
 import styles from '../../desktop/components/DataTable.module.css';
 
 export const EnhancedLiveMonitorView = () => {
@@ -180,17 +181,9 @@ export const EnhancedLiveMonitorView = () => {
                 size: 180,
                 minSize: 160,
                 accessorFn: (row) => row.originalCheck?.dueDate || '',
-                cell: ({ row }) => {
-                    const dueDate = row.original.originalCheck?.dueDate;
-                    if (!dueDate) return <span style={{ color: 'var(--control-fg-placeholder)' }}>—</span>;
-                    const date = new Date(dueDate);
-                    return (
-                        <div className={styles.singleRowCell}>
-                            <span className={styles.primaryText}>{date.toLocaleDateString()}</span>
-                            <span className={styles.secondaryText}>{date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
-                        </div>
-                    );
-                },
+                cell: ({ row }) => (
+                    <TimestampCell isoString={row.original.originalCheck?.dueDate} />
+                ),
             },
 
         ],

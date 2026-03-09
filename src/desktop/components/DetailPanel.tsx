@@ -78,6 +78,7 @@ export const DetailPanel = ({ record, selectedCount = 0, onResizeStart, onResize
             year: '2-digit',
             hour: 'numeric',
             minute: '2-digit',
+            second: '2-digit',
             hour12: true,
         });
     };

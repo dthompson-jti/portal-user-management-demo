@@ -48,8 +48,9 @@ export const SafetyChecksForm: React.FC = () => {
       </p>
 
       <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>General</h2>
         <FormField
-          label="Enabled"
+          label="Feature Enabled"
           description={PROPERTY_DESCRIPTIONS['enabled']}
           align="inline"
         >
@@ -59,6 +60,21 @@ export const SafetyChecksForm: React.FC = () => {
           />
         </FormField>
 
+        <FormField
+          label="Missed Check Delay"
+          description={PROPERTY_DESCRIPTIONS['missedCheckDelay']}
+        >
+          <TextInput
+            type="number"
+            min={0}
+            value={config.missedCheckDelay}
+            onChange={(e) => updateConfig({ missedCheckDelay: parseInt(e.target.value) || 0 })}
+          />
+        </FormField>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Device & Form Options</h2>
         <FormField
           label="Default Scan Type"
           description={PROPERTY_DESCRIPTIONS['scanType']}
@@ -72,11 +88,31 @@ export const SafetyChecksForm: React.FC = () => {
             <SelectItem value="QR_CODE">QR Code</SelectItem>
           </Select>
         </FormField>
+        <FormField
+          label="Enable Check Form"
+          description={PROPERTY_DESCRIPTIONS['enableCheckForm']}
+          align="inline"
+        >
+          <Switch
+            checked={config.enableCheckForm}
+            onCheckedChange={(checked) => updateConfig({ enableCheckForm: checked })}
+          />
+        </FormField>
+        <FormField
+          label="Enable Check Type"
+          description={PROPERTY_DESCRIPTIONS['enableCheckType']}
+          align="inline"
+        >
+          <Switch
+            checked={config.enableCheckType}
+            onCheckedChange={(checked) => updateConfig({ enableCheckType: checked })}
+          />
+        </FormField>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Intervals & Timing</h2>
-        <div className={styles.grid}>
+        <h2 className={styles.sectionTitle}>Normal Observation</h2>
+        <div className={styles.stack}>
           <FormField
             label="Maximum Interval"
             description={PROPERTY_DESCRIPTIONS['maximumInterval']}
@@ -110,23 +146,12 @@ export const SafetyChecksForm: React.FC = () => {
               onChange={(e) => updateConfig({ bufferTime: parseInt(e.target.value) || 0 })}
             />
           </FormField>
-          <FormField
-            label="Missed Check Delay"
-            description={PROPERTY_DESCRIPTIONS['missedCheckDelay']}
-          >
-            <TextInput
-              type="number"
-              min={0}
-              value={config.missedCheckDelay}
-              onChange={(e) => updateConfig({ missedCheckDelay: parseInt(e.target.value) || 0 })}
-            />
-          </FormField>
         </div>
       </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Enhanced Observation</h2>
-        <div className={styles.grid}>
+        <div className={styles.stack}>
           <FormField
             label="Maximum Interval"
             description={PROPERTY_DESCRIPTIONS['enhancedObservation.maximumInterval']}
@@ -161,30 +186,6 @@ export const SafetyChecksForm: React.FC = () => {
             />
           </FormField>
         </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Form & Options</h2>
-        <FormField
-          label="Enable Check Form"
-          description={PROPERTY_DESCRIPTIONS['enableCheckForm']}
-          align="inline"
-        >
-          <Switch
-            checked={config.enableCheckForm}
-            onCheckedChange={(checked) => updateConfig({ enableCheckForm: checked })}
-          />
-        </FormField>
-        <FormField
-          label="Enable Check Type"
-          description={PROPERTY_DESCRIPTIONS['enableCheckType']}
-          align="inline"
-        >
-          <Switch
-            checked={config.enableCheckType}
-            onCheckedChange={(checked) => updateConfig({ enableCheckType: checked })}
-          />
-        </FormField>
       </section>
     </div>
   );

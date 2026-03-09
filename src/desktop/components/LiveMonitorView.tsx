@@ -11,6 +11,7 @@ import {
     loadEnhancedLivePage as loadLiveChecksPage
 } from '../../desktop-enhanced/data/mockData';
 import { COLUMN_WIDTHS } from './tableConstants';
+import { TimestampCell } from './TimestampCell';
 import styles from './DataTable.module.css';
 
 export const LiveMonitorView = () => {
@@ -127,10 +128,9 @@ export const LiveMonitorView = () => {
                 header: 'Scheduled',
                 ...COLUMN_WIDTHS.TIMESTAMP,
                 accessorFn: (row) => row.lastCheckTime || '',
-                cell: ({ row }) => {
-                    // Display the scheduled time from the row data
-                    return row.original.lastCheckTime || '--';
-                },
+                cell: ({ row }) => (
+                    <TimestampCell isoString={row.original.lastCheckTime} />
+                ),
             },
             // 6. Status column
             {

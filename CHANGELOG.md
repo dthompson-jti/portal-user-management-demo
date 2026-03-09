@@ -7,6 +7,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ---
 
 ## [Unreleased]
+### Changed (2026-03-09) - Settings Refactoring
+- **Safety Checks Settings Layout**:
+    - Reorganized the settings page into a lean, single-column layout for better readability on desktop.
+    - Consolidated timing parameters into distinct "Normal Observation" and "Enhanced Observation" sections.
+    - Integrated "Missed Check Delay" into the "General" configuration section to clarify its scope.
+    - Grouped hardware and form-level settings under "Device & Form Options".
+    - Updated property descriptions in `settingsData.ts` to be more precise regarding observation types.
+- **Facility Safety Checks Renaming**: (Completed in previous steps) Standardized terminology to "Safety Check" across the UI.
+
 ### Changed (2026-03-04) - Navigation and Dark Mode Refinement
 - **Top Nav Dark Chrome**:
     - Dark mode top-nav background deepened to `--primitives-theme-975` for stronger brand contrast.

@@ -1,7 +1,16 @@
 import * as Popover from '@radix-ui/react-popover';
 import { useAtom } from 'jotai';
 import { desktopEnhancedTreeLayoutAtom } from '../atoms';
-import { residentDisplayModeAtom, residentBadgeTextAtom, autoOpenDetailPanelAtom, residentBadgeColorModeAtom, reasonSelectionModeAtom, appFontAtom } from '../../desktop/atoms';
+import {
+    residentDisplayModeAtom,
+    residentBadgeTextAtom,
+    autoOpenDetailPanelAtom,
+    residentBadgeColorModeAtom,
+    reasonSelectionModeAtom,
+    appFontAtom,
+    timestampPrecisionModeAtom,
+    preciseTooltipAtom
+} from '../../desktop/atoms';
 
 import { Switch } from '../../components/Switch';
 import styles from './TopNavMenu.module.css';
@@ -14,6 +23,8 @@ export const TopNavMenu = () => {
     const [autoOpenPanel, setAutoOpenPanel] = useAtom(autoOpenDetailPanelAtom);
     const [reasonSelectionMode, setReasonSelectionMode] = useAtom(reasonSelectionModeAtom);
     const [appFont, setAppFont] = useAtom(appFontAtom);
+    const [timestampPrecision, setTimestampPrecision] = useAtom(timestampPrecisionModeAtom);
+    const [preciseTooltip, setPreciseTooltip] = useAtom(preciseTooltipAtom);
 
     return (
         <Popover.Root>
@@ -73,6 +84,32 @@ export const TopNavMenu = () => {
                             checked={residentBadgeText === 'full'}
                             onCheckedChange={(checked) => setResidentBadgeText(checked ? 'full' : 'short')}
                             id="badge-text-toggle"
+                        />
+                    </div>
+
+                    <div className={styles.divider} />
+
+                    <div className={styles.sectionHeader}>Timestamp Precision</div>
+
+                    <div className={styles.menuRow}>
+                        <div className={styles.menuRowText}>
+                            <span>Show seconds in table</span>
+                        </div>
+                        <Switch
+                            checked={timestampPrecision === 'seconds'}
+                            onCheckedChange={(checked) => setTimestampPrecision(checked ? 'seconds' : 'minutes')}
+                            id="seconds-toggle"
+                        />
+                    </div>
+
+                    <div className={styles.menuRow}>
+                        <div className={styles.menuRowText}>
+                            <span>Precise tooltip timestamps</span>
+                        </div>
+                        <Switch
+                            checked={preciseTooltip}
+                            onCheckedChange={setPreciseTooltip}
+                            id="precise-tooltip-toggle"
                         />
                     </div>
 

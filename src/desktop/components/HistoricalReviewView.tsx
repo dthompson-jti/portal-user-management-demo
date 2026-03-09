@@ -20,16 +20,9 @@ import {
 } from '../../desktop-enhanced/data/mockData';
 import { COLUMN_WIDTHS } from './tableConstants';
 import { Button } from '../../components/Button';
+import { TimestampCell } from './TimestampCell';
 import styles from './DataTable.module.css';
 
-const formatTime = (isoString: string): string => {
-    const date = new Date(isoString);
-    return date.toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-    });
-};
 
 export const HistoricalReviewView = () => {
     const [selectedRows, setSelectedRows] = useAtom(selectedHistoryRowsAtom);
@@ -232,22 +225,9 @@ export const HistoricalReviewView = () => {
                 header: 'Scheduled',
                 ...COLUMN_WIDTHS.TIMESTAMP,
                 accessorFn: (row) => row.scheduledTime,
-                cell: ({ row }) => {
-                    const dateObj = new Date(row.original.scheduledTime);
-                    const dateStr = dateObj.toLocaleDateString('en-US', {
-                        month: '2-digit',
-                        day: '2-digit',
-                        year: 'numeric',
-                    });
-                    const timeStr = formatTime(row.original.scheduledTime);
-
-                    return (
-                        <div className={styles.singleRowCell}>
-                            <span className={styles.primaryText}>{dateStr}</span>
-                            <span className={styles.secondaryText}>{timeStr}</span>
-                        </div>
-                    );
-                }
+                cell: ({ row }) => (
+                    <TimestampCell isoString={row.original.scheduledTime} />
+                )
             },
             // 7. Actual (Date + Time Merged)
             {
@@ -255,23 +235,9 @@ export const HistoricalReviewView = () => {
                 header: 'Actual',
                 ...COLUMN_WIDTHS.TIMESTAMP,
                 accessorFn: (row) => row.actualTime || '—',
-                cell: ({ row }) => {
-                    if (!row.original.actualTime) return <span className={styles.secondaryText}>—</span>;
-                    const dateObj = new Date(row.original.actualTime);
-                    const dateStr = dateObj.toLocaleDateString('en-US', {
-                        month: '2-digit',
-                        day: '2-digit',
-                        year: 'numeric',
-                    });
-                    const timeStr = formatTime(row.original.actualTime);
-
-                    return (
-                        <div className={styles.singleRowCell}>
-                            <span className={styles.primaryText}>{dateStr}</span>
-                            <span className={styles.secondaryText}>{timeStr}</span>
-                        </div>
-                    );
-                }
+                cell: ({ row }) => (
+                    <TimestampCell isoString={row.original.actualTime} />
+                )
             },
             // 8. Officer
             {

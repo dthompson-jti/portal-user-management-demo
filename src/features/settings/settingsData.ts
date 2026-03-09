@@ -59,15 +59,15 @@ export const DEFAULT_SAFETY_CHECKS: SafetyChecksConfig = {
 };
 
 export const PROPERTY_DESCRIPTIONS: Record<string, string> = {
-  'bufferTime': "Minutes before the maximum interval when a check becomes 'due'.",
+  'bufferTime': "Minutes before the maximum interval when a standard check becomes 'due'.",
   'enableCheckForm': "Enables the detailed safety check form on devices. When disabled, the app performs single-tap quick checks.",
   'enableCheckType': "Shows the check type selection field on the safety check form.",
   'enabled': "Master toggle for the safety checks feature. Disabling this stops check creation and deactivates related endpoints.",
-  'enhancedObservation.bufferTime': "Minutes before the maximum interval when a check becomes 'due'.",
-  'enhancedObservation.maximumInterval': "Maximum minutes allowed between checks before a miss is recorded.",
-  'enhancedObservation.minimumInterval': "Minimum minutes required between checks. Performing a check earlier triggers a warning (set to 0 to disable).",
-  'maximumInterval': "Maximum minutes allowed between checks before a miss is recorded.",
-  'minimumInterval': "Minimum minutes required between checks. Performing a check earlier triggers a warning (set to 0 to disable).",
-  'missedCheckDelay': "Grace period (in minutes) after the maximum interval before recording a miss. Accounts for offline sync delays (set to 0 for immediate recording).",
+  'enhancedObservation.bufferTime': "Minutes before the maximum interval when an enhanced observation check becomes 'due'.",
+  'enhancedObservation.maximumInterval': "Maximum minutes allowed between enhanced observation checks before a miss is recorded.",
+  'enhancedObservation.minimumInterval': "Minimum minutes required between enhanced observation checks. Performing a check earlier triggers a warning.",
+  'maximumInterval': "Maximum minutes allowed between standard checks before a miss is recorded.",
+  'minimumInterval': "Minimum minutes required between standard checks. Performing a check earlier triggers a warning (set to 0 to disable).",
+  'missedCheckDelay': "Grace period (in minutes) after the maximum interval before recording a miss. Applied to both standard and enhanced observation checks.",
   'scanType': "The primary scanning technology devices will use to record safety checks.",
 };

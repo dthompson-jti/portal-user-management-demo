@@ -36,8 +36,8 @@ export const COLUMN_WIDTHS = {
         minSize: 154, // Fits "Upcoming" badge comfortably + room for ellipsis
     },
     TIMESTAMP: {
-        size: 180,
-        minSize: 160, // Fits merged "MM/DD/YYYY  HH:MM AM/PM" comfortably
+        size: 190,
+        minSize: 170, // Fits merged "MM/DD/YYYY  HH:MM:SS AM/PM" comfortably
     },
     RESIDENT: {
         size: 300,

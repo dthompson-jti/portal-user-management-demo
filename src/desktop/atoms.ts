@@ -445,3 +445,15 @@ export const reasonSelectionModeAtom = atomWithStorage<ReasonSelectionMode>(`${S
 /** Global state to track if the current view has zero results (for header title sync) */
 export const isNoResultsAtom = atom(false);
 
+/** Toggle for showing seconds in timestamp tables */
+export const timestampPrecisionModeAtom = atomWithStorage<'minutes' | 'seconds'>(
+    `${STORAGE_PREFIX}timestamp_precision_mode`,
+    'minutes'
+);
+
+/** Toggle for showing more precise tooltip timestamps (Long Date, Long Time + TZ) */
+export const preciseTooltipAtom = atomWithStorage<boolean>(
+    `${STORAGE_PREFIX}precise_tooltip`,
+    false
+);
+
