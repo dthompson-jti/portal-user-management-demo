@@ -55,6 +55,24 @@ function collectUsageTokens(files) {
   return counts;
 }
 
+function collectSelfReferentialDefs(files) {
+  const rows = [];
+  const pattern = /^\s*(--[a-zA-Z0-9_-]+)\s*:\s*var\(\s*(--[a-zA-Z0-9_-]+)\s*\)\s*;\s*$/;
+
+  for (const file of files) {
+    const rel = path.relative(projectRoot, file).replace(/\\/g, '/');
+    const lines = readText(file).split('\n');
+    lines.forEach((line, idx) => {
+      const match = line.match(pattern);
+      if (!match) return;
+      if (match[1] !== match[2]) return;
+      rows.push({ file: rel, line: idx + 1, token: match[1], declaration: line.trim() });
+    });
+  }
+
+  return rows;
+}
+
 function isAllowedMissing(token) {
   const prefixes = [
     '--radix-',
@@ -162,6 +180,10 @@ const unresolved = [...usageCounts.entries()]
   .filter(([token]) => !isAllowedMissing(token))
   .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
+const generatedFiles = fileMap
+  .map(([, projectNameFile]) => path.join(generatedDir, projectNameFile))
+  .filter((filePath) => fs.existsSync(filePath));
+const selfReferences = collectSelfReferentialDefs(generatedFiles);
 const rawGeometry = collectRawGeometryLiterals(cssFiles);
 
 const lines = [];
@@ -174,6 +196,7 @@ lines.push('## Summary');
 lines.push(`- canonical sync issues: ${syncIssues.length}`);
 lines.push(`- missing canonical tokens: ${missingCanonicalTokens.length}`);
 lines.push(`- unresolved token usages: ${unresolved.length}`);
+lines.push(`- self-referential token definitions: ${selfReferences.length}`);
 lines.push(`- raw geometry literal findings: ${rawGeometry.length}`);
 lines.push('');
 
@@ -203,6 +226,16 @@ if (!unresolved.length) {
 }
 lines.push('');
 
+lines.push('## Self-Referential Token Definitions');
+if (!selfReferences.length) {
+  lines.push('- none');
+} else {
+  for (const row of selfReferences.slice(0, 200)) {
+    lines.push(`- ${row.file}:${row.line} -> \`${row.declaration}\``);
+  }
+}
+lines.push('');
+
 lines.push('## Raw Geometry Literal Inventory');
 if (!rawGeometry.length) {
   lines.push('- none');
@@ -219,6 +252,7 @@ fs.writeFileSync(reportPath, `${lines.join('\n')}\n`);
 const failures = [];
 if (syncIssues.length) failures.push('generated token files are out of sync with canonical output');
 if (missingCanonicalTokens.length) failures.push('missing canonical tokens in generated files');
+if (selfReferences.length) failures.push('self-referential token definitions found in generated files');
 if (strict && unresolved.length) failures.push('strict mode: unresolved token usages found');
 if (strict && rawGeometry.length) failures.push('strict mode: raw geometry literals found');
 

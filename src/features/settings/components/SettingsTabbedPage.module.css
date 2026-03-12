@@ -34,19 +34,19 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--text-tertiary);
-    font-size: var(--font-size-s);
+    color: var(--control-fg-link-default);
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     position: relative;
     transition: color 0.2s;
 }
 
 .tabTrigger:hover {
-    color: var(--text-primary);
+    color: var(--control-fg-link-hover);
 }
 
 .tabTrigger[data-state='active'] {
-    color: var(--text-primary);
+    color: var(--control-fg-link-active);
 }
 
 .contentScrollArea {

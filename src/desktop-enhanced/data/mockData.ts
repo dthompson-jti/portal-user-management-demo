@@ -102,6 +102,8 @@ const seededRandom = (seed: number) => {
     return x - Math.floor(x);
 };
 
+const seededSecond = (seed: number) => Math.floor(seededRandom(seed) * 60);
+
 // Room Definition
 interface RoomDef {
     id: string;
@@ -292,7 +294,7 @@ export const generateEnhancedData = () => {
         }
 
         const scheduledTime = new Date(now.getTime() - targetDelta * MS_PER_MINUTE);
-        scheduledTime.setSeconds(0, 0);
+        scheduledTime.setSeconds(seededSecond(stableSeed + 17), 0);
 
         // Calculate how many minutes ago (positive) or in the future (negative) this check is
         const deltaMinutes = Math.floor((now.getTime() - scheduledTime.getTime()) / MS_PER_MINUTE);
@@ -373,9 +375,15 @@ export const generateEnhancedData = () => {
             let slotTime = new Date(historyStart);
             let slotIndex = 0;
 
-            while (slotTime < scheduledTime) {
+            const scheduledWindowEnd = new Date(scheduledTime);
+            scheduledWindowEnd.setSeconds(0, 0);
+
+            while (slotTime < scheduledWindowEnd) {
                 const checkId = `hist-${room.id}-${resIdx}-${slotIndex}`;
-                const scheduledTimeISO = slotTime.toISOString();
+                const slotSeed = getStableHash(`${resident.id}-${room.id}-${slotIndex}`);
+                const scheduledSlotTime = new Date(slotTime);
+                scheduledSlotTime.setSeconds(seededSecond(slotSeed), 0);
+                const scheduledTimeISO = scheduledSlotTime.toISOString();
 
                 // --- SLOT LEVEL SIMULATION ---
                 const slotOpState = getOperationalState(scheduledTimeISO);
@@ -383,7 +391,7 @@ export const generateEnhancedData = () => {
                 const resSeed = getStableHash(resident.id + scheduledTimeISO);
                 const randomVal = seededRandom(resSeed);
 
-                const checkAgeHours = (now.getTime() - slotTime.getTime()) / (60 * 60 * 1000);
+                const checkAgeHours = (now.getTime() - scheduledSlotTime.getTime()) / (60 * 60 * 1000);
                 const decayFactor = Math.exp(-checkAgeHours / 24); // More historical data visibility
 
                 // Missed Logic: Influenced by Story, Cadence, and Unit Profile
@@ -404,7 +412,7 @@ export const generateEnhancedData = () => {
                     ? 'missed'
                     : (variance > 0 ? 'completed-late' : 'completed');
 
-                const actualTime = isMissed ? null : new Date(slotTime.getTime() + variance * MS_PER_MINUTE).toISOString();
+                const actualTime = isMissed ? null : new Date(scheduledSlotTime.getTime() + variance * MS_PER_MINUTE).toISOString();
                 const officerNote = (slotIndex % 4 === 0) ? NOTE_SNIPPETS[slotIndex % NOTE_SNIPPETS.length] : undefined;
 
                 const commentRandomVal = seededRandom(resSeed + 2);
@@ -424,7 +432,7 @@ export const generateEnhancedData = () => {
                         reason,
                         notes: `Reviewed and documented. Delay caused by ${reason.toLowerCase()}.`,
                         reviewedById: 'u-dthompson',
-                        reviewedDate: new Date(slotTime.getTime() + 60 * MS_PER_MINUTE).toISOString()
+                        reviewedDate: new Date(scheduledSlotTime.getTime() + 60 * MS_PER_MINUTE).toISOString()
                     };
                 }
 
@@ -438,10 +446,10 @@ export const generateEnhancedData = () => {
                     correlationGuid,
                     residents: [resident],
                     location: room.location,
-                    scheduledStartTime: slotTime.toISOString(),
-                    scheduledEndTime: slotTime.toISOString(),
+                    scheduledStartTime: scheduledTimeISO,
+                    scheduledEndTime: scheduledTimeISO,
                     completedTime: actualTime,
-                    missedTime: isMissed ? slotTime.toISOString() : null,
+                    missedTime: isMissed ? scheduledTimeISO : null,
                     scheduledTime: scheduledTimeISO,
                     actualTime,
                     status,
@@ -463,14 +471,14 @@ export const generateEnhancedData = () => {
                 // 10% chance if missed, to show it was eventually settled
                 if (isMissed && randomVal < 0.1) {
                     const correctionVariance = 17 + (resSeed % 10); // 17-26 mins late
-                    const correctionTime = new Date(slotTime.getTime() + correctionVariance * MS_PER_MINUTE).toISOString();
+                    const correctionTime = new Date(scheduledSlotTime.getTime() + correctionVariance * MS_PER_MINUTE).toISOString();
                     historicalData.push({
                         id: `${checkId}-corrected`,
                         correlationGuid, // SHARED GUID
                         residents: [resident],
                         location: room.location,
-                        scheduledStartTime: slotTime.toISOString(),
-                        scheduledEndTime: slotTime.toISOString(),
+                        scheduledStartTime: scheduledTimeISO,
+                        scheduledEndTime: scheduledTimeISO,
                         completedTime: correctionTime,
                         missedTime: null,
                         scheduledTime: scheduledTimeISO,

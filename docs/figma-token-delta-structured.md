@@ -1,6 +1,6 @@
 # Figma Convergence Delta Review
 
-Generated: 2026-03-03T03:18:55.369Z
+Generated: 2026-03-09T22:52:01.587Z
 
 Decision tracking format:
 - check each token item
@@ -13,6 +13,36 @@ Decision tracking format:
   - figma: `#FFFFFF`
   - desktop: `#FFFFFF`
   - concept: `#FFFFFF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-white-translucent`
+  - figma: `#FFFFFFBF`
+  - desktop: `#FFFFFFBF`
+  - concept: `#FFFFFFBF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-20-translucent`
+  - figma: `#F9F9F9BF`
+  - desktop: `#F9F9F9BF`
+  - concept: `#F9F9F9BF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-40-translucent`
+  - figma: `#F3F3F3BF`
+  - desktop: `#F3F3F3BF`
+  - concept: `#F3F3F3BF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-860-translucent`
+  - figma: `#202531BF`
+  - desktop: `#202531BF`
+  - concept: `#202531BF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-940-translucent`
+  - figma: `#0E1017BF`
+  - desktop: `#0E1017BF`
+  - concept: `#0E1017BF`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-10`
@@ -1030,7 +1060,7 @@ Decision tracking format:
   - recommendation: keep
   - status: `aligned`
 
-Section totals: aligned=170, review=0, total=170
+Section totals: aligned=175, review=0, total=175
 
 ## Semantics Light (Core)
 
@@ -3571,18 +3601,18 @@ Section totals: aligned=22, review=0, total=22
 ## Non-Figma Tokens (Flagged)
 
 ### Desktop
-- `--font-size-sm` (usage count: 57)
+- `--font-size-sm` (usage count: 60)
 - `--radius-sm` (usage count: 36)
+- `--control-fg-selected` (usage count: 31)
 - `--radius-md` (usage count: 28)
-- `--control-fg-selected` (usage count: 24)
-- `--font-weight-medium` (usage count: 22)
+- `--font-weight-medium` (usage count: 23)
+- `--icon-size-sm` (usage count: 20)
 - `--font-family-sans` (usage count: 19)
+- `--font-weight-semibold` (usage count: 19)
 - `--icon-size-md` (usage count: 19)
-- `--icon-size-sm` (usage count: 19)
 - `--font-weight-regular` (usage count: 16)
-- `--font-weight-semibold` (usage count: 16)
 - `--control-height-sm` (usage count: 14)
-- `--control-fg-placeholder` (usage count: 13)
+- `--control-fg-placeholder` (usage count: 12)
 - `--primitives-grey-500` (usage count: 11)
 - `--control-fg-selected-hover` (usage count: 10)
 - `--control-height-md` (usage count: 9)
@@ -3591,24 +3621,25 @@ Section totals: aligned=22, review=0, total=22
 - `--tree-indent-step` (usage count: 9)
 - `--col-` (usage count: 8)
 - `--primitives-grey-300` (usage count: 8)
-- `--primitives-grey-400` (usage count: 8)
 - `--ring-width-focus` (usage count: 8)
-- `--top-nav-fg` (usage count: 8)
 - `--z-dropdown` (usage count: 8)
 - `--control-height-lg` (usage count: 7)
+- `--primitives-grey-600` (usage count: 7)
+- `--primitives-grey-900` (usage count: 7)
 - `--radius-xs` (usage count: 7)
+- `--surface-shadow-sm` (usage count: 7)
+- `--top-nav-fg` (usage count: 7)
 - `--font-size-2xs` (usage count: 6)
 - `--font-size-md` (usage count: 6)
-- `--primitives-grey-200` (usage count: 6)
-- `--primitives-grey-600` (usage count: 6)
+- `--primitives-grey-400` (usage count: 6)
 - `--primitives-grey-800` (usage count: 6)
-- `--primitives-grey-900` (usage count: 6)
 - `--radius-button-sm` (usage count: 6)
 - `--radius-container` (usage count: 6)
-- `--surface-shadow-sm` (usage count: 6)
 - `--font-size-lg` (usage count: 5)
 - `--font-size-xs` (usage count: 5)
+- `--primitives-grey-200` (usage count: 5)
 - `--primitives-grey-30` (usage count: 5)
+- `--primitives-grey-880` (usage count: 5)
 - `--radius-badge` (usage count: 5)
 - `--radius-button-md` (usage count: 5)
 - `--surface-bg-brand-solid` (usage count: 5)
@@ -3621,13 +3652,14 @@ Section totals: aligned=22, review=0, total=22
 - `--font-family-body` (usage count: 4)
 - `--icon-size-lg` (usage count: 4)
 - `--line-height-tight` (usage count: 4)
-- `--primitives-grey-880` (usage count: 4)
+- `--nav-group-fg-selected` (usage count: 4)
 - `--primitives-grey-950` (usage count: 4)
 - `--radius-input` (usage count: 4)
 - `--radius-pill` (usage count: 4)
 - `--radix-popover-trigger-width` (usage count: 4)
 - `--status-danger-fg` (usage count: 4)
 - `--surface-bg-error-primary` (usage count: 4)
+- `--surface-fg-primary-on-brand` (usage count: 4)
 - `--surface-shadow-md` (usage count: 4)
 - `--top-nav-search-bg-hover` (usage count: 4)
 - `--z-resizer` (usage count: 4)
@@ -3636,6 +3668,7 @@ Section totals: aligned=22, review=0, total=22
 - `--control-height-xs` (usage count: 3)
 - `--control-min-touch` (usage count: 3)
 - `--nav-indent-base` (usage count: 3)
+- `--nav-item-bg-selected-hover` (usage count: 3)
 - `--primitives-grey-840` (usage count: 3)
 - `--primitives-grey-860` (usage count: 3)
 - `--primitives-grey-920` (usage count: 3)
@@ -3650,9 +3683,15 @@ Section totals: aligned=22, review=0, total=22
 - `--control-border-destructive` (usage count: 2)
 - `--control-fg-disabled` (usage count: 2)
 - `--control-width-thumb` (usage count: 2)
+- `--depth` (usage count: 2)
+- `--font-size-xl` (usage count: 2)
 - `--icon-size-2xl` (usage count: 2)
 - `--max-width-empty-state` (usage count: 2)
+- `--nav-control-bg-hover` (usage count: 2)
+- `--nav-control-fg-hover` (usage count: 2)
 - `--nav-group-bg-hover` (usage count: 2)
+- `--nav-group-bg-selected` (usage count: 2)
+- `--nav-group-bg-selected-hover` (usage count: 2)
 - `--nav-group-fg` (usage count: 2)
 - `--nav-group-fg-hover` (usage count: 2)
 - `--nav-indent-step` (usage count: 2)
@@ -3671,26 +3710,17 @@ Section totals: aligned=22, review=0, total=22
 - `--shadow-color-brand` (usage count: 2)
 - `--spacing-2p5` (usage count: 2)
 - `--status-warning-fg` (usage count: 2)
-- `--surface-fg-primary-on-brand` (usage count: 2)
+- `--surface-bg-brand-section` (usage count: 2)
 - `--surface-shadow-2xl` (usage count: 2)
 - `--surface-shadow-lg` (usage count: 2)
+- `--text-primary` (usage count: 2)
 - `--top-nav-fg-secondary` (usage count: 2)
 - `--top-nav-search-bg` (usage count: 2)
 - `--top-nav-search-focused-fg` (usage count: 2)
 - `--utility-alpha-black-10` (usage count: 2)
 - `--utility-alpha-black-50` (usage count: 2)
 - `--utility-alpha-grey-60` (usage count: 2)
-- `--z-modal` (usage count: 2)
-- `--z-tooltip` (usage count: 2)
-- `--brand-primary` (usage count: 1)
-- `--brand-subtle` (usage count: 1)
-- `--breakpoint-mobile` (usage count: 1)
-- `--color-critical-default` (usage count: 1)
-- `--control-bg-destructive` (usage count: 1)
-- `--control-bg-destructive-hover` (usage count: 1)
-- `--control-bg-destructive-pressed` (usage count: 1)
-- `--control-border-focus` (usage count: 1)
-- `--control-fg-alert-pressed` (usage count: 1)
+- `--utility-alpha-white-10` (usage count: 2)
 
 ### Concept
 - `--font-size-sm` (usage count: 39)

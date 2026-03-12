@@ -1,21 +1,25 @@
 # Token Audit Report: safeguard-desktop
 
-Generated: 2026-03-04T16:07:54.303Z
+Generated: 2026-03-12T19:55:59.345Z
 Strict mode: off
 
 ## Summary
-- canonical sync issues: 1
+- canonical sync issues: 0
 - missing canonical tokens: 0
 - unresolved token usages: 0
-- raw geometry literal findings: 13
+- self-referential token definitions: 0
+- raw geometry literal findings: 16
 
 ## Canonical Sync Issues
-- figma-primitives-core.css: diverged from canonical
+- none
 
 ## Missing Canonical Tokens
 - none
 
 ## Unresolved Token Usages
+- none
+
+## Self-Referential Token Definitions
 - none
 
 ## Raw Geometry Literal Inventory
@@ -32,4 +36,7 @@ Strict mode: off
 - src/desktop-enhanced/components/TreeView.module.css:57 -> `left: calc(12px + 4px - 1px);`
 - src/desktop-enhanced/components/TreeView.module.css:164 -> `padding: 2px 8px;`
 - src/desktop-enhanced/Layout.module.css:55 -> `width: 2px !important;`
+- src/features/settings/components/SettingsBreadcrumbs.module.css:7 -> `padding: 12px 16px;`
+- src/features/settings/components/SettingsNavigationPanel.module.css:32 -> `width: 28px !important;`
+- src/features/settings/components/SettingsNavigationPanel.module.css:33 -> `height: 28px !important;`
 

@@ -40,7 +40,7 @@
 
 .menuBtnOverride:hover {
     color: var(--surface-fg-primary) !important;
-    background-color: var(--surface-bg-tertiary_hover) !important;
+    background-color: var(--control-bg-tertiary-hover) !important;
 }
 
 .treeWrapper {
