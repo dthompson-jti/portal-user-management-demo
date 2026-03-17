@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   // Configure the base path for GitHub Pages deployment.
   // This should be the name of your repository.
-  base: '/safeguard-desktop/',
+  base: '/safety-check-desktop/',
   build: {
     rollupOptions: {
       input: {

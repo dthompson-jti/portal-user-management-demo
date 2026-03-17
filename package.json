@@ -1,13 +1,13 @@
 {
-  "name": "safeguard-desktop",
+  "name": "safety-check-desktop",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dthompson-jti/safeguard-desktop.git"
+    "url": "https://github.com/JTI-Product-Design/safety-check-desktop.git"
   },
-  "homepage": "https://dthompson-jti.github.io/safeguard-desktop/",
+  "homepage": "https://JTI-Product-Design.github.io/safety-check-desktop/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

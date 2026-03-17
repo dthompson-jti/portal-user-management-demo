@@ -5,7 +5,7 @@ export const ExtremeLeftNav: React.FC = () => {
     return (
         <div className={styles.extremeLeftNav}>
             <img
-                src="/safeguard-desktop/left-nav-wireframe.png"
+                src="/safety-check-desktop/left-nav-wireframe.png"
                 alt="Navigation Menu"
                 className={styles.navImage}
             />
