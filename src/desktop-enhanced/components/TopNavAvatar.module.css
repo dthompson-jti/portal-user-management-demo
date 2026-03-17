@@ -24,7 +24,7 @@
 .popoverContent {
     background: var(--surface-bg-primary);
     border: 1px solid var(--surface-border-secondary);
-    border-radius: var(--radius-container);
+    border-radius: var(--radius-surface-popover);
     padding: var(--spacing-1p5);
     min-width: 240px;
     box-shadow: var(--shadow-lg);

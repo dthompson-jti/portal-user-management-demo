@@ -13,7 +13,7 @@
     /* Colors - Standard semantic tokens - Consistently on the container */
     background-color: var(--control-bg-secondary);
     border: 1px solid var(--control-border-secondary);
-    border-radius: var(--radius-input);
+    border-radius: var(--radius-control-input);
     transition: all 0.2s ease;
 
     /* SPEC: Ensure min-height matches project standard */

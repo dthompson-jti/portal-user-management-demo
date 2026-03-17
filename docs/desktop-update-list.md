@@ -53,6 +53,8 @@ This document tracks the implemented desktop token/state updates that were final
 ## Verification
 
 1. `npm run build` passes after each major token pass.
-2. `npm run audit:tokens` currently reports one canonical sync issue:
-   - `figma-primitives-core.css: diverged from canonical`
-3. `docs/token-audit-report.md` is the source of truth for token sync/drift summary.
+2. `npm run audit:tokens` currently reports:
+   - canonical sync issues: `0`
+   - unresolved token usages: `0`
+   - raw geometry literal findings: `16`
+3. `docs/token-audit-report.md` is the source of truth for current token sync/drift summary.

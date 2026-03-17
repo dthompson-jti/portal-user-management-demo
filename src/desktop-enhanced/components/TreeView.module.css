@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     padding: var(--spacing-1) var(--spacing-2);
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     /* Clear left for bar */
     cursor: pointer;
     transition: all 0.15s ease;
@@ -68,7 +68,7 @@
 
 /* 2. Remove default border radius for rows to handle full width look better */
 .tree[data-layout="full-width"] .row {
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     margin-left: 8px;
     margin-right: 8px;
     /* We use padding-left based on depth */
@@ -162,7 +162,7 @@
 
 .badge {
     padding: 2px 8px;
-    border-radius: 12px;
+    border-radius: var(--radius-surface-pill);
     font-size: var(--font-size-2xs);
     font-weight: var(--font-weight-bold);
     min-width: 24px;

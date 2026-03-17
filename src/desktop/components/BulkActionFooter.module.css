@@ -15,7 +15,7 @@
     background: var(--surface-bg-brand-solid);
     color: var(--control-fg-on-solid);
 
-    border-radius: var(--radius-toolbar);
+    border-radius: var(--radius-surface-toolbar);
     border: 2px solid var(--surface-border-theme);
 
     padding: var(--spacing-2);
@@ -37,7 +37,7 @@
     height: var(--control-height-sm);
     min-height: var(--control-height-sm);
     max-height: var(--control-height-sm);
-    border-radius: var(--radius-button-sm);
+    border-radius: var(--radius-control-button-sm);
     margin: 0;
 }
 
@@ -95,7 +95,7 @@
 .menu {
     background: white;
     border: 1px solid var(--surface-border-primary);
-    border-radius: 8px;
+    border-radius: var(--radius-surface-popover);
     box-shadow: var(--surface-shadow-lg);
     min-width: 220px;
     padding: var(--spacing-1) 0;

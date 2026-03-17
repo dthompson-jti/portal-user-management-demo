@@ -10,7 +10,7 @@ textarea {
   padding: var(--spacing-2) var(--spacing-3);
   border: 1px solid var(--surface-border-primary);
   /* Standardized border */
-  border-radius: var(--radius-input);
+  border-radius: var(--radius-control-input);
   font-size: 0.9em;
   background-color: var(--surface-bg-primary);
   color: var(--surface-fg-primary);
@@ -57,7 +57,7 @@ input[type="checkbox"] {
   margin: 0;
   width: var(--control-width-checkbox);
   height: var(--control-width-checkbox);
-  border-radius: var(--radius-button-sm);
+  border-radius: var(--radius-control-button-sm);
   cursor: pointer;
   display: grid;
   place-content: center;

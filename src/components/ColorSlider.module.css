@@ -26,7 +26,7 @@
     flex: 1;
     height: var(--spacing-1p5);
     /* 4px gradient + 1px border each side */
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-surface-pill);
     border: 1px solid var(--surface-border-primary);
     position: relative;
     cursor: pointer;
@@ -38,7 +38,7 @@
 .trackGradient {
     position: absolute;
     inset: 0;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-surface-pill);
     background: linear-gradient(to right,
             oklch(0.65 0.18 0),
             oklch(0.65 0.18 60),

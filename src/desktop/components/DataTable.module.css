@@ -329,7 +329,7 @@
     display: inline-flex;
     align-items: center;
     padding: var(--spacing-0p5) var(--spacing-2);
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-surface-pill);
     font-size: var(--font-size-2xs);
     font-weight: var(--font-weight-semibold);
     text-transform: capitalize;

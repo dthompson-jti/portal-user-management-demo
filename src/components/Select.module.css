@@ -14,7 +14,7 @@
   min-width: 0;
   height: 36px;
   padding: 0 var(--spacing-3);
-  border-radius: var(--radius-input);
+  border-radius: var(--radius-control-input);
   font-size: var(--font-size-sm);
   font-weight: 600;
   letter-spacing: -0.21px;

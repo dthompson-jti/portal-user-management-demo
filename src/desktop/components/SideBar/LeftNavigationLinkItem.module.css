@@ -23,7 +23,7 @@
 
     /* Indentation Tokens */
     --nav-indent-base: 34px;
-    --nav-indent-step: 20px;
+    --nav-indent-step: var(--layout-nav-indent-step); /* 20px */
 }
 
 .item:hover {

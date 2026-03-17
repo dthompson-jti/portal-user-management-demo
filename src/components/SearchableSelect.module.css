@@ -20,7 +20,7 @@
     /* Standard MD Search Input height */
     background-color: var(--search-input-bg-primary);
     border: 1px solid var(--search-input-border-primary);
-    border-radius: var(--radius-button-sm);
+    border-radius: var(--radius-control-button-sm);
     transition: all 0.2s ease;
 }
 

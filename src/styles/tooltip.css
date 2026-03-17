@@ -3,7 +3,7 @@
 .tooltip-content {
   background-color: var(--primitives-grey-900);
   color: var(--surface-fg-white);
-  border-radius: var(--spacing-1);
+  border-radius: var(--radius-surface-tooltip);
   padding: var(--spacing-1p5) var(--spacing-3);
   font-size: 0.85em;
   font-weight: 500;

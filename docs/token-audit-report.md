@@ -3,6 +3,14 @@
 Generated: 2026-03-12T19:55:59.345Z
 Strict mode: off
 
+Scope note:
+- This report verifies canonical sync, missing/unresolved tokens, self-references, and raw
+  geometry literals.
+- It is not a full migration-completeness report for spacing/layout/radius semantics.
+- Tokenized but non-canonical patterns such as spacing-used-as-radius, legacy bridge alias
+  consumption, or local-vs-canonical semantic naming drift may still exist even when this report
+  passes.
+
 ## Summary
 - canonical sync issues: 0
 - missing canonical tokens: 0
@@ -39,4 +47,3 @@ Strict mode: off
 - src/features/settings/components/SettingsBreadcrumbs.module.css:7 -> `padding: 12px 16px;`
 - src/features/settings/components/SettingsNavigationPanel.module.css:32 -> `width: 28px !important;`
 - src/features/settings/components/SettingsNavigationPanel.module.css:33 -> `height: 28px !important;`
-

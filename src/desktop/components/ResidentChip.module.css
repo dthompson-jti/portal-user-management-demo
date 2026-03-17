@@ -3,7 +3,7 @@
     align-items: center;
     gap: var(--spacing-2);
     padding: var(--spacing-0p5) var(--spacing-2);
-    border-radius: var(--radius-badge);
+    border-radius: var(--radius-surface-badge);
     background-color: var(--surface-bg-warning-primary);
     color: var(--surface-fg-warning-primary);
     border: 1px solid var(--surface-border-warning_subtle);

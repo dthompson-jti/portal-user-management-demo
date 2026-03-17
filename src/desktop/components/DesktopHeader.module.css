@@ -95,7 +95,7 @@
     min-width: 200px;
     background-color: var(--surface-bg-primary);
     border: 1px solid var(--surface-border-primary);
-    border-radius: var(--spacing-3);
+    border-radius: var(--radius-surface-popover);
     box-shadow: var(--surface-shadow-xl);
     padding: var(--spacing-1);
     display: flex;
@@ -110,7 +110,7 @@
     width: 100%;
     padding: var(--spacing-2) var(--spacing-3);
     border: 1px solid transparent;
-    border-radius: var(--spacing-2);
+    border-radius: var(--radius-md);
     background: transparent;
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);

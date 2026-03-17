@@ -5,7 +5,7 @@
     flex-direction: column;
     gap: var(--spacing-3);
     padding: var(--spacing-2);
-    min-width: var(--side-menu-min-width);
+    min-width: var(--layout-surface-width-menu-min);
 }
 
 /* Centered Header with Secondary Background */

@@ -1,60 +1,75 @@
-# Semantic Radii Tokens
+# Desktop Semantic Radii Layer
 
-This document outlines the standardized radii system for the Safeguard Desktop application. It maps semantic component needs to a system scale, which is then mapped to raw design primitives from Figma.
+This document describes the semantic radius tokens used in the desktop project.
+
+The canonical cross-project naming model is documented in
+`design-tokens-canonical/reports/confluence-semantic-radius-tokens.md`.
 
 ## Design Philosophy
 
-The application uses rounded corners to create a friendly, approachable, and modern interface. Radii are categorized by component type and "elevation" logic.
+Rounded corners communicate component role and elevation:
 
-- **Toolbars (16px)**: High-elevation "objects" (Action Bars) that sit above the UI.
-- **Structural (12px)**: Root-level boundaries (Modals, Cards, Panels).
-- **Interactive (8px)**: Standard touch-points (Inputs, Buttons, Tooltips).
-- **Dense/Subtle (6px)**: Nested or high-density elements (Badges, Small Buttons).
+- **Toolbars (16px)**: Floating action bars that sit above the UI.
+- **Structural (12px)**: Root-level boundaries — Modals, Cards, Popovers, Menus.
+- **Interactive (8px)**: Standard touch-points — Inputs, Buttons, Tooltips.
+- **Dense/Subtle (6px)**: Nested or high-density elements — Badges, Small Buttons.
 
----
-
-## Radius Mapping Hierarchy
-
-The following table shows the full hierarchy from semantic intent to raw pixel values, aligned with the latest Figma design tokens.
-
-| Semantic Token | System Scale | Primitive Step | Pixel Value |
-| :--- | :--- | :--- | :--- |
-| **`--radius-toolbar`** | XXL | `radius-2xl` | 16px |
-| **`--radius-container`** | XL | `radius-xl` | 12px |
-| **`--radius-modal`** | XL | `radius-xl` | 12px |
-| **`--radius-card`** | XL | `radius-xl` | 12px |
-| **`--radius-button-lg`** | LG | `radius-lg` | 10px |
-| **`--radius-input`** | MD | `radius-md` | 8px |
-| **`--radius-button-md`** | MD | `radius-md` | 8px |
-| **`--radius-tooltip`** | MD | `radius-md` | 8px |
-| **`--radius-button-sm`** | SM | `radius-sm` | 6px |
-| **`--radius-button-xs`** | SM | `radius-sm` | 6px |
-| **`--radius-badge`** | SM | `radius-sm` | 6px |
-| **`--radius-pill`** | MAX | `radius-full` | 9999px |
+Popover containers use **concentric radii**: container radius = inner item radius + container padding.
 
 ---
 
-## Component Definitions
+## Canonical Semantic Tokens
 
-### Overlays & Containers
-- **`--radius-toolbar`**: High-priority floating action bars and toolbars.
-- **`--radius-modal`**: Large system dialogs and focus-traps.
-- **`--radius-container`**: Transient floating UI like Popovers and Menus.
-- **`--radius-card`**: Persistent structural panels, dashboard cards, and sidebars.
+All shared components use these canonical names. Defined in `semantics.css`.
 
-### Form & Interaction
-- **`--radius-input`**: All standard data entry (Text inputs, Selects, ComboBoxes).
-- **`--radius-button-[xs/sm/md/lg]`**: Buttons of varying sizes, ensuring visual weight matches scale.
+### Control (interactive elements)
 
-### Feedback & Status
-- **`--radius-badge`**: Standard regular mode for chips and resident status labels.
-- **`--radius-pill`**: Used for high-contrast "pill" status indicators.
-- **`--radius-tooltip`**: Small read-only contextual overlays.
+| Token | Points to | Resolved | Use |
+|---|---|---|---|
+| `--radius-control-input` | `var(--radius-md)` | 8px | Text inputs, selects, textareas |
+| `--radius-control-button-xs` | `var(--radius-sm)` | 6px | Extra-small buttons |
+| `--radius-control-button-sm` | `var(--radius-sm)` | 6px | Small buttons |
+| `--radius-control-button-md` | `var(--radius-md)` | 8px | Standard buttons |
+| `--radius-control-button-lg` | `var(--radius-lg)` | 10px | Large buttons |
+
+### Surface (passive containers)
+
+| Token | Points to | Resolved | Use |
+|---|---|---|---|
+| `--radius-surface-card` | `var(--radius-xl)` | 12px | Cards, list tiles, panels |
+| `--radius-surface-modal` | `var(--radius-xl)` | 12px | Modals and sheets |
+| `--radius-surface-toolbar` | `var(--radius-2xl)` | 16px | Floating action bars (BulkActionFooter) |
+| `--radius-surface-popover` | `var(--radius-xl)` | 12px | Menus, dropdowns, context menus |
+| `--radius-surface-tooltip` | `var(--radius-md)` | 8px | Tooltips and info popovers |
+| `--radius-surface-badge` | `var(--radius-sm)` | 6px | Status badges, attribute chips |
+| `--radius-surface-pill` | `var(--radius-full)` | 9999px | Fully rounded pills, avatars, tags |
 
 ---
 
-## Implementation Rules
+## Legacy Names (Retired)
 
-1. **Never use Primitives directly**: Always use the semantic tokens in component CSS.
-2. **Size Pairing**: Components scaled to `sm` height should generally use `--radius-button-sm`.
-3. **Pill Mode**: Use `--radius-pill` only when the design explicitly calls for a fully rounded shape (e.g. status lozenges).
+The following desktop-local names have been replaced by canonical tokens:
+
+| Legacy Name | Replaced By |
+|---|---|
+| `--radius-toolbar` | `--radius-surface-toolbar` |
+| `--radius-container` | `--radius-surface-popover` |
+| `--radius-modal` | `--radius-surface-modal` |
+| `--radius-card` | `--radius-surface-card` |
+| `--radius-button-lg` | `--radius-control-button-lg` |
+| `--radius-input` | `--radius-control-input` |
+| `--radius-button-md` | `--radius-control-button-md` |
+| `--radius-tooltip` | `--radius-surface-tooltip` |
+| `--radius-button-sm` | `--radius-control-button-sm` |
+| `--radius-button-xs` | `--radius-control-button-xs` |
+| `--radius-badge` | `--radius-surface-badge` |
+| `--radius-pill` | `--radius-surface-pill` |
+
+---
+
+## Usage Rules
+
+1. All shared components use canonical semantic radius tokens.
+2. Primitive radii are acceptable only for local, one-off work.
+3. Do not use spacing tokens (`--spacing-*`) as radius values.
+4. Bridge aliases (`--radius-3`, `--radius-s`) are migration-only — do not use in new code.

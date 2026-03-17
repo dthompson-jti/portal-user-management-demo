@@ -94,7 +94,6 @@
   --surface-border-theme: var(--primitives-theme-500);
   --surface-border-theme-hover: var(--primitives-theme-600);
   --surface-border-theme_alt: var(--primitives-theme-600);
-  --surface-border-secondary_alt: #00000014;
 
   /* Subtle Borders - 200 series for Light Mode */
   --surface-border-alert_subtle: var(--primitives-red-200);
@@ -112,31 +111,33 @@
   --surface-shadow-3xl: 0 32px 64px -16px #0A0C1223, 0 0 1px 0 #0A0C120A;
   --surface-shadow-pill: 0px 1px 3px 0px rgba(10, 13, 18, 0.1), 0px 1px 2px -1px rgba(10, 13, 18, 0.1);
 
-  /* Radii */
-  --radius-toolbar: var(--radius-2xl);
-  /* 16px */
-  --radius-container: var(--radius-xl);
-  /* 12px */
-  --radius-modal: var(--radius-xl);
-  /* 12px */
-  --radius-card: var(--radius-xl);
-  /* 12px */
-  --radius-input: var(--radius-md);
-  /* 8px */
-  --radius-button-xs: var(--radius-sm);
-  /* 6px */
-  --radius-button-sm: var(--radius-sm);
-  /* 6px */
-  --radius-button-md: var(--radius-md);
-  /* 8px */
-  --radius-button-lg: var(--radius-lg);
-  /* 10px */
-  --radius-badge: var(--radius-sm);
-  /* 6px */
-  --radius-pill: var(--radius-full);
-  /* 9999px */
-  --radius-tooltip: var(--radius-md);
-  /* 8px */
+  /* Semantic Radii — Control */
+  --radius-control-input: var(--radius-md); /* 8px */
+  --radius-control-button-xs: var(--radius-sm); /* 6px */
+  --radius-control-button-sm: var(--radius-sm); /* 6px */
+  --radius-control-button-md: var(--radius-md); /* 8px */
+  --radius-control-button-lg: var(--radius-lg); /* 10px */
+
+  /* Semantic Radii — Surface */
+  --radius-surface-card: var(--radius-xl); /* 12px */
+  --radius-surface-modal: var(--radius-xl); /* 12px */
+  --radius-surface-toolbar: var(--radius-2xl); /* 16px — floating action bar */
+  --radius-surface-popover: var(--radius-xl); /* 12px — concentric with inner item radius + padding */
+  --radius-surface-tooltip: var(--radius-md); /* 8px */
+  --radius-surface-badge: var(--radius-sm); /* 6px */
+  --radius-surface-pill: var(--radius-full); /* 9999px */
+
+  /* Semantic Layout — Surface Heights */
+  --layout-surface-height-header-default: var(--spacing-14); /* 56px */
+  --layout-surface-height-footer-default: var(--spacing-20); /* 80px */
+  --layout-surface-height-form-footer-default: var(--spacing-24); /* 96px */
+
+  /* Semantic Layout — Surface Widths */
+  --layout-surface-width-nav-rail: 208px; /* bespoke, off spacing scale */
+  --layout-surface-width-menu-min: 220px; /* bespoke, off spacing scale */
+
+  /* Semantic Layout — Nav Indentation */
+  --layout-nav-indent-step: var(--spacing-5); /* 20px */
 
   /* Shadow Colors - Semantic tokens for colored shadows */
   --shadow-color-brand: var(--surface-shadows-shadow-md-01);
@@ -362,7 +363,7 @@
   /* The Ambient Floor (Base Canvas) */
   --surface-bg-primary: var(--primitives-grey-910);
   /* Elevated 1 (Cards) */
-  --surface-bg-tertiary: var(--primitives-grey-900);
+  --surface-bg-tertiary: var(--primitives-grey-880);
   /* Elevated 2 (Modals) */
   --surface-bg-quaternary: var(--primitives-grey-860);
   /* Selection/Active High-Fidelity highlight */
@@ -371,7 +372,7 @@
 
   /* Header/Footer Translucency - matches secondary bg (grey-940) */
   --surface-bg-secondary-translucent: rgba(14, 16, 23, 0.85);
-  --surface-bg-tertiary-translucent: rgba(32, 37, 49, 0.85);
+  --surface-bg-tertiary-translucent: rgba(28, 33, 44, 0.85);
   --surface-bg-brand-primary: var(--primitives-theme-900);
 
   /* Text - High Contrast */

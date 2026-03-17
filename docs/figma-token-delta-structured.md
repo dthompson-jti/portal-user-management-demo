@@ -1,33 +1,24 @@
-# Figma Convergence Delta Review
+# Figma Token Delta Review
 
-Generated: 2026-03-09T22:52:01.587Z
+Current authoritative source:
+- [canonical figma-delta-structured.md](/c:/Users/dthompson/Documents/CODE/design-tokens-canonical/reports/figma-delta-structured.md)
 
-Decision tracking format:
-- check each token item
-- confirm approved value
-- mark remaining exceptions for follow-up
+## Project Note
 
-## Primitives (Core)
+This project-local file is a pointer to the canonical structured delta report.
 
-- [ ] `--primitives-base-white`
-  - figma: `#FFFFFF`
-  - desktop: `#FFFFFF`
-  - concept: `#FFFFFF`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--primitives-neutral-translucent-white-translucent`
-  - figma: `#FFFFFFBF`
-  - desktop: `#FFFFFFBF`
-  - concept: `#FFFFFFBF`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--primitives-neutral-translucent-20-translucent`
-  - figma: `#F9F9F9BF`
-  - desktop: `#F9F9F9BF`
-  - concept: `#F9F9F9BF`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--primitives-neutral-translucent-40-translucent`
+Use the canonical report when you need:
+- token-by-token Figma vs canonical comparison
+- latest structured alignment snapshot
+- review evidence for convergence decisions
+
+Use local project docs for repo-specific cleanup:
+- [token-audit-report.md](/c:/Users/dthompson/Documents/CODE/safeguard-desktop/docs/token-audit-report.md)
+- [desktop-update-list.md](/c:/Users/dthompson/Documents/CODE/safeguard-desktop/docs/desktop-update-list.md)
+
+## Historical Snapshot Below
+
+Do not use the copied content below as the current source of truth. It is retained only as an older local snapshot. Use the canonical report above for current review work.
   - figma: `#F3F3F3BF`
   - desktop: `#F3F3F3BF`
   - concept: `#F3F3F3BF`
@@ -3843,4 +3834,3 @@ Section totals: aligned=22, review=0, total=22
 - `--magma-base` (usage count: 1)
 - `--primitives-gray-tint-100` (usage count: 1)
 - `--primitives-gray-tint-200` (usage count: 1)
-

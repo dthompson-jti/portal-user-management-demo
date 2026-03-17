@@ -1,9 +1,5 @@
-:root {
-    --extreme-left-nav-width: 208px;
-}
-
 .extremeLeftNav {
-    width: var(--extreme-left-nav-width);
+    width: var(--layout-surface-width-nav-rail);
     height: 100%;
     background-color: var(--surface-bg-primary);
     flex-shrink: 0;

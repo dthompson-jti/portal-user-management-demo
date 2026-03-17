@@ -302,11 +302,11 @@
   --surface-bg-secondary-subtle: var(--primitives-neutral-930);
   --surface-bg-secondary-strong: var(--primitives-neutral-950);
   --surface-bg-secondary-hover: var(--primitives-neutral-930);
-  --surface-bg-tertiary: var(--primitives-neutral-900);
+  --surface-bg-tertiary: var(--primitives-neutral-880);
   --surface-bg-quaternary: var(--primitives-neutral-920);
   --surface-bg-skeleton: var(--primitives-neutral-860);
   --surface-bg-primary-translucent: #0E1017BF;
-  --surface-bg-tertiary-translucent: #202531BF;
+  --surface-bg-tertiary-translucent: #1C212CBF;
   --surface-bg-primary-solid: var(--primitives-neutral-900);
   --surface-bg-secondary-solid: var(--primitives-neutral-700);
   --surface-bg-theme-primary: var(--primitives-theme-950);

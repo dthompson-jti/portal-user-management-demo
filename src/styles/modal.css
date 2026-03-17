@@ -21,7 +21,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--surface-bg-primary);
-  border-radius: var(--radius-modal);
+  border-radius: var(--radius-surface-modal);
   box-shadow: var(--surface-shadow-2xl);
   display: flex;
   flex-direction: column;
@@ -90,7 +90,7 @@
   padding: var(--spacing-3) var(--spacing-4);
   border-bottom: 1px solid var(--surface-border-secondary);
   flex-shrink: 0;
-  background-color: var(--surface-bg-secondary);
+  background-color: var(--surface-bg-tertiary);
 }
 
 .modal-header h3 {
@@ -113,5 +113,5 @@
   padding: var(--spacing-3) var(--spacing-4);
   border-top: 1px solid var(--surface-border-secondary);
   flex-shrink: 0;
-  background-color: var(--surface-bg-secondary);
+  background-color: var(--surface-bg-tertiary);
 }

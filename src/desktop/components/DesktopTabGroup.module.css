@@ -105,7 +105,7 @@
     padding: var(--spacing-0p5) var(--spacing-2);
     /* 2px 8px */
     background: var(--surface-bg-secondary);
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-surface-pill);
     /* Full round */
 }
 

@@ -58,7 +58,7 @@ export const Layout: React.FC<LayoutProps> = ({ leftPanel, children }) => {
     const resize = useCallback((e: MouseEvent) => {
         if (isResizing) {
             // Use CSS property for the offset from the strip
-            const stripWidthStr = getComputedStyle(document.documentElement).getPropertyValue('--extreme-left-nav-width').trim();
+            const stripWidthStr = getComputedStyle(document.documentElement).getPropertyValue('--layout-surface-width-nav-rail').trim();
             const stripWidth = parseInt(stripWidthStr) || 192;
             const newWidth = e.clientX - stripWidth;
             if (newWidth > 260 && newWidth < 450) {

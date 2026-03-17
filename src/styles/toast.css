@@ -35,7 +35,7 @@
   min-width: 320px;
   max-width: 440px;
   padding: var(--spacing-3);
-  border-radius: var(--radius-container);
+  border-radius: var(--radius-surface-card);
   gap: var(--spacing-3);
 
   display: flex;
