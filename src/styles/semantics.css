@@ -353,19 +353,15 @@
 [data-theme='dark'] {
   /* ================== SURFACE ================== */
 
-  /* Background (Elevation = Lightness, high fidelity) */
-  --surface-bg-secondary: var(--primitives-grey-930);
-  /* Deepest (Body) */
-  --surface-bg-secondary_subtle: var(--primitives-grey-920);
-  /* Shadow Recession */
-  --surface-bg-secondary_strong: var(--primitives-grey-950);
-  --surface-bg-secondary_hover: var(--primitives-grey-920);
-  /* The Ambient Floor (Base Canvas) */
-  --surface-bg-primary: var(--primitives-grey-910);
-  /* Elevated 1 (Cards) */
-  --surface-bg-tertiary: var(--primitives-grey-880);
-  /* Elevated 2 (Modals) */
-  --surface-bg-quaternary: var(--primitives-grey-860);
+  /* Background — mirrors canonical dark theme (940 primary, compressed 5-step spread) */
+  --surface-bg-primary: var(--primitives-grey-940);
+  --surface-bg-primary_hover: var(--primitives-grey-920);
+  --surface-bg-secondary: var(--primitives-grey-950);
+  --surface-bg-secondary_subtle: var(--primitives-grey-945);
+  --surface-bg-secondary_strong: var(--primitives-grey-955);
+  --surface-bg-secondary_hover: var(--primitives-grey-935);
+  --surface-bg-tertiary: var(--primitives-grey-955);
+  --surface-bg-quaternary: var(--primitives-grey-960);
   /* Selection/Active High-Fidelity highlight */
   --surface-bg-active: var(--primitives-grey-880);
   --surface-bg-secondary-solid: var(--primitives-grey-800);
@@ -456,11 +452,15 @@
   --control-bg-theme: var(--primitives-theme-800);
   --control-bg-theme-hover: var(--primitives-theme-700);
   --control-bg-theme-pressed: var(--primitives-theme-900);
-  /* Highest Reflection (Rest State) */
-  --control-bg-primary: var(--primitives-grey-840);
+  /* Control backgrounds — mirrors canonical dark theme */
+  --control-bg-primary: var(--primitives-grey-940);
+  --control-bg-primary-hover: var(--primitives-grey-920);
+  --control-bg-secondary: var(--primitives-grey-945);
+  --control-bg-secondary-hover: var(--primitives-grey-930);
+  --control-bg-secondary-pressed: var(--primitives-grey-920);
   --control-bg-alert: var(--primitives-red-950);
-  --control-bg-alert-hover: var(--primitives-red-800);
-  --control-bg-alert-pressed: var(--primitives-red-700);
+  --control-bg-alert-hover: var(--primitives-red-900);
+  --control-bg-alert-pressed: var(--primitives-red-800);
   --control-bg-warning: var(--primitives-yellow-950);
   --control-bg-warning-hover: var(--primitives-yellow-800);
   --control-bg-warning-pressed: var(--primitives-yellow-700);
@@ -470,10 +470,6 @@
   --control-bg-info: var(--primitives-blue-950);
   --control-bg-info-hover: var(--primitives-blue-800);
   --control-bg-info-pressed: var(--primitives-blue-700);
-  --control-bg-primary-hover: var(--primitives-grey-840);
-  --control-bg-secondary: var(--primitives-grey-920);
-  --control-bg-secondary-hover: var(--primitives-grey-900);
-  --control-bg-secondary-pressed: var(--primitives-grey-880);
   --control-bg-selected: var(--primitives-theme-975);
   --control-bg-selected-hover: var(--primitives-theme-900);
   --control-bg-selected-pressed: var(--primitives-theme-800);

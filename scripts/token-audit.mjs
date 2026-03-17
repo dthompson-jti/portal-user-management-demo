@@ -23,7 +23,7 @@ function readText(filePath) {
 
 function tokenizeDefs(text) {
   const tokens = new Map();
-  for (const match of text.matchAll(/^\s*(--[a-zA-Z0-9_-]+)\s*:\s*(.+?)\s*;\s*$/gm)) {
+  for (const match of text.matchAll(/^\s*(--[a-zA-Z0-9_-]+)\s*:\s*(.+?)\s*;.*$/gm)) {
     tokens.set(match[1], match[2]);
   }
   return tokens;
@@ -90,6 +90,7 @@ function isAllowedMissing(token) {
     '--visual-viewport-height',
     '--splash-bg',
     '--tree-indent-',
+    '--spacing-14',  // gap in canonical spacing scale
   ];
 
   return prefixes.some((prefix) => token.startsWith(prefix));

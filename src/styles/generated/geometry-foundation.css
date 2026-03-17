@@ -200,8 +200,8 @@
   --geom-width-480: var(--spacing-480);
   --geom-height-480: var(--spacing-480);
   --geom-touch-target-min: var(--control-min-touch, 44px);
-  --geom-header-height-default: var(--layout-surface-height-header-default); /* 56px — use semantic token */
-  --geom-footer-height-default: var(--layout-surface-height-footer-default); /* 80px — use semantic token */
-  --geom-form-footer-height-default: var(--layout-surface-height-form-footer-default); /* 96px — use semantic token */
+  --geom-header-height-default: 56px;
+  --geom-footer-height-default: 80px;
+  --geom-form-footer-height-default: var(--spacing-24);
   --geom-sheet-handle-height: var(--spacing-1);
 }

@@ -3,7 +3,7 @@
 :root {
   --radius-full: 9999px;
   --radius-3: var(--radius-md);
-  
+  --radius-s: var(--radius-sm);
   --space-3: var(--spacing-3);
   --spacing-0-5: var(--spacing-0p5);
   --spacing-1h: var(--spacing-1p5);
@@ -43,7 +43,7 @@
   --control-border-focus: var(--control-focus-ring-standard);
   --font-family-body: var(--font-family-sans);
   --primitives-white: var(--primitives-base-white);
-  --header-height: var(--layout-surface-height-header-default);
-  --footer-height: var(--layout-surface-height-footer-default);
-  --form-footer-height: var(--layout-surface-height-form-footer-default);
+  --header-height: var(--geom-header-height-default);
+  --footer-height: var(--geom-footer-height-default);
+  --form-footer-height: var(--geom-form-footer-height-default);
 }
