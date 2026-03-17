@@ -1,0 +1,38 @@
+--- .NET Proxy Resolution ---
+
+
+AbsolutePath   : /
+AbsoluteUri    : https://g
+                 ithub.com
+                 /
+LocalPath      : /
+Authority      : github.co
+                 m
+HostNameType   : Dns
+IsDefaultPort  : True
+IsFile         : False
+IsLoopback     : False
+PathAndQuery   : /
+Segments       : {/}
+IsUnc          : False
+Host           : github.co
+                 m
+Port           : 443
+Query          : 
+Fragment       : 
+Scheme         : https
+OriginalString : https://g
+                 ithub.com
+DnsSafeHost    : github.co
+                 m
+IdnHost        : github.co
+                 m
+IsAbsoluteUri  : True
+UserEscaped    : False
+UserInfo       : 
+
+
+
+
+--- Invoke-WebRequest Test ---
+Connection Failed: The underlying connection was closed: An unexpected error occurred on a send.
