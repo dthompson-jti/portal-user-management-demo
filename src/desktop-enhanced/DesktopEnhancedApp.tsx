@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -14,7 +14,8 @@ import {
     selectedLiveRowsAtom,
     panelWidthAtom,
     desktopViewAtom,
-    isNoResultsAtom
+    isNoResultsAtom,
+    refreshButtonStyleAtom
 } from '../desktop/atoms';
 import { EnhancedLiveMonitorView as LiveMonitorView } from './components/EnhancedLiveMonitorView';
 import { EnhancedHistoricalReviewView as HistoricalReviewView } from './components/EnhancedHistoricalReviewView';
@@ -50,6 +51,14 @@ export default function DesktopEnhancedApp() {
     const panelWidth = useAtomValue(panelWidthAtom);
 
     const toasts = useAtomValue(toastsAtom);
+    const refreshButtonStyle = useAtomValue(refreshButtonStyleAtom);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    const handleRefresh = useCallback(() => {
+        if (isRefreshing) return;
+        setIsRefreshing(true);
+        setTimeout(() => setIsRefreshing(false), 2000);
+    }, [isRefreshing]);
 
     // Selection counts for panel empty states
     const [selectedLive, setSelectedLive] = useAtom(selectedLiveRowsAtom);
@@ -134,6 +143,53 @@ export default function DesktopEnhancedApp() {
                                     </h2>
 
                                     <div className={styles.row2Actions}>
+                                        <Tooltip content="Refresh data">
+                                            {refreshButtonStyle === 'icon' ? (
+                                                <Button
+                                                    variant="secondary"
+                                                    size="s"
+                                                    iconOnly
+                                                    onClick={handleRefresh}
+                                                    disabled={isRefreshing}
+                                                >
+                                                    <span
+                                                        className={`material-symbols-rounded ${styles.refreshIcon}`}
+                                                        data-refreshing={isRefreshing}
+                                                    >
+                                                        {isRefreshing ? 'progress_activity' : 'refresh'}
+                                                    </span>
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    variant="secondary"
+                                                    size="s"
+                                                    onClick={handleRefresh}
+                                                    disabled={isRefreshing}
+                                                    className={styles.refreshButton}
+                                                >
+                                                    {isRefreshing ? (
+                                                        <span
+                                                            className={`material-symbols-rounded ${styles.refreshSpinner}`}
+                                                        >
+                                                            progress_activity
+                                                        </span>
+                                                    ) : (
+                                                        'Refresh'
+                                                    )}
+                                                </Button>
+                                            )}
+                                        </Tooltip>
+
+                                        <Tooltip content="Export data">
+                                            <Button
+                                                variant="secondary"
+                                                size="s"
+                                                onClick={() => {}}
+                                            >
+                                                Export
+                                            </Button>
+                                        </Tooltip>
+
                                         <Tooltip content={showPanel ? "Close side panel" : "Open side panel"}>
                                             <Button
                                                 variant="secondary"

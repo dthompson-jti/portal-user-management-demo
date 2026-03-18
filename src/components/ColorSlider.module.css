@@ -30,7 +30,7 @@
     border: 1px solid var(--surface-border-primary);
     position: relative;
     cursor: pointer;
-    background: var(--surface-bg-secondary);
+    background: var(--control-bg-primary);
     /* Fallback */
 }
 
@@ -56,7 +56,7 @@
     width: var(--spacing-6);
     height: var(--spacing-6);
     border-radius: 50%;
-    background: var(--surface-bg-primary);
+    background: var(--control-bg-primary);
     border: var(--ring-width-focus) solid var(--surface-border-primary);
     box-shadow: var(--surface-shadow-sm);
     transform: translate(-50%, -50%);

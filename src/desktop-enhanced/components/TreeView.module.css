@@ -19,7 +19,7 @@
 }
 
 .row:hover {
-    background-color: var(--surface-bg-secondary_hover);
+    background-color: var(--surface-bg-primary_hover);
     color: var(--surface-fg-primary);
 }
 

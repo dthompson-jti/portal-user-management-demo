@@ -81,3 +81,23 @@
 .detailPanelWrapper[data-resizing="true"] * {
     transition: none;
 }
+/* Refresh button: fixed width to prevent layout shift between states */
+.refreshButton {
+    min-width: 72px;
+    justify-content: center;
+}
+
+/* Spinner rotation for icon mode */
+.refreshIcon[data-refreshing="true"] {
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner for text mode */
+.refreshSpinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

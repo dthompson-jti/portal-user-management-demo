@@ -1,6 +1,6 @@
 import * as Popover from '@radix-ui/react-popover';
 import { useAtom } from 'jotai';
-import { desktopEnhancedTreeLayoutAtom } from '../atoms';
+import { desktopEnhancedTreeLayoutAtom, missedCountModeAtom, chromeStyleAtom } from '../atoms';
 import {
     residentDisplayModeAtom,
     residentBadgeTextAtom,
@@ -9,7 +9,8 @@ import {
     reasonSelectionModeAtom,
     appFontAtom,
     timestampPrecisionModeAtom,
-    preciseTooltipAtom
+    preciseTooltipAtom,
+    refreshButtonStyleAtom
 } from '../../desktop/atoms';
 
 import { Switch } from '../../components/Switch';
@@ -25,6 +26,9 @@ export const TopNavMenu = () => {
     const [appFont, setAppFont] = useAtom(appFontAtom);
     const [timestampPrecision, setTimestampPrecision] = useAtom(timestampPrecisionModeAtom);
     const [preciseTooltip, setPreciseTooltip] = useAtom(preciseTooltipAtom);
+    const [refreshButtonStyle, setRefreshButtonStyle] = useAtom(refreshButtonStyleAtom);
+    const [missedCountMode, setMissedCountMode] = useAtom(missedCountModeAtom);
+    const [chromeStyle, setChromeStyle] = useAtom(chromeStyleAtom);
 
     return (
         <Popover.Root>
@@ -46,6 +50,28 @@ export const TopNavMenu = () => {
                             onCheckedChange={(checked) => setTreeLayout(checked ? 'indented' : 'full-width')}
                             id="indent-toggle"
                         />
+                    </div>
+
+                    <div className={styles.divider} />
+
+                    <div className={styles.sectionHeader}>Missed Count Mode</div>
+                    <div className={styles.displayOptionsGrid} style={{ gridTemplateColumns: '1fr 1fr' }}>
+                        <button
+                            className={styles.optionButton}
+                            data-active={missedCountMode === 'checks'}
+                            onClick={() => setMissedCountMode('checks')}
+                            title="Total number of missed checks"
+                        >
+                            <span>Checks</span>
+                        </button>
+                        <button
+                            className={styles.optionButton}
+                            data-active={missedCountMode === 'rooms'}
+                            onClick={() => setMissedCountMode('rooms')}
+                            title="Number of rooms with missed checks"
+                        >
+                            <span>Rooms</span>
+                        </button>
                     </div>
 
                     <div className={styles.divider} />
@@ -222,6 +248,47 @@ export const TopNavMenu = () => {
                         </button>
                     </div>
 
+                    <div className={styles.divider} />
+
+                    <div className={styles.sectionHeader}>Refresh Button Style</div>
+                    <div className={styles.displayOptionsGrid} style={{ gridTemplateColumns: '1fr 1fr' }}>
+                        <button
+                            className={styles.optionButton}
+                            data-active={refreshButtonStyle === 'icon'}
+                            onClick={() => setRefreshButtonStyle('icon')}
+                        >
+                            <span>Icon</span>
+                        </button>
+                        <button
+                            className={styles.optionButton}
+                            data-active={refreshButtonStyle === 'text'}
+                            onClick={() => setRefreshButtonStyle('text')}
+                        >
+                            <span>Text</span>
+                        </button>
+                    </div>
+
+                    <div className={styles.divider} />
+
+                    <div className={styles.sectionHeader}>Chrome Style</div>
+                    <div className={styles.displayOptionsGrid} style={{ gridTemplateColumns: '1fr 1fr' }}>
+                        <button
+                            className={styles.optionButton}
+                            data-active={chromeStyle === 'default'}
+                            onClick={() => setChromeStyle('default')}
+                            title="Headers match tertiary surface"
+                        >
+                            <span>Default</span>
+                        </button>
+                        <button
+                            className={styles.optionButton}
+                            data-active={chromeStyle === 'elevated'}
+                            onClick={() => setChromeStyle('elevated')}
+                            title="Headers lighter in dark mode"
+                        >
+                            <span>Elevated</span>
+                        </button>
+                    </div>
                 </Popover.Content>
             </Popover.Portal>
         </Popover.Root>

@@ -23,8 +23,8 @@
   user-select: none;
   transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.15s;
 
-  /* === BASE STATE (Secondary) === */
-  background-color: var(--control-bg-secondary);
+  /* === BASE STATE === */
+  background-color: var(--control-bg-primary);
   border: 1px solid var(--control-border-secondary);
   color: var(--surface-fg-primary);
   box-shadow: none;
@@ -92,7 +92,7 @@
 }
 
 .trigger:not([data-variant='filter']):not([data-active='true']):hover:not(:disabled) {
-  background-color: var(--control-bg-secondary-hover);
+  background-color: var(--control-bg-primary-hover);
   border-color: var(--control-border-secondary-hover);
   color: var(--surface-fg-primary);
   box-shadow: none;
@@ -100,7 +100,7 @@
 
 .trigger:not([data-variant='filter']):not([data-active='true']):active:not(:disabled),
 .trigger:not([data-variant='filter']):not([data-active='true'])[data-state='open'] {
-  background-color: var(--control-bg-secondary-pressed);
+  background-color: var(--control-bg-primary-active);
   border-color: var(--control-border-secondary-pressed);
   color: var(--surface-fg-primary);
   box-shadow: none;
@@ -164,8 +164,8 @@
   width: var(--control-width-checkbox);
   height: var(--control-width-checkbox);
   border-radius: var(--radius-control-button-sm);
-  border: 1px solid var(--surface-border-primary);
-  background: var(--surface-bg-primary);
+  border: 1px solid var(--control-border-secondary);
+  background: var(--control-bg-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,7 +217,7 @@
 
 @media (hover: hover) {
   .clearButton:hover {
-    background-color: var(--surface-bg-secondary);
+    background-color: var(--control-bg-secondary-hover);
     color: var(--surface-fg-secondary);
   }
 }

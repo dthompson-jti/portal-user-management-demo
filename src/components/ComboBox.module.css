@@ -11,7 +11,7 @@
     align-items: center;
 
     /* Colors - Standard semantic tokens - Consistently on the container */
-    background-color: var(--control-bg-secondary);
+    background-color: var(--control-bg-primary);
     border: 1px solid var(--control-border-secondary);
     border-radius: var(--radius-control-input);
     transition: all 0.2s ease;
@@ -26,7 +26,7 @@
 }
 
 .inputContainer:hover:not([data-disabled='true']) {
-    background-color: var(--control-bg-secondary-hover);
+    background-color: var(--control-bg-primary-hover);
     border-color: var(--control-border-secondary-hover);
 }
 

@@ -5,7 +5,7 @@
     padding: 0 0 var(--spacing-1p5) 0;
     /* 6px bottom breathing room to divider */
     border-bottom: 1px solid var(--surface-border-secondary);
-    background-color: var(--surface-bg-primary);
+    background-color: var(--control-bg-primary);
     margin: 0;
 }
 

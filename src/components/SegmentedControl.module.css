@@ -16,7 +16,7 @@
     justify-content: center;
     gap: var(--spacing-1);
     padding: var(--spacing-3) var(--spacing-2);
-    background: var(--surface-bg-primary);
+    background: var(--control-bg-primary);
     border: 1px solid var(--surface-border-primary);
     font-size: 0.875rem;
     font-weight: 600;

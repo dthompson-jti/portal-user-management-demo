@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--surface-border-secondary);
-    background-color: var(--surface-bg-tertiary);
+    background-color: var(--surface-bg-trim);
     justify-content: space-between;
 }
 

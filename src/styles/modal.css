@@ -90,7 +90,7 @@
   padding: var(--spacing-3) var(--spacing-4);
   border-bottom: 1px solid var(--surface-border-secondary);
   flex-shrink: 0;
-  background-color: var(--surface-bg-tertiary);
+  background-color: var(--surface-bg-trim);
 }
 
 .modal-header h3 {
@@ -113,5 +113,5 @@
   padding: var(--spacing-3) var(--spacing-4);
   border-top: 1px solid var(--surface-border-secondary);
   flex-shrink: 0;
-  background-color: var(--surface-bg-tertiary);
+  background-color: var(--surface-bg-trim);
 }

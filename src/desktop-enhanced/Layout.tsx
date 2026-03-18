@@ -4,7 +4,7 @@ import styles from './Layout.module.css';
 import { TopNav } from './components/TopNav';
 import { SideBar } from '../desktop/components/SideBar/SideBar';
 // import { ExtremeLeftNav } from './components/ExtremeLeftNav'; // Removed
-import { desktopEnhancedPanelWidthAtom, desktopEnhancedSelectionAtom } from './atoms';
+import { desktopEnhancedPanelWidthAtom, desktopEnhancedSelectionAtom, chromeStyleAtom } from './atoms';
 import { desktopFilterAtom } from '../desktop/atoms';
 import { activePageAtom } from '../data/activePageAtom';
 import { useLayoutRegistration } from '../data/useLayoutRegistration';
@@ -23,6 +23,17 @@ export const Layout: React.FC<LayoutProps> = ({ leftPanel, children }) => {
     const [isResizing, setIsResizing] = useState(false);
     const widthRef = useRef(width);
     const topNavRef = useLayoutRegistration(headerHeightAtom);
+    const chromeStyle = useAtomValue(chromeStyleAtom);
+
+    // Sync chrome style to root element
+    useEffect(() => {
+        const root = document.documentElement;
+        if (chromeStyle === 'elevated') {
+            root.setAttribute('data-chrome-style', 'elevated');
+        } else {
+            root.removeAttribute('data-chrome-style');
+        }
+    }, [chromeStyle]);
 
     // Sync selection to filter
     useEffect(() => {

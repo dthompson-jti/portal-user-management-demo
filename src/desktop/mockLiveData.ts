@@ -67,18 +67,37 @@ const minutesAgo = (mins: number) => new Date(now.getTime() - mins * 60000).toIS
 const generateData = (): LiveCheckRow[] => {
     const data: LiveCheckRow[] = [];
 
-    // 1. Critical Overdue Checks
-    data.push(createLiveCheck('live-1', 'Jeff Siemens', '102', 'overdue', 'Missed 5m', {
+    // 1. Critical Overdue Checks — Room 102 has 4 consecutive missed checks
+    data.push(createLiveCheck('live-1', 'Jeff Siemens', '102', 'overdue', 'Missed 12m', {
+        lastCheckTime: minutesAgo(42),
+        group: 'Alpha',
+        unit: 'A',
+    }));
+    data.push(createLiveCheck('live-2', 'Brett Corbin', '102', 'overdue', 'Missed 8m', {
+        hasHighRisk: true,
+        riskType: 'Suicide Watch',
+        lastCheckTime: minutesAgo(38),
+        group: 'Alpha',
+        unit: 'A',
+    }));
+    data.push(createLiveCheck('live-2b', 'Marcus Rivera', '102', 'overdue', 'Missed 5m', {
         lastCheckTime: minutesAgo(35),
         group: 'Alpha',
         unit: 'A',
     }));
-    data.push(createLiveCheck('live-2', 'Brett Corbin', '102', 'overdue', 'Missed 3m', {
+    data.push(createLiveCheck('live-2c', 'Tyrone Washington', '102', 'overdue', 'Missed 3m', {
         hasHighRisk: true,
-        riskType: 'Suicide Watch',
+        riskType: 'Medical Watch',
         lastCheckTime: minutesAgo(33),
         group: 'Alpha',
         unit: 'A',
+    }));
+
+    // Additional overdue in other rooms
+    data.push(createLiveCheck('live-2d', 'Sarah Jenkins', '205', 'overdue', 'Missed 2m', {
+        lastCheckTime: minutesAgo(32),
+        group: 'Beta',
+        unit: 'B',
     }));
 
     // 2. Due Checks

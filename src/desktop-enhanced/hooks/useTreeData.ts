@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { desktopViewAtom } from '../../desktop/atoms';
 import { desktopFilterAtom } from '../../desktop/atoms';
+import { missedCountModeAtom } from '../atoms';
 
 import { enhancedMockData } from '../data/mockData';
 
@@ -28,6 +29,7 @@ export interface TreeUnit {
 export const useTreeData = () => {
     const view = useAtomValue(desktopViewAtom);
     const filter = useAtomValue(desktopFilterAtom);
+    const missedCountMode = useAtomValue(missedCountModeAtom);
 
 
     // 1. Build a STABLE structure from ALL known groups/units across BOTH datasets
@@ -58,8 +60,8 @@ export const useTreeData = () => {
             const key = getCountKey(check.group || 'Other', check.unit || 'Other');
             const current = countsMap.get(key) || { missed: 0, secondary: 0 };
             if (check.status === 'overdue') {
-                // Sum the actual number of missed checks (e.g., Room 104 with 2 missed checks adds 2 to the tree count)
-                current.missed += (check.missedCheckCount || 1);
+                // 'rooms' mode: count each room as 1. 'checks' mode: sum all missed checks per room.
+                current.missed += missedCountMode === 'rooms' ? 1 : (check.missedCheckCount || 1);
             }
             if (check.status === 'due') current.secondary++;
             countsMap.set(key, current);

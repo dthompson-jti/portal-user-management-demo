@@ -68,7 +68,7 @@
 
 /* Active state - this is the SELECTED tab */
 .tab[data-active="true"] {
-    background: var(--surface-bg-primary);
+    background: var(--nav-toggle-pill-bg);
     color: var(--surface-fg-primary);
     box-shadow: var(--surface-shadow-sm);
 }

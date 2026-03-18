@@ -14,6 +14,7 @@
   --surface-bg-secondary_strong: var(--primitives-grey-30);
   --surface-bg-secondary_hover: var(--primitives-grey-50);
   --surface-bg-tertiary: var(--primitives-grey-40);
+  --surface-bg-trim: var(--surface-bg-tertiary);
   --surface-bg-quaternary: var(--primitives-grey-60);
   --surface-bg-primary-solid: var(--primitives-grey-950);
   --surface-bg-secondary-solid: var(--primitives-grey-600);
@@ -154,10 +155,12 @@
   --control-bg-theme-hover: var(--primitives-theme-600);
   --control-bg-theme-pressed: var(--primitives-theme-800);
   --control-bg-primary: var(--primitives-base-white);
+  --control-bg-primary-active: var(--primitives-base-white);
   --control-bg-primary-hover: var(--primitives-grey-30);
   --control-bg-secondary: var(--primitives-grey-20);
   --control-bg-secondary-hover: var(--primitives-grey-50);
   --control-bg-secondary-pressed: var(--primitives-grey-100);
+  --control-bg-inset: var(--primitives-grey-50);
   --control-bg-selected: var(--primitives-theme-50);
   --control-bg-selected-hover: var(--primitives-theme-100);
   --control-bg-selected-pressed: var(--primitives-theme-200);
@@ -283,10 +286,10 @@
   --top-nav-search-bg-hover: var(--utility-alpha-white-20);
 
   /* Nav Groups (Light Theme) */
-  --nav-group-bg: var(--surface-bg-primary);
-  --nav-group-bg-hover: var(--surface-bg-primary_hover);
-  --nav-group-bg-selected: var(--surface-bg-primary);
-  --nav-group-bg-selected-hover: var(--surface-bg-primary_hover);
+  --nav-group-bg: var(--primitives-grey-50);
+  --nav-group-bg-hover: var(--primitives-grey-30);
+  --nav-group-bg-selected: var(--primitives-grey-50);
+  --nav-group-bg-selected-hover: var(--primitives-grey-30);
 
   --nav-group-fg: var(--surface-fg-theme-intense);
   --nav-group-fg-hover: var(--surface-fg-theme-intense);
@@ -308,10 +311,10 @@
   --nav-control-fg-subtle: var(--surface-fg-tertiary);
   --nav-control-fg-hover: var(--surface-fg-primary);
   --nav-control-bg-hover: var(--control-bg-quaternary-hover);
-  --nav-toggle-bg: var(--control-bg-secondary);
+  --nav-toggle-bg: var(--control-bg-inset);
   --nav-toggle-border: var(--surface-border-tertiary);
   --nav-toggle-fg: var(--surface-fg-tertiary);
-  --nav-toggle-pill-bg: var(--surface-bg-primary);
+  --nav-toggle-pill-bg: var(--control-bg-primary-active);
   --nav-toggle-pill-fg: var(--surface-fg-primary);
   --nav-toggle-pill-shadow: var(--surface-shadow-sm);
 
@@ -353,29 +356,30 @@
 [data-theme='dark'] {
   /* ================== SURFACE ================== */
 
-  /* Background — mirrors canonical dark theme (940 primary, compressed 5-step spread) */
-  --surface-bg-primary: var(--primitives-grey-940);
-  --surface-bg-primary_hover: var(--primitives-grey-920);
-  --surface-bg-secondary: var(--primitives-grey-950);
-  --surface-bg-secondary_subtle: var(--primitives-grey-945);
-  --surface-bg-secondary_strong: var(--primitives-grey-955);
-  --surface-bg-secondary_hover: var(--primitives-grey-935);
-  --surface-bg-tertiary: var(--primitives-grey-955);
-  --surface-bg-quaternary: var(--primitives-grey-960);
+  /* Background — 910 primary, OKLCH-balanced spread */
+  --surface-bg-primary: var(--primitives-grey-910);
+  --surface-bg-primary_hover: var(--primitives-grey-890);
+  --surface-bg-secondary: var(--primitives-grey-925);
+  --surface-bg-secondary_subtle: var(--primitives-grey-920);
+  --surface-bg-secondary_strong: var(--primitives-grey-935);
+  --surface-bg-secondary_hover: var(--primitives-grey-905);
+  --surface-bg-tertiary: var(--primitives-grey-935);
+  --surface-bg-trim: var(--surface-bg-tertiary);
+  --surface-bg-quaternary: var(--primitives-grey-945);
   /* Selection/Active High-Fidelity highlight */
-  --surface-bg-active: var(--primitives-grey-880);
+  --surface-bg-active: var(--primitives-grey-860);
   --surface-bg-secondary-solid: var(--primitives-grey-800);
 
-  /* Header/Footer Translucency - matches secondary bg (grey-940) */
-  --surface-bg-secondary-translucent: rgba(14, 16, 23, 0.85);
-  --surface-bg-tertiary-translucent: rgba(28, 33, 44, 0.85);
+  /* Header/Footer Translucency - matches secondary bg (grey-910) and tertiary (grey-920) */
+  --surface-bg-secondary-translucent: rgba(22, 26, 36, 0.85);
+  --surface-bg-tertiary-translucent: rgba(20, 24, 32, 0.85);
   --surface-bg-brand-primary: var(--primitives-theme-900);
 
   /* Text - High Contrast */
   --surface-fg-primary: var(--primitives-grey-50);
   --surface-fg-secondary: var(--primitives-grey-300);
-  --surface-fg-tertiary: var(--primitives-grey-400);
-  --surface-fg-quaternary: var(--primitives-grey-500);
+  --surface-fg-tertiary: var(--primitives-grey-350);
+  --surface-fg-quaternary: var(--primitives-grey-400);
   --surface-fg-quaternary-rgb: 113, 118, 128;
   --surface-fg-quinary: var(--primitives-grey-500);
 
@@ -394,8 +398,8 @@
   --surface-fg-tertiary_hover: var(--primitives-grey-300);
 
   /* Borders - Fine-tuned */
-  --surface-border-primary: var(--primitives-grey-700);
-  --surface-border-secondary: var(--primitives-grey-800);
+  --surface-border-primary: var(--primitives-grey-800);
+  --surface-border-secondary: var(--primitives-grey-840);
   --surface-border-tertiary: var(--primitives-grey-880);
 
   /* Status Backgrounds - shifted up for visibility (900/850 vs 975/950) */
@@ -438,6 +442,9 @@
   /* Brand Logo - Pure white in dark mode */
   --brand-logo-text: var(--primitives-base-white);
 
+  /* Native browser control fixes */
+  --calendar-icon-filter: invert(1);
+
   /* Overlay */
   --surface-bg-overlay: #000000;
   --surface-bg-backdrop: var(--surface-bg-overlay);
@@ -452,12 +459,14 @@
   --control-bg-theme: var(--primitives-theme-800);
   --control-bg-theme-hover: var(--primitives-theme-700);
   --control-bg-theme-pressed: var(--primitives-theme-900);
-  /* Control backgrounds — mirrors canonical dark theme */
-  --control-bg-primary: var(--primitives-grey-940);
-  --control-bg-primary-hover: var(--primitives-grey-920);
-  --control-bg-secondary: var(--primitives-grey-945);
-  --control-bg-secondary-hover: var(--primitives-grey-930);
-  --control-bg-secondary-pressed: var(--primitives-grey-920);
+  /* Control backgrounds — inputs match surface-bg-tertiary */
+  --control-bg-primary: var(--primitives-grey-935);
+  --control-bg-primary-active: var(--primitives-grey-860);
+  --control-bg-primary-hover: var(--primitives-grey-915);
+  --control-bg-secondary: var(--primitives-grey-925);
+  --control-bg-secondary-hover: var(--primitives-grey-905);
+  --control-bg-secondary-pressed: var(--primitives-grey-860);
+  --control-bg-inset: var(--primitives-grey-935);
   --control-bg-alert: var(--primitives-red-950);
   --control-bg-alert-hover: var(--primitives-red-900);
   --control-bg-alert-pressed: var(--primitives-red-800);
@@ -481,7 +490,7 @@
   --control-bg-on-solid-hover: var(--utility-alpha-white-10);
   --control-bg-on-solid-pressed: var(--utility-alpha-black-10);
   --control-bg-disabled: var(--primitives-grey-860);
-  --control-bg-disabled_subtle: var(--primitives-grey-910);
+  --control-bg-disabled_subtle: var(--primitives-grey-890);
   --control-bg-destructive: var(--primitives-red-950);
   --control-bg-destructive-hover: var(--primitives-red-900);
   --control-bg-destructive-pressed: var(--primitives-red-800);
@@ -529,9 +538,9 @@
   --control-border-primary: var(--primitives-theme-800);
   --control-border-primary-hover: var(--primitives-theme-600);
   --control-border-primary-pressed: var(--primitives-theme-600);
-  --control-border-secondary: var(--primitives-grey-600);
-  --control-border-secondary-hover: var(--primitives-grey-500);
-  --control-border-secondary-pressed: var(--primitives-grey-500);
+  --control-border-secondary: var(--primitives-grey-550);
+  --control-border-secondary-hover: var(--primitives-grey-400);
+  --control-border-secondary-pressed: var(--primitives-grey-400);
   --control-border-selected: var(--primitives-theme-600);
   --control-border-selected-hover: var(--primitives-theme-500);
   --control-border-selected-pressed: var(--primitives-theme-400);
@@ -556,7 +565,7 @@
   --surface-shadow-pill: 0px 1px 3px 0px rgba(0, 0, 0, 0.25), 0px 1px 2px -1px rgba(0, 0, 0, 0.25);
 
   /* ================== NAVIGATION ================== */
-  --nav-bg: var(--surface-bg-primary);
+  --nav-bg: var(--surface-bg-secondary);
   --nav-surface-border: var(--surface-border-secondary);
 
   --top-nav-bg: var(--primitives-theme-975);
@@ -564,16 +573,16 @@
   --top-nav-fg-secondary: var(--surface-fg-secondary);
   --top-nav-divider: var(--control-bg-on-solid-hover);
   --top-nav-skeleton-bg: var(--control-bg-on-solid-hover);
-  --top-nav-search-bg: var(--primitives-grey-900);
+  --top-nav-search-bg: var(--primitives-grey-910);
   --top-nav-search-bg-hover: var(--primitives-grey-880);
 
-  --nav-group-bg: var(--primitives-theme-950);
-  --nav-group-bg-hover: var(--primitives-theme-900);
-  --nav-group-bg-selected: var(--primitives-theme-950);
-  --nav-group-bg-selected-hover: var(--primitives-theme-900);
-  --nav-group-fg: var(--surface-fg-theme-intense);
-  --nav-group-fg-hover: var(--surface-fg-theme-intense);
-  --nav-group-fg-selected: var(--surface-fg-theme-intense);
+  --nav-group-bg: var(--primitives-grey-880);
+  --nav-group-bg-hover: var(--primitives-grey-860);
+  --nav-group-bg-selected: var(--primitives-grey-880);
+  --nav-group-bg-selected-hover: var(--primitives-grey-860);
+  --nav-group-fg: var(--surface-fg-secondary);
+  --nav-group-fg-hover: var(--surface-fg-primary);
+  --nav-group-fg-selected: var(--surface-fg-primary);
 
   --nav-item-bg: transparent;
   --nav-item-bg-hover: var(--control-bg-quaternary-hover);
@@ -588,10 +597,10 @@
   --nav-control-fg-subtle: var(--surface-fg-tertiary);
   --nav-control-fg-hover: var(--surface-fg-primary);
   --nav-control-bg-hover: var(--control-bg-quaternary-hover);
-  --nav-toggle-bg: var(--control-bg-secondary);
+  --nav-toggle-bg: var(--control-bg-inset);
   --nav-toggle-border: var(--surface-border-tertiary);
   --nav-toggle-fg: var(--surface-fg-secondary);
-  --nav-toggle-pill-bg: var(--surface-bg-primary);
+  --nav-toggle-pill-bg: var(--control-bg-primary-active);
   --nav-toggle-pill-fg: var(--surface-fg-primary);
   --nav-toggle-pill-shadow: var(--surface-shadow-sm);
 
@@ -605,6 +614,11 @@
   --top-nav-search-focused-fg: var(--control-fg-primary);
   --top-nav-search-focused-placeholder: var(--surface-fg-secondary);
   --top-nav-search-focused-caret: var(--control-fg-selected);
+}
+
+/* Chrome trim style toggle — elevated option makes headers/footers lighter in dark mode */
+[data-theme='dark'][data-chrome-style='elevated'] {
+  --surface-bg-trim: var(--primitives-grey-910);
 }
 
 

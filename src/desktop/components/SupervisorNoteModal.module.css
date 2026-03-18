@@ -93,7 +93,7 @@
     padding: var(--spacing-3);
     border-radius: var(--radius-md);
     border: 1px solid var(--surface-border-primary);
-    background-color: var(--surface-bg-secondary);
+    background-color: var(--control-bg-primary);
     color: var(--surface-fg-primary);
     font-family: var(--font-family-sans);
     font-size: var(--font-size-sm);

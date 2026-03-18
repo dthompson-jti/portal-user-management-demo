@@ -18,7 +18,7 @@
     height: 100%;
     flex-shrink: 0;
     border-right: 1px solid var(--surface-border-secondary);
-    background-color: var(--surface-bg-secondary);
+    background-color: var(--surface-bg-primary);
     position: relative;
     max-width: 600px;
     transition: border-color 0.15s ease;

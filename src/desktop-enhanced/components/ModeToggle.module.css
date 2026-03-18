@@ -33,7 +33,7 @@
 
 .toggleButton:hover:not(.active) {
     background-color: var(--control-bg-quaternary-hover);
-    color: var(--control-fg-quaternary-hover);
+    color: var(--surface-fg-primary);
     border: none;
     /* Removed border on hover per user request */
 }

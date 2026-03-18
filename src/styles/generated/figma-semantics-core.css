@@ -13,6 +13,7 @@
   --surface-bg-tertiary-translucent: var(--primitives-neutral-translucent-40-translucent);
   --surface-bg-quaternary: var(--primitives-neutral-60);
   --surface-bg-skeleton: var(--primitives-neutral-100);
+  --surface-bg-blackout: var(--primitives-neutral-900);
   --surface-bg-primary-solid: var(--primitives-neutral-900);
   --surface-bg-secondary-solid: var(--primitives-neutral-700);
   --surface-bg-theme-primary: var(--primitives-theme-50);
@@ -102,6 +103,7 @@
   --control-bg-theme-hover: var(--primitives-theme-600);
   --control-bg-theme-pressed: var(--primitives-theme-800);
   --control-bg-primary: var(--primitives-base-white);
+  --control-bg-primary-active: var(--primitives-base-white);
   --control-bg-primary-hover: var(--primitives-neutral-30);
   --control-bg-secondary: var(--primitives-neutral-20);
   --control-bg-secondary-hover: var(--primitives-neutral-50);
@@ -237,6 +239,7 @@
   --surface-border-info_hover: var(--surface-border-info-hover);
   --control-bg-theme_hover: var(--control-bg-theme-hover);
   --control-bg-theme_pressed: var(--control-bg-theme-pressed);
+  --control-bg-primary_active: var(--control-bg-primary-active);
   --control-bg-primary_hover: var(--control-bg-primary-hover);
   --control-bg-secondary_hover: var(--control-bg-secondary-hover);
   --control-bg-secondary_pressed: var(--control-bg-secondary-pressed);
@@ -298,24 +301,25 @@
 }
 
 [data-theme='dark'] {
-  --surface-bg-primary: var(--primitives-neutral-940);
-  --surface-bg-primary-hover: var(--primitives-neutral-920);
-  --surface-bg-primary-translucent: var(--primitives-neutral-translucent-940-translucent);
-  --surface-bg-secondary: var(--primitives-neutral-950);
-  --surface-bg-secondary-subtle: var(--primitives-neutral-945);
-  --surface-bg-secondary-strong: var(--primitives-neutral-955);
-  --surface-bg-secondary-hover: var(--primitives-neutral-935);
-  --surface-bg-secondary-translucent: var(--primitives-neutral-translucent-940-translucent);
-  --surface-bg-tertiary: var(--primitives-neutral-955);
-  --surface-bg-tertiary-translucent: var(--primitives-neutral-translucent-860-translucent);
-  --surface-bg-quaternary: var(--primitives-neutral-960);
-  --surface-bg-skeleton: var(--primitives-neutral-880);
-  --surface-bg-primary-solid: var(--primitives-neutral-900);
+  --surface-bg-primary: var(--primitives-neutral-910);
+  --surface-bg-primary-hover: var(--primitives-neutral-890);
+  --surface-bg-primary-translucent: var(--primitives-neutral-translucent-910-translucent);
+  --surface-bg-secondary: var(--primitives-neutral-925);
+  --surface-bg-secondary-subtle: var(--primitives-neutral-920);
+  --surface-bg-secondary-strong: var(--primitives-neutral-935);
+  --surface-bg-secondary-hover: var(--primitives-neutral-905);
+  --surface-bg-secondary-translucent: var(--primitives-neutral-translucent-920-translucent);
+  --surface-bg-tertiary: var(--primitives-neutral-935);
+  --surface-bg-tertiary-translucent: var(--primitives-neutral-translucent-930-translucent);
+  --surface-bg-quaternary: var(--primitives-neutral-945);
+  --surface-bg-skeleton: var(--primitives-neutral-860);
+  --surface-bg-blackout: var(--primitives-neutral-970);
+  --surface-bg-primary-solid: var(--primitives-neutral-860);
   --surface-bg-secondary-solid: var(--primitives-neutral-700);
   --surface-bg-theme-primary: var(--primitives-theme-950);
   --surface-bg-theme-secondary: var(--primitives-theme-900);
   --surface-bg-theme-solid: var(--primitives-theme-600);
-  --surface-bg-theme-solid-hover: var(--primitives-theme-700);
+  --surface-bg-theme-solid-hover: var(--primitives-theme-500);
   --surface-bg-alert-primary: var(--primitives-red-900);
   --surface-bg-alert-secondary: var(--primitives-red-850);
   --surface-bg-alert-solid: var(--primitives-red-600);
@@ -333,9 +337,9 @@
   --surface-fg-primary: var(--primitives-neutral-50);
   --surface-fg-secondary: var(--primitives-neutral-300);
   --surface-fg-secondary-hover: var(--primitives-neutral-200);
-  --surface-fg-tertiary: var(--primitives-neutral-400);
+  --surface-fg-tertiary: var(--primitives-neutral-350);
   --surface-fg-tertiary-hover: var(--primitives-neutral-300);
-  --surface-fg-quaternary: var(--primitives-neutral-500);
+  --surface-fg-quaternary: var(--primitives-neutral-400);
   --surface-fg-quinary: var(--primitives-neutral-400);
   --surface-fg-on-solid: var(--primitives-base-white);
   --surface-fg-on-solid-faint: var(--primitives-alpha-white-70);
@@ -355,8 +359,8 @@
   --surface-fg-success-secondary: var(--primitives-green-200);
   --surface-fg-success-on-solid: var(--primitives-green-800);
   --surface-fg-logo-text: var(--primitives-base-white);
-  --surface-border-primary: var(--primitives-neutral-700);
-  --surface-border-secondary: var(--primitives-neutral-800);
+  --surface-border-primary: var(--primitives-neutral-800);
+  --surface-border-secondary: var(--primitives-neutral-840);
   --surface-border-tertiary: var(--primitives-neutral-880);
   --surface-border-theme: var(--primitives-theme-500);
   --surface-border-theme-hover: var(--primitives-theme-400);
@@ -398,11 +402,12 @@
   --control-bg-theme: var(--primitives-theme-800);
   --control-bg-theme-hover: var(--primitives-theme-700);
   --control-bg-theme-pressed: var(--primitives-theme-900);
-  --control-bg-primary: var(--primitives-neutral-940);
-  --control-bg-primary-hover: var(--primitives-neutral-920);
-  --control-bg-secondary: var(--primitives-neutral-945);
-  --control-bg-secondary-hover: var(--primitives-neutral-930);
-  --control-bg-secondary-pressed: var(--primitives-neutral-920);
+  --control-bg-primary: var(--primitives-neutral-935);
+  --control-bg-primary-active: var(--primitives-neutral-860);
+  --control-bg-primary-hover: var(--primitives-neutral-915);
+  --control-bg-secondary: var(--primitives-neutral-925);
+  --control-bg-secondary-hover: var(--primitives-neutral-905);
+  --control-bg-secondary-pressed: var(--primitives-neutral-860);
   --control-bg-selected: var(--primitives-theme-975);
   --control-bg-selected-hover: var(--primitives-theme-950);
   --control-bg-selected-pressed: var(--primitives-theme-800);
@@ -414,7 +419,7 @@
   --control-bg-on-solid-hover: var(--primitives-alpha-white-10);
   --control-bg-on-solid-pressed: var(--primitives-alpha-black-10);
   --control-bg-disabled: var(--primitives-neutral-860);
-  --control-bg-disabled-subtle: var(--primitives-neutral-930);
+  --control-bg-disabled-subtle: var(--primitives-neutral-890);
   --control-bg-alert: var(--primitives-red-950);
   --control-bg-alert-hover: var(--primitives-red-900);
   --control-bg-alert-pressed: var(--primitives-red-800);
@@ -454,7 +459,7 @@
   --control-fg-alert-hover: var(--primitives-red-100);
   --control-fg-alert-hover-pressed: var(--primitives-red-100);
   --control-fg-alert-faint: var(--primitives-red-400);
-  --control-fg-alert-faint-hover: var(--primitives-red-400);
+  --control-fg-alert-faint-hover: var(--primitives-red-300);
   --control-fg-warning: var(--primitives-yellow-300);
   --control-fg-warning-hover: var(--primitives-yellow-100);
   --control-fg-warning-pressed: var(--primitives-yellow-50);
@@ -473,9 +478,9 @@
   --control-border-selected: var(--primitives-theme-300);
   --control-border-selected-hover: var(--primitives-theme-300);
   --control-border-selected-pressed: var(--primitives-theme-200);
-  --control-border-secondary: var(--primitives-neutral-400);
-  --control-border-secondary-hover: var(--primitives-neutral-300);
-  --control-border-secondary-pressed: var(--primitives-neutral-300);
+  --control-border-secondary: var(--primitives-neutral-550);
+  --control-border-secondary-hover: var(--primitives-neutral-400);
+  --control-border-secondary-pressed: var(--primitives-neutral-400);
   --control-border-tertiary: var(--primitives-alpha-white-20);
   --control-border-tertiary-hover: var(--primitives-alpha-white-50);
   --control-border-tertiary-pressed: var(--primitives-alpha-white-70);

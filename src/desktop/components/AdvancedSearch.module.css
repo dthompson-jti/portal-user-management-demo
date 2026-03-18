@@ -55,9 +55,9 @@
 .input {
     height: var(--control-height-lg);
     padding: 0 var(--spacing-3);
-    border: 1px solid var(--surface-border-primary);
+    border: 1px solid var(--control-border-secondary);
     border-radius: var(--radius-md);
-    background: var(--surface-bg-primary);
+    background: var(--control-bg-primary);
     color: var(--surface-fg-primary);
     font-size: var(--font-size-sm);
     outline: none;
@@ -79,8 +79,8 @@
 
 /* Custom styles for the Select trigger in this context */
 .selectTrigger {
-    background: var(--surface-bg-primary) !important;
-    border: 1px solid var(--surface-border-primary) !important;
+    background: var(--control-bg-primary) !important;
+    border: 1px solid var(--control-border-secondary) !important;
     color: var(--surface-fg-primary) !important;
     height: var(--control-height-lg) !important;
     font-weight: 400 !important;

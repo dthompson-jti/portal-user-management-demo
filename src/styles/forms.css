@@ -8,11 +8,10 @@ textarea {
   height: var(--control-height-md);
   /* Standardized height */
   padding: var(--spacing-2) var(--spacing-3);
-  border: 1px solid var(--surface-border-primary);
-  /* Standardized border */
+  border: 1px solid var(--control-border-secondary);
   border-radius: var(--radius-control-input);
   font-size: 0.9em;
-  background-color: var(--surface-bg-primary);
+  background-color: var(--control-bg-primary);
   color: var(--surface-fg-primary);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
@@ -22,7 +21,7 @@ textarea {
 
   :is(input[type="text"], input[type="password"], input[type="email"], input[type="search"], input[type="url"], input[type="tel"], input[type="number"]):not(:disabled):hover,
   textarea:not(:disabled):hover {
-    background-color: var(--surface-bg-primary);
+    background-color: var(--control-bg-primary-hover);
     border-color: var(--control-border-tertiary-hover);
   }
 }
@@ -32,7 +31,14 @@ textarea:focus {
   border-color: var(--surface-border-theme);
   box-shadow: 0 0 0 2px var(--control-focus-ring-standard);
   /* Standardized outer focus ring */
-  background-color: var(--surface-bg-primary);
+  background-color: var(--control-bg-primary);
+}
+
+/* Calendar picker icon - invert in dark mode */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: var(--calendar-icon-filter, none);
+  cursor: pointer;
 }
 
 :is(input[type="text"], input[type="password"], input[type="email"], input[type="search"], input[type="url"], input[type="tel"], input[type="number"]):disabled,
@@ -61,8 +67,8 @@ input[type="checkbox"] {
   cursor: pointer;
   display: grid;
   place-content: center;
-  border: 1px solid var(--surface-border-primary);
-  background: var(--surface-bg-primary);
+  border: 1px solid var(--control-border-secondary);
+  background: var(--control-bg-primary);
   transition: all 0.1s ease-in-out;
 }
 

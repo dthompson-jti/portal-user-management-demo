@@ -524,7 +524,7 @@
     flex-shrink: 0;
     border: 1px solid var(--control-border-secondary);
     border-radius: var(--radius-sm);
-    background: var(--surface-bg-primary);
+    background: var(--control-bg-primary);
     cursor: pointer;
     transition: all 0.1s ease-in-out;
     margin: 0;

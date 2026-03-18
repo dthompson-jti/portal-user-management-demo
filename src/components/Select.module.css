@@ -24,8 +24,8 @@
   position: relative;
   user-select: none;
 
-  /* === REST STATE: Secondary button look === */
-  background-color: var(--control-bg-secondary);
+  /* === REST STATE === */
+  background-color: var(--control-bg-primary);
   border: 1px solid var(--control-border-secondary);
   color: var(--surface-fg-primary);
   box-shadow: none;
@@ -41,7 +41,7 @@
 /* === HOVER STATE: Simple border change, NO thick bottom === */
 /* Only apply "no shadow" if it's NOT a filter (skeuomorphic) variant */
 .selectTrigger:not([data-variant='filter']):hover:not(:disabled) {
-  background-color: var(--control-bg-secondary-hover);
+  background-color: var(--control-bg-primary-hover);
   border-color: var(--control-border-secondary-hover);
   color: var(--surface-fg-primary);
   /* No skeuomorphic shadow for regular selects */
@@ -51,7 +51,7 @@
 /* === ACTIVE/OPEN STATE: Pressed look === */
 .selectTrigger:not([data-variant='filter']):active:not(:disabled),
 .selectTrigger:not([data-variant='filter'])[data-state='open'] {
-  background-color: var(--control-bg-secondary-pressed);
+  background-color: var(--control-bg-primary-active);
   border-color: var(--control-border-secondary-pressed);
   color: var(--surface-fg-primary);
   box-shadow: none;

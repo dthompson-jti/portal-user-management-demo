@@ -457,3 +457,10 @@ export const preciseTooltipAtom = atomWithStorage<boolean>(
     false
 );
 
+/** Refresh button style: 'icon' shows refresh icon, 'text' shows "Refresh" text */
+export type RefreshButtonStyle = 'icon' | 'text';
+export const refreshButtonStyleAtom = atomWithStorage<RefreshButtonStyle>(
+    `${STORAGE_PREFIX}refresh_button_style`,
+    'icon'
+);
+

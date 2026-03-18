@@ -24,7 +24,7 @@
   justify-content: center;
   height: var(--control-height-md);
   padding: var(--spacing-2);
-  background-color: var(--surface-bg-primary);
+  background-color: var(--control-bg-primary);
   color: var(--surface-fg-secondary);
   position: relative;
   cursor: pointer;

@@ -37,8 +37,8 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
-    background: var(--surface-bg-primary);
-    border: 1px solid var(--surface-border-primary);
+    background: var(--control-bg-primary);
+    border: 1px solid var(--control-border-secondary);
     border-radius: var(--radius-md);
     padding: 0;
     /* Clear padding, using input/icon margins instead */
@@ -213,8 +213,8 @@
 
 .dateInput {
     height: var(--control-height-md);
-    background: var(--surface-bg-primary);
-    border: 1px solid var(--surface-border-primary);
+    background: var(--control-bg-primary);
+    border: 1px solid var(--control-border-secondary);
     border-radius: var(--radius-md);
     padding: 0 var(--spacing-3);
     color: var(--surface-fg-primary);

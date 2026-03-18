@@ -66,7 +66,7 @@
 .switchRoot:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: var(--surface-bg-tertiary);
+  background-color: var(--control-bg-disabled_subtle);
   border-color: var(--control-border-secondary);
 }
 

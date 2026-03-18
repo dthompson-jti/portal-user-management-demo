@@ -275,8 +275,14 @@ export const generateEnhancedData = () => {
         const stableSeed = getStableHash(room.id + windowStartTime.toDateString());
         const rand = seededRandom(stableSeed);
 
+        // FORCE: Room 102 in Cedar Intake deeply overdue (multiple consecutive missed checks)
+        if (room.unit === 'Cedar Intake' && room.location === '102') {
+            targetDelta = 52; // ~52 mins overdue → missedCheckCount = 4
+        // FORCE: Cedar Assessment — all rooms overdue, no due checks (missed-only scenario)
+        } else if (room.unit === 'Cedar Assessment') {
+            targetDelta = 18 + (stableSeed % 12); // 18-29 mins overdue, all missed
         // Lockdown Story: Cluster rooms into Overdue
-        if (storyMode === 'LOCKDOWN') {
+        } else if (storyMode === 'LOCKDOWN') {
             targetDelta = 25 + (stableSeed % 15); // Forced Overdue
         } else if (opState.mode === 'SHIFT_CHANGE' && rand < 0.3) {
             targetDelta = 10 + (stableSeed % 10); // Shift change jank
