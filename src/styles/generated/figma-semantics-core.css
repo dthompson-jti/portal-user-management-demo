@@ -298,18 +298,33 @@
   --control-border-success_pressed: var(--control-border-success-pressed);
   --control-border-info_hover: var(--control-border-info-hover);
   --control-border-info_pressed: var(--control-border-info-pressed);
+
+  /* Radius */
+  --radius-control-input: var(--radius-md);
+  --radius-control-button-xs: var(--radius-sm);
+  --radius-control-button-sm: var(--radius-sm);
+  --radius-control-button-md: var(--radius-md);
+  --radius-control-button-lg: var(--radius-lg);
+  --radius-surface-card: var(--radius-xl);
+  --radius-surface-modal: var(--radius-xl);
+  --radius-surface-toolbar: var(--radius-2xl);
+  --radius-surface-popover: var(--radius-xl);
+  --radius-surface-tooltip: var(--radius-md);
+  --radius-surface-badge: var(--radius-sm);
+  --radius-surface-pill: var(--radius-full);
+
 }
 
 [data-theme='dark'] {
   --surface-bg-primary: var(--primitives-neutral-910);
   --surface-bg-primary-hover: var(--primitives-neutral-890);
   --surface-bg-primary-translucent: var(--primitives-neutral-translucent-910-translucent);
-  --surface-bg-secondary: var(--primitives-neutral-925);
-  --surface-bg-secondary-subtle: var(--primitives-neutral-920);
-  --surface-bg-secondary-strong: var(--primitives-neutral-935);
-  --surface-bg-secondary-hover: var(--primitives-neutral-905);
+  --surface-bg-secondary: var(--primitives-neutral-920);
+  --surface-bg-secondary-subtle: var(--primitives-neutral-915);
+  --surface-bg-secondary-strong: var(--primitives-neutral-925);
+  --surface-bg-secondary-hover: var(--primitives-neutral-900);
   --surface-bg-secondary-translucent: var(--primitives-neutral-translucent-920-translucent);
-  --surface-bg-tertiary: var(--primitives-neutral-935);
+  --surface-bg-tertiary: var(--primitives-neutral-930);
   --surface-bg-tertiary-translucent: var(--primitives-neutral-translucent-930-translucent);
   --surface-bg-quaternary: var(--primitives-neutral-945);
   --surface-bg-skeleton: var(--primitives-neutral-860);
@@ -408,8 +423,8 @@
   --control-bg-secondary: var(--primitives-neutral-925);
   --control-bg-secondary-hover: var(--primitives-neutral-905);
   --control-bg-secondary-pressed: var(--primitives-neutral-860);
-  --control-bg-selected: var(--primitives-theme-975);
-  --control-bg-selected-hover: var(--primitives-theme-950);
+  --control-bg-selected: var(--primitives-theme-925);
+  --control-bg-selected-hover: var(--primitives-theme-900);
   --control-bg-selected-pressed: var(--primitives-theme-800);
   --control-bg-tertiary: var(--primitives-alpha-grey-10);
   --control-bg-tertiary-hover: var(--primitives-alpha-grey-10);

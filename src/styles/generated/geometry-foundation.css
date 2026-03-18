@@ -37,6 +37,12 @@
   --geom-padding-block-2: var(--spacing-2);
   --geom-width-2: var(--spacing-2);
   --geom-height-2: var(--spacing-2);
+  --geom-gap-2p5: var(--spacing-2p5);
+  --geom-padding-2p5: var(--spacing-2p5);
+  --geom-padding-inline-2p5: var(--spacing-2p5);
+  --geom-padding-block-2p5: var(--spacing-2p5);
+  --geom-width-2p5: var(--spacing-2p5);
+  --geom-height-2p5: var(--spacing-2p5);
   --geom-gap-3: var(--spacing-3);
   --geom-padding-3: var(--spacing-3);
   --geom-padding-inline-3: var(--spacing-3);

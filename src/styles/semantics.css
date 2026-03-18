@@ -568,7 +568,7 @@
   --nav-bg: var(--surface-bg-secondary);
   --nav-surface-border: var(--surface-border-secondary);
 
-  --top-nav-bg: var(--primitives-theme-975);
+  --top-nav-bg: var(--primitives-theme-900);
   --top-nav-fg: var(--surface-fg-primary);
   --top-nav-fg-secondary: var(--surface-fg-secondary);
   --top-nav-divider: var(--control-bg-on-solid-hover);

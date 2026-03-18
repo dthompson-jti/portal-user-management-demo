@@ -169,7 +169,7 @@
 
 @media (hover: hover) {
     .tr:hover:not([data-state="checked"]) {
-        background: var(--surface-bg-secondary);
+        background: var(--surface-bg-secondary-hover);
     }
 }
 
@@ -640,7 +640,7 @@
 }
 
 .tr:hover .stickyColumn {
-    background: var(--surface-bg-secondary);
+    background: var(--surface-bg-secondary-hover);
 }
 
 .tr[data-state="checked"] .stickyColumn {
