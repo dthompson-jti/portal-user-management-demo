@@ -265,6 +265,8 @@
   --primitives-gray-tint-400: var(--primitives-alpha-grey-60);
   --primitives-gray-tint-500: var(--primitives-alpha-grey-70);
   --primitives-gray-tint-600: var(--primitives-alpha-grey-80);
-  --primitives-gray-tint-700: var(--primitives-alpha-grey-90);
-  --primitives-gray-tint-800: var(--primitives-alpha-grey-100);
+  --primitives-gray-tint-700: var(--primitives-alpha-grey-90);  --primitives-gray-tint-800: var(--primitives-alpha-grey-100);
+
+  /* Typography */
+  --letter-spacing-tight: -0.015em;
 }

@@ -28,6 +28,7 @@ body {
   background-color: var(--surface-bg-secondary);
   color: var(--surface-fg-primary);
   -webkit-font-smoothing: antialiased;
+  letter-spacing: var(--letter-spacing-tight);
   -moz-osx-font-smoothing: grayscale;
 }
 

@@ -46,7 +46,7 @@
   font-size: var(--font-size-sm);
   font-weight: 600;
   line-height: 20px;
-  letter-spacing: -0.21px;
+  letter-spacing: var(--letter-spacing-tight);
   display: flex;
   align-items: center;
   height: 100%;

@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/JTI-Product-Design/safety-check-desktop.git"
   },
-  "homepage": "https://JTI-Product-Design.github.io/safety-check-desktop/",
+  "homepage": "https://probable-adventure-3qvnpzy.pages.github.io",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

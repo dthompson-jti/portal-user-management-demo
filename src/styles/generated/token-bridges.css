@@ -46,4 +46,5 @@
   --header-height: var(--geom-header-height-default);
   --footer-height: var(--geom-footer-height-default);
   --form-footer-height: var(--geom-form-footer-height-default);
+  --runtime-layout-height-visual-viewport: 100dvh;
 }
