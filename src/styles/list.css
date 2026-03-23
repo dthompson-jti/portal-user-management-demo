@@ -43,7 +43,7 @@
 
 /* Active State */
 .list-item-root:active:not(:disabled) {
-  background-color: var(--surface-bg-primary_hover);
+  background-color: var(--surface-bg-primary-hover);
 }
 
 /* Disabled State */

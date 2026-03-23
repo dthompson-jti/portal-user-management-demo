@@ -1,5 +1,6 @@
 /* src/styles/primitives.css */
-/* Contains only primitive, non-semantic design tokens. */
+/* Project-specific primitive tokens not provided by canonical. */
+/* Color ramps, spacing, base radii, and alpha tokens come from generated/figma-primitives-core.css. */
 
 :root {
   /* ----------------------------------------- */
@@ -9,287 +10,9 @@
   --breakpoint-mobile: 768px;
 
   /* ----------------------------------------- */
-  /*                 PRIMITIVES                */
-  /* ----------------------------------------- */
-
-  /* Base */
-  --primitives-base-white: #FFFFFF;
-  --primitives-base-black: #000000;
-  --primitives-base-transparent: #FFFFFF00;
-
-  /* Theme (Blue) */
-  --primitives-theme-25: #F9FBFF;
-  --primitives-theme-50: #F2F7FE;
-  --primitives-theme-100: #E7F0FF;
-  --primitives-theme-200: #CFE1FE;
-  --primitives-theme-300: #ADCFFB;
-  --primitives-theme-400: #7AA9F6;
-  --primitives-theme-500: #5890ED;
-  --primitives-theme-600: #276FE3;
-  --primitives-theme-700: #155ACA;
-  --primitives-theme-800: #174B9F;
-  --primitives-theme-900: #123D82;
-  --primitives-theme-950: #022762;
-  --primitives-theme-975: #011a42;
-  --primitives-theme-tint-40: #E9F1FD;
-  --primitives-theme-tint-60: #E3EBF7;
-  --primitives-theme-tint-80: #DDE5F1;
-  --primitives-theme-tint-100: #D7DFEB;
-  --primitives-theme-tint-120: #D3DAE5;
-  --primitives-theme-tint-140: #CDD4DF;
-
-  /* Grey */
-  --primitives-grey-10: #FCFCFC;
-  --primitives-grey-20: #F9F9F9;
-  --primitives-grey-30: #F6F6F7;
-  --primitives-grey-40: #F3F3F4;
-  --primitives-grey-50: #F1F1F1;
-  --primitives-grey-60: #EEEEEE;
-  --primitives-grey-70: #EAEBEC;
-  --primitives-grey-80: #E8E8E9;
-  --primitives-grey-90: #E5E5E6;
-  --primitives-grey-100: #EBECEC;
-  --primitives-grey-120: #E9E9EA;
-  --primitives-grey-200: #E0E1E3;
-  --primitives-grey-300: #D5D6D9;
-  --primitives-grey-350: #BCBEC3;
-  --primitives-grey-400: #A3A7AE;
-  --primitives-grey-500: #717680;
-  --primitives-grey-550: #626771;
-  --primitives-grey-600: #535861;
-  --primitives-grey-700: #414651;
-  --primitives-grey-800: #2C313D;
-  --primitives-grey-840: #242936;
-  --primitives-grey-860: #202531;
-  --primitives-grey-880: #1C212C;
-  --primitives-grey-890: #1A1F2A;
-  --primitives-grey-895: #191E29;
-  --primitives-grey-900: #181D27;
-  --primitives-grey-905: #171C26;
-  --primitives-grey-910: #161A24;
-  --primitives-grey-915: #151922;
-  --primitives-grey-920: #141820;
-  --primitives-grey-925: #12151C;
-    --primitives-grey-930: #11141B;
-  --primitives-grey-935: #101219;
-  --primitives-grey-940: #0D0F16;
-    --primitives-grey-945: #0C0E15;
-  --primitives-grey-950: #0A0C12;
-  --primitives-grey-955: #090A10;
-
-  /* Grey Tint (Alpha) */
-  --primitives-gray-tint-25: #F9F9F94C;
-  --primitives-gray-tint-50: #F1F1F14C;
-  --primitives-gray-tint-100: #E2E2E44C;
-  --primitives-gray-tint-200: #E9EAEB4C;
-  --primitives-gray-tint-300: #D5D7DA4C;
-  --primitives-gray-tint-400: #A4A7AE4C;
-  --primitives-gray-tint-500: #7176804C;
-  --primitives-gray-tint-600: #5358624C;
-  --primitives-gray-tint-700: #4146514C;
-  --primitives-gray-tint-800: #252B3799;
-  --primitives-gray-tint-900: #181D274C;
-  --primitives-gray-tint-950: #0A0D124C;
-
-  /* Red - OKLCH-optimized for high chromacity */
-  --primitives-red-25: #FEFAFA;
-  --primitives-red-50: #FFF3F2;
-  --primitives-red-100: #FEE3E1;
-  --primitives-red-150: #FCD9D6;
-  --primitives-red-200: #FFCEC9;
-  --primitives-red-250: #FFB8B1;
-  --primitives-red-300: #FFA298;
-  --primitives-red-400: #FF6B5E;
-  /* oklch(0.68 0.24 22) - vivid for dark mode */
-  --primitives-red-500: #F04940;
-  /* oklch(0.60 0.25 24) - punchy mid-tone */
-  --primitives-red-600: #D63230;
-  /* oklch(0.54 0.24 25) - slightly darker, high chroma */
-  --primitives-red-700: #BB2E28;
-  --primitives-red-800: #9A271F;
-  /* L≈28% */
-  --primitives-red-850: #7A1F18;
-  /* L≈22% */
-  --primitives-red-900: #5E1812;
-  /* L≈18% */
-  --primitives-red-950: #42110C;
-  /* L≈13% */
-  --primitives-red-975: #2A0A07;
-  /* L≈8%  */
-
-  /* Yellow/Orange - OKLCH-optimized for warning visibility */
-  --primitives-yellow-25: #FFFCF4;
-  --primitives-yellow-50: #FFF9EB;
-  --primitives-yellow-100: #FEEFC6;
-  --primitives-yellow-150: #FBE6A2;
-  --primitives-yellow-200: #FFDF84;
-  --primitives-yellow-250: #F2CF63;
-  --primitives-yellow-300: #F4C04B;
-  --primitives-yellow-400: #F5A623;
-  /* oklch(0.76 0.17 70) - vibrant amber for dark mode */
-  --primitives-yellow-500: #E58D0A;
-  /* oklch(0.68 0.18 65) - richer orange */
-  --primitives-yellow-600: #C45500;
-  /* oklch(0.55 0.17 55) - darker burnt orange, better contrast */
-  --primitives-yellow-700: #A84000;
-  --primitives-yellow-800: #7A3005;
-  /* L≈28% */
-  --primitives-yellow-850: #5E2504;
-  /* L≈22% */
-  --primitives-yellow-900: #471C03;
-  /* L≈18% */
-  --primitives-yellow-950: #321402;
-  /* L≈13% */
-  --primitives-yellow-975: #1F0C01;
-  /* L≈8%  */
-
-  /* Green */
-  --primitives-green-25: #F5FDF9;
-  --primitives-green-50: #E6FFEF;
-  --primitives-green-100: #CAFFDE;
-  --primitives-green-150: #B7FAD1;
-  --primitives-green-200: #A1F1C1;
-  --primitives-green-250: #8EE7B3;
-  --primitives-green-300: #7DDFA7;
-  --primitives-green-400: #5DCA8F;
-  --primitives-green-500: #01B26D;
-  --primitives-green-600: #0D935A;
-  --primitives-green-700: #017647;
-  --primitives-green-800: #005D37;
-  /* L≈28% */
-  --primitives-green-850: #004A2C;
-  /* L≈22% */
-  --primitives-green-900: #003921;
-  /* L≈18% */
-  --primitives-green-950: #002817;
-  /* L≈13% */
-  --primitives-green-975: #00180E;
-  /* L≈8%  */
-
-  /* Blue */
-  --primitives-blue-25: #F4FAFF;
-  --primitives-blue-50: #F0F9FF;
-  --primitives-blue-100: #DFF2FE;
-  --primitives-blue-150: #DFF2FE;
-  --primitives-blue-200: #B9E5FD;
-  --primitives-blue-250: #A0DEFD;
-  --primitives-blue-300: #7BD4FD;
-  --primitives-blue-400: #36BFF9;
-  --primitives-blue-500: #0BA4EB;
-  --primitives-blue-600: #0085C9;
-  --primitives-blue-700: #016AA2;
-  --primitives-blue-800: #055986;
-  /* L≈28% */
-  --primitives-blue-850: #044568;
-  /* L≈22% */
-  --primitives-blue-900: #03344F;
-  /* L≈18% */
-  --primitives-blue-950: #022438;
-  /* L≈13% */
-  --primitives-blue-975: #011522;
-  /* L≈8%  */
-
-  /* ----------------------------------------- */
-  /*                   SPACING                 */
-  /* ----------------------------------------- */
-
-  --spacing-0: 0px;
-  --spacing-0p25: 1px;
-  --spacing-0p5: 0.125rem;
-  /* 2px */
-  --spacing-1: 0.25rem;
-  /* 4px */
-  --spacing-1p5: 0.375rem;
-  /* 6px */
-  --spacing-2: 0.5rem;
-  /* 8px */
-  --spacing-2p5: 0.625rem;
-  /* 10px */
-  --spacing-3: 0.75rem;
-  /* 12px */
-  --spacing-4: 1rem;
-  /* 16px */
-  --spacing-5: 1.25rem;
-  /* 20px */
-  --spacing-6: 1.5rem;
-  /* 24px */
-  --spacing-8: 2rem;
-  /* 32px */
-  --spacing-10: 2.5rem;
-  /* 40px */
-  --spacing-12: 3rem;
-  /* 48px */
-  --spacing-16: 4rem;
-  /* 64px */
-  --spacing-20: 5rem;
-  /* 80px */
-  --spacing-24: 6rem;
-  /* 96px */
-  --spacing-32: 8rem;
-  /* 128px */
-  --spacing-40: 10rem;
-  /* 160px */
-  --spacing-48: 12rem;
-  /* 192px */
-  --spacing-56: 14rem;
-  /* 224px */
-  --spacing-64: 16rem;
-  /* 256px */
-  --spacing-80: 20rem;
-  /* 320px */
-  --spacing-96: 24rem;
-  /* 384px */
-  --spacing-120: 30rem;
-  /* 480px */
-  --spacing-140: 35rem;
-  /* 560px */
-  --spacing-160: 40rem;
-  /* 640px */
-  --spacing-180: 45rem;
-  /* 720px */
-  --spacing-192: 48rem;
-  /* 768px */
-  --spacing-256: 64rem;
-  /* 1024px */
-  --spacing-320: 80rem;
-  /* 1280px */
-  --spacing-360: 90rem;
-  /* 1440px */
-  --spacing-400: 100rem;
-  /* 1600px */
-  --spacing-480: 120rem;
-  /* 1920px */
-
-  /* ----------------------------------------- */
-  /*                   RADII                   */
-  /* ----------------------------------------- */
-  --radius-xs: 0.25rem;
-  /* 4px */
-  --radius-sm: 0.375rem;
-  /* 6px */
-  --radius-md: 0.5rem;
-  /* 8px */
-  --radius-lg: 0.625rem;
-  /* 10px */
-  --radius-xl: 0.75rem;
-  /* 12px */
-  --radius-2xl: 1rem;
-  /* 16px */
-  --radius-3xl: 1.25rem;
-  /* 20px */
-  --radius-4xl: 1.5rem;
-  /* 24px */
-  --radius-full: 9999px;
-
-  /* ----------------------------------------- */
-  /*            TYPOGRAPHY LEADING             */
-  /* ----------------------------------------- */
-  --line-height-trim: 1;
-  /* For headers adjacent to icons/buttons to center cap-height */
-
-  /* ----------------------------------------- */
   /*            TYPOGRAPHY SIZES               */
   /* ----------------------------------------- */
+
   --font-size-2xs: 0.75rem;
   /* 12px - Badges, captions */
   --font-size-xs: 0.8125rem;
@@ -314,97 +37,16 @@
   /* 64px - Empty state icons, NFC hero */
 
   /* ----------------------------------------- */
-  /*          ICON SIZES (Material)            */
+  /*            TYPOGRAPHY LEADING             */
   /* ----------------------------------------- */
-  --icon-size-xs: 0.75rem;
-  /* 12px */
-  --icon-size-sm: 1rem;
-  /* 16px */
-  --icon-size-md: 1.25rem;
-  /* 20px - DEFAULT */
-  --icon-size-lg: 1.5rem;
-  /* 24px */
-  --icon-size-xl: 2rem;
-  /* 32px */
-  --icon-size-2xl: 3rem;
-  /* 48px */
 
-  /* ----------------------------------------- */
-  /*        LOGO / BRAND SIZES                 */
-  /* ----------------------------------------- */
-  --logo-size-splash: 9rem;
-  /* 144px */
-  --logo-size-icon: 1.25rem;
-  /* 20px */
-
-  /* ----------------------------------------- */
-  /*            CONTROL HEIGHTS                */
-  /* ----------------------------------------- */
-  --control-height-xs: 1.25rem;
-  /* 20px */
-  --control-height-sm: 2rem;
-  /* 32px - Desktop Standard */
-  --control-height-md: 2.25rem;
-  /* 36px - Desktop Standard */
-  --control-height-lg: 2.5rem;
-  /* 40px - Desktop Large */
-
-  /* ----------------------------------------- */
-  /*            CONTROL WIDTHS                 */
-  /* ----------------------------------------- */
-  --control-width-switch: 2.25rem;
-  /* 36px */
-  --control-width-checkbox: 1.25rem;
-  /* 20px */
-  --control-width-thumb: 1rem;
-  /* 16px */
-  --control-width-toast-icon: 1.5rem;
-  /* 24px */
-
-  /* ----------------------------------------- */
-  /*              AVATAR SIZES                 */
-  /* ----------------------------------------- */
-  --avatar-size-sm: 2.5rem;
-  /* 40px - Optical size, touch target via parent padding */
-  --avatar-size-md: 3rem;
-  /* 48px */
-
-  /* ----------------------------------------- */
-  /*          LAYOUT DIMENSIONS                */
-  /* ----------------------------------------- */
-  --modal-header-height: 3.75rem;
-  /* 60px */
-  --footer-action-height: 3rem;
-  /* 48px */
-  --list-leading-width: 3rem;
-  /* 48px */
-  /* 220px */
-  --sheet-handle-width: 2rem;
-  /* 32px */
-  --sheet-handle-height: 0.25rem;
-  /* 4px */
-
-  /* ----------------------------------------- */
-  /*     MAX WIDTHS (Content Constraints)      */
-  /* ----------------------------------------- */
-  --max-width-card: 25rem;
-  /* 400px */
-  --max-width-content: 25rem;
-  /* 400px */
-  --max-width-scanner: 18.75rem;
-  /* 300px */
-  --max-width-empty-state: 20rem;
-  /* 320px */
-
-  /* ----------------------------------------- */
-  /*              BLUR VALUES                  */
-  /* ----------------------------------------- */
-  --blur-glass: 0.5rem;
-  /* 8px */
+  --line-height-trim: 1;
+  /* For headers adjacent to icons/buttons to center cap-height */
 
   /* ----------------------------------------- */
   /*            TYPOGRAPHY WEIGHTS             */
   /* ----------------------------------------- */
+
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -412,8 +54,82 @@
   --font-weight-extrabold: 800;
 
   /* ----------------------------------------- */
+  /*          ICON SIZES (Material)            */
+  /* ----------------------------------------- */
+
+  --icon-size-xs: 12px;
+  --icon-size-sm: 16px;
+  --icon-size-md: 20px;
+  /* DEFAULT */
+  --icon-size-lg: 24px;
+  --icon-size-xl: 32px;
+  --icon-size-2xl: 48px;
+
+  /* ----------------------------------------- */
+  /*        LOGO / BRAND SIZES                 */
+  /* ----------------------------------------- */
+
+  --logo-size-splash: 144px;
+  --logo-size-icon: 20px;
+
+  /* ----------------------------------------- */
+  /*            CONTROL HEIGHTS                */
+  /* ----------------------------------------- */
+
+  --control-height-xs: 20px;
+  --control-height-sm: 32px;
+  /* Desktop Standard */
+  --control-height-md: 36px;
+  /* Desktop Standard */
+  --control-height-lg: 40px;
+  /* Desktop Large */
+
+  /* ----------------------------------------- */
+  /*            CONTROL WIDTHS                 */
+  /* ----------------------------------------- */
+
+  --control-width-switch: 36px;
+  --control-width-checkbox: 20px;
+  --control-width-thumb: 16px;
+  --control-width-toast-icon: 24px;
+
+  /* ----------------------------------------- */
+  /*              AVATAR SIZES                 */
+  /* ----------------------------------------- */
+
+  --avatar-size-sm: 40px;
+  /* Optical size, touch target via parent padding */
+  --avatar-size-md: 48px;
+
+  /* ----------------------------------------- */
+  /*          LAYOUT DIMENSIONS                */
+  /* ----------------------------------------- */
+
+  --modal-header-height: 60px;
+  --footer-action-height: 48px;
+  --list-leading-width: 48px;
+  --sheet-handle-width: 32px;
+  --sheet-handle-height: 4px;
+
+  /* ----------------------------------------- */
+  /*     MAX WIDTHS (Content Constraints)      */
+  /* ----------------------------------------- */
+
+  --max-width-card: 400px;
+  --max-width-content: 400px;
+  --max-width-scanner: 300px;
+  --max-width-empty-state: 320px;
+
+  /* ----------------------------------------- */
+  /*              BLUR VALUES                  */
+  /* ----------------------------------------- */
+
+  --blur-glass: 8px;
+
+  /* ----------------------------------------- */
   /*         STROKE / RING WIDTHS              */
   /* ----------------------------------------- */
+
   --ring-width-focus: 2px;
   --ring-width-underline: 2px;
 }

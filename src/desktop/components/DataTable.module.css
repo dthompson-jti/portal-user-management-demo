@@ -158,11 +158,11 @@
 }
 
 .tbody {
-    background: var(--surface-bg-secondary_subtle);
+    background: var(--surface-bg-secondary-subtle);
 }
 
 .tr {
-    background: var(--surface-bg-secondary_subtle);
+    background: var(--surface-bg-secondary-subtle);
     /* border-bottom moved to TD for better collapse/spacing control */
     transition: background-color 0.1s ease;
 }
@@ -346,7 +346,7 @@
 }
 
 .statusLozenge.missed {
-    background: var(--surface-bg-error-secondary);
+    background: var(--surface-bg-alert-secondary);
     color: var(--surface-fg-alert-primary);
 }
 

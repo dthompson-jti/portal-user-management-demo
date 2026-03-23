@@ -149,7 +149,7 @@
 
 /* Alert / Error */
 .toast-root[data-variant='alert'] {
-  background-color: var(--surface-bg-error-solid);
+  background-color: var(--surface-bg-alert-solid);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 

@@ -17,7 +17,7 @@
 }
 
 .avatarButton:hover {
-    background-color: var(--surface-bg-primary_hover);
+    background-color: var(--surface-bg-primary-hover);
 }
 
 

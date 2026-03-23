@@ -19,13 +19,13 @@
 .label {
     font-size: var(--font-size-2xs);
     font-weight: 600;
-    color: var(--surface-fg-secondary_on_brand);
+    color: var(--surface-fg-secondary-on-brand);
 }
 
 .value {
     font-size: var(--font-size-md);
     font-weight: 700;
-    color: var(--surface-fg-primary_on_brand);
+    color: var(--surface-fg-primary-on-brand);
     min-width: 12px;
 }
 

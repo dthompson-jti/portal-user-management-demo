@@ -1,7 +1,7 @@
 /* src/styles/tooltip.css */
 
 .tooltip-content {
-  background-color: var(--primitives-grey-900);
+  background-color: var(--primitives-neutral-900);
   color: var(--surface-fg-white);
   border-radius: var(--radius-surface-tooltip);
   padding: var(--spacing-1p5) var(--spacing-3);
@@ -9,7 +9,7 @@
   font-weight: 500;
   line-height: 1.4;
   box-shadow: var(--surface-shadow-md);
-  border: 1px solid var(--primitives-grey-800);
+  border: 1px solid var(--primitives-neutral-800);
   user-select: none;
   z-index: var(--z-tooltip);
   /* Ensure it's above other UI */
@@ -24,7 +24,7 @@
 }
 
 .tooltip-arrow {
-  fill: var(--primitives-grey-800);
+  fill: var(--primitives-neutral-800);
 }
 
 .tooltip-secondary-text {
@@ -33,16 +33,16 @@
 
 /* --- Dark Mode: Invert Tooltip --- */
 [data-theme='dark'] .tooltip-content {
-  background-color: var(--primitives-grey-50);
-  color: var(--primitives-grey-900);
-  border-color: var(--primitives-grey-200);
+  background-color: var(--primitives-neutral-50);
+  color: var(--primitives-neutral-900);
+  border-color: var(--primitives-neutral-200);
 }
 
 [data-theme='dark'] .tooltip-arrow {
-  fill: var(--primitives-grey-50);
+  fill: var(--primitives-neutral-50);
 }
 
 [data-theme='dark'] .tooltip-secondary-text {
-  color: var(--primitives-grey-500);
+  color: var(--primitives-neutral-500);
 }
 

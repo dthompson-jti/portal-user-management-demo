@@ -26,7 +26,7 @@
 }
 
 .error {
-    background-color: var(--surface-bg-error-primary, #fef3f2);
+    background-color: var(--surface-bg-alert-primary, #fef3f2);
     color: var(--surface-fg-alert-primary, #d92d20);
     border-color: var(--utility-error-200, #fecdca);
 }

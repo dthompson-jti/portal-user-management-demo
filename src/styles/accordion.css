@@ -37,7 +37,7 @@
 
 @media (hover: hover) {
   .accordion-trigger:hover {
-    color: var(--surface-fg-secondary_hover);
+    color: var(--surface-fg-secondary-hover);
   }
 }
 

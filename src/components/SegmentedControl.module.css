@@ -45,7 +45,7 @@
 @media (hover: hover) {
     .segmentedControlItem:not([data-state="on"]):hover {
         background-color: var(--control-bg-secondary-hover);
-        color: var(--control-fg-secondary_hover);
+        color: var(--control-fg-secondary-hover);
         border-color: var(--control-border-secondary-hover);
         z-index: 1;
         position: relative;

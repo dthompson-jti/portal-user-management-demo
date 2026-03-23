@@ -53,10 +53,10 @@
 
 /* --- Error --- */
 [data-appearance-type="error"] {
-  background-color: var(--surface-bg-error-primary);
+  background-color: var(--surface-bg-alert-primary);
 }
 [data-appearance-type="error"][data-bordered="true"] {
-  border: 1px solid var(--surface-border-alert_subtle);
+  border: 1px solid var(--surface-border-alert-subtle);
 }
 
 /* --- AUTOMATIC RESPONSIVE BEHAVIORS --- */

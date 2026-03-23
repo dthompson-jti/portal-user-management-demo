@@ -6,7 +6,7 @@
     border-radius: 50%;
     background-color: var(--surface-bg-brand-solid);
     /* Static blue - overridden by inline style when feature flag is on */
-    color: var(--surface-fg-primary_on_brand);
+    color: var(--surface-fg-primary-on-brand);
 
     display: flex;
     align-items: center;

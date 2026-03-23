@@ -11,12 +11,10 @@
 
 /* Layer 1: Design Tokens */
 @import url('./primitives.css') layer(tokens);
-@import url('./utility.css') layer(tokens);
 @import url('./semantics.css') layer(tokens);
 @import url('./generated/figma-primitives-core.css') layer(tokens);
 @import url('./generated/figma-typography-core.css') layer(tokens);
 @import url('./generated/figma-semantics-core.css') layer(tokens);
-@import url('./generated/geometry-foundation.css') layer(tokens);
 @import url('./generated/token-bridges.css') layer(tokens);
 
 /* Layer 2: Base Styles */

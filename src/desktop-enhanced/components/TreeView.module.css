@@ -19,7 +19,7 @@
 }
 
 .row:hover {
-    background-color: var(--surface-bg-primary_hover);
+    background-color: var(--surface-bg-primary-hover);
     color: var(--surface-fg-primary);
 }
 
@@ -170,13 +170,13 @@
 }
 
 .danger {
-    background-color: var(--surface-bg-error-primary);
+    background-color: var(--surface-bg-alert-primary);
     color: var(--surface-fg-alert-primary);
-    border: 1px solid var(--surface-border-alert_subtle);
+    border: 1px solid var(--surface-border-alert-subtle);
 }
 
 .warning {
     background-color: var(--surface-bg-warning-primary);
     color: var(--surface-fg-warning-primary);
-    border: 1px solid var(--surface-border-warning_subtle);
+    border: 1px solid var(--surface-border-warning-subtle);
 }

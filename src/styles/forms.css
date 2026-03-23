@@ -43,7 +43,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 :is(input[type="text"], input[type="password"], input[type="email"], input[type="search"], input[type="url"], input[type="tel"], input[type="number"]):disabled,
 textarea:disabled {
-  background-color: var(--control-bg-disabled_subtle);
+  background-color: var(--control-bg-disabled-subtle);
   color: var(--control-fg-disabled);
   border-color: var(--control-border-disabled);
   cursor: not-allowed;

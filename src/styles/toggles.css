@@ -49,7 +49,7 @@
 @media (hover: hover) {
   .toggle-group .toggle-group-item:not([aria-checked='true']):hover:not([data-disabled]) {
     background-color: var(--control-bg-secondary-hover);
-    color: var(--control-fg-secondary_hover);
+    color: var(--control-fg-secondary-hover);
     border-color: var(--control-border-secondary-hover);
     z-index: 1;
   }

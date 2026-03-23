@@ -11,7 +11,7 @@
 }
 
 .profileButton:hover {
-    background: var(--surface-bg-secondary_hover);
+    background: var(--surface-bg-secondary-hover);
 }
 
 .avatar {
