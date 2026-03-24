@@ -25,6 +25,10 @@ interface DataTableProps<T> {
     getRowId?: (row: T) => string;
     totalCount?: number;
     isLoading?: boolean;
+    /** When true, body skeleton rows replace data rows. Managed by useMinDurationSkeleton. */
+    showSkeleton?: boolean;
+    /** When true, header cells are replaced with skeleton bars (use on full view changes). */
+    showHeaderSkeleton?: boolean;
     hasMore?: boolean;
     onLoadMore?: () => void;
     onRowClick?: (row: T, event: React.MouseEvent, visualIds: string[]) => void;
@@ -42,6 +46,8 @@ export function DataTable<T>({
     getRowId,
     totalCount,
     isLoading = false,
+    showSkeleton,
+    showHeaderSkeleton = false,
     hasMore = false,
     onLoadMore,
     onRowClick,
@@ -49,6 +55,9 @@ export function DataTable<T>({
     initialSorting = [],
     emptyState,
 }: DataTableProps<T>) {
+    // When showSkeleton is not explicitly controlled, fall back to the old heuristic.
+    const shouldShowSkeleton = showSkeleton ?? (isLoading && data.length === 0);
+    const isHeaderSkeleton = !!showHeaderSkeleton && shouldShowSkeleton;
     const [sorting, setSorting] = useState<SortingState>(initialSorting);
     const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({});
     const [columnPinning] = useState<ColumnPinningState>({
@@ -200,7 +209,7 @@ export function DataTable<T>({
                 >
                     <thead className={styles.thead}>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id}>
+                            <tr key={headerGroup.id} className={isHeaderSkeleton ? styles.skeletonHeaderRow : undefined}>
                                 {headerGroup.headers.map((header) => {
                                     const isPinned = header.column.getIsPinned();
                                     const isSpacer = header.column.id === 'spacer';
@@ -217,7 +226,7 @@ export function DataTable<T>({
                                             key={header.id}
                                             className={`${styles.th} ${pinnedClass}`}
                                             colSpan={header.colSpan}
-                                            onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                                            onClick={!isHeaderSkeleton && header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
                                             style={{
                                                 width: isSpacer ? 'auto' : `var(--col-${safeId}-width)`,
                                                 padding: isSpacer ? 0 : undefined,
@@ -226,34 +235,50 @@ export function DataTable<T>({
                                                 left: isPinned === 'left' ? `var(--col-${safeId}-left)` : undefined,
                                             }}
                                             data-pinned={isPinned || undefined}
-                                            data-sortable={header.column.getCanSort()}
-                                            data-sorted={!!header.column.getIsSorted()}
-                                            data-sort-direction={header.column.getIsSorted() as string}
+                                            data-sortable={!isHeaderSkeleton && header.column.getCanSort()}
+                                            data-sorted={!isHeaderSkeleton && !!header.column.getIsSorted()}
+                                            data-sort-direction={!isHeaderSkeleton ? header.column.getIsSorted() as string : undefined}
                                         >
-                                            <div
-                                                className={styles.thContent}
-                                            >
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(header.column.columnDef.header, header.getContext())}
-                                                {header.column.getCanSort() && (
-                                                    <span className={`material-symbols-rounded ${styles.sortIndicator}`}>
-                                                        arrow_downward
-                                                    </span>
-                                                )}
-                                            </div>
-                                            {header.column.getCanResize() && !isSpacer && (
-                                                <div
-                                                    onDoubleClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleAutoFit(header.column.id);
-                                                    }}
-                                                    onMouseDown={header.getResizeHandler()}
-                                                    onTouchStart={header.getResizeHandler()}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    className={`${styles.resizer} ${header.column.getIsResizing() ? styles.isResizing : ''
-                                                        }`}
-                                                />
+                                            {isHeaderSkeleton ? (
+                                                // Skeleton: replace label with shimmer bar, wrapped in a
+                                                // height-matched container so the <th> matches real header height.
+                                                !isSpacer && (
+                                                    <div className={styles.skeletonHeaderContent}>
+                                                        <div className={
+                                                            header.column.id === 'select'
+                                                                ? styles.skeletonCheckbox
+                                                                : header.column.id === 'actions'
+                                                                    ? styles.skeletonAction
+                                                                    : styles.skeletonHeaderCell
+                                                        } />
+                                                    </div>
+                                                )
+                                            ) : (
+                                                <>
+                                                    <div className={styles.thContent}>
+                                                        {header.isPlaceholder
+                                                            ? null
+                                                            : flexRender(header.column.columnDef.header, header.getContext())}
+                                                        {header.column.getCanSort() && (
+                                                            <span className={`material-symbols-rounded ${styles.sortIndicator}`}>
+                                                                arrow_downward
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    {header.column.getCanResize() && !isSpacer && (
+                                                        <div
+                                                            onDoubleClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleAutoFit(header.column.id);
+                                                            }}
+                                                            onMouseDown={header.getResizeHandler()}
+                                                            onTouchStart={header.getResizeHandler()}
+                                                            onClick={(e) => e.stopPropagation()}
+                                                            className={`${styles.resizer} ${header.column.getIsResizing() ? styles.isResizing : ''
+                                                                }`}
+                                                        />
+                                                    )}
+                                                </>
                                             )}
                                         </th>
                                     );
@@ -263,7 +288,7 @@ export function DataTable<T>({
                     </thead>
                     <tbody className={styles.tbody}>
                         {/* Skeleton Loading State */}
-                        {isLoading && data.length === 0 && Array.from({ length: 15 }).map((_, idx) => (
+                        {shouldShowSkeleton && Array.from({ length: 15 }).map((_, idx) => (
                             <tr key={`skeleton-${idx}`} className={styles.skeletonRow}>
                                 {table.getVisibleFlatColumns().map((column) => {
                                     const isPinned = column.getIsPinned();
@@ -296,7 +321,9 @@ export function DataTable<T>({
                                                             ? styles.skeletonCheckbox
                                                             : column.id === 'actions'
                                                                 ? styles.skeletonAction
-                                                                : styles.skeletonCell
+                                                                : column.id === 'status'
+                                                                    ? styles.skeletonStatusPill
+                                                                    : styles.skeletonCell
                                                     }
                                                 />
                                             )}
@@ -306,8 +333,8 @@ export function DataTable<T>({
                             </tr>
                         ))}
 
-                        {/* Actual Data */}
-                        {table.getRowModel().rows.map((row) => (
+                        {/* Actual Data — hidden while skeleton is active */}
+                        {!shouldShowSkeleton && table.getRowModel().rows.map((row) => (
                             <tr
                                 key={row.id}
                                 className={styles.tr}
@@ -363,7 +390,8 @@ export function DataTable<T>({
                                 })}
                             </tr>
                         ))}
-                        {hasMore && (
+                        {/* Infinite scroll sentinel — only when data is visible */}
+                        {!shouldShowSkeleton && hasMore && (
                             <tr ref={sentinelRef} className={styles.skeletonRow}>
                                 {table.getVisibleFlatColumns().map((column) => {
                                     const isPinned = column.getIsPinned();
@@ -406,7 +434,7 @@ export function DataTable<T>({
                         )}
                     </tbody>
                 </table>
-                {table.getRowModel().rows.length === 0 && !isLoading && data.length === 0 && (
+                {table.getRowModel().rows.length === 0 && !isLoading && !shouldShowSkeleton && data.length === 0 && (
                     emptyState || (
                         <div className={styles.emptyState}>
 
@@ -418,8 +446,8 @@ export function DataTable<T>({
                 {/* Table Footer - Moved inside scrollArea for better sticky behavior */}
                 <div className={styles.tableFooter}>
                     <div className={styles.footerLeft}>
-                        {/* If fetching, show just text. If done, show count. */}
-                        {isLoading ? (
+                        {/* Stays in loading state for the full skeleton duration (min 1s on view change) */}
+                        {(isLoading || shouldShowSkeleton) ? (
                             <div className={styles.loadingIndicator}>
                                 <span className={`material-symbols-rounded ${styles.loadingSpinner}`}>
                                     progress_activity

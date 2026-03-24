@@ -123,3 +123,54 @@
 .cancelButton {
     min-width: 80px;
 }
+
+.confirmBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.warningBanner {
+    display: flex;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    background-color: var(--surface-bg-alert-primary);
+    border-radius: var(--radius-input);
+    border: 1px solid var(--surface-border-alert-subtle);
+    color: var(--surface-fg-alert-primary);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+.warningBannerIcon {
+    flex-shrink: 0;
+    font-size: var(--icon-size-md);
+    font-variation-settings: 'FILL' 0;
+    color: var(--surface-fg-alert-primary);
+}
+
+.warningBannerYellow {
+    display: flex;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    background-color: var(--surface-bg-warning-primary);
+    border-radius: var(--radius-input);
+    border: 1px solid var(--surface-border-warning-subtle);
+    color: var(--surface-fg-warning-primary);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+.warningBannerIconYellow {
+    flex-shrink: 0;
+    font-size: var(--icon-size-md);
+    font-variation-settings: 'FILL' 0;
+    color: var(--surface-fg-warning-primary);
+}
+
+.confirmText {
+    font-size: var(--font-size-sm);
+    color: var(--surface-fg-primary);
+    line-height: 1.5;
+    margin: 0;
+}

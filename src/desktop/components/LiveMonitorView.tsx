@@ -1,7 +1,8 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState, useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
 import { ColumnDef } from '@tanstack/react-table';
-import { desktopFilterAtom } from '../atoms';
+import { desktopFilterAtom, skeletonForcedAtom } from '../atoms';
+import { useMinDurationSkeleton } from '../../hooks/useMinDurationSkeleton';
 import { LiveCheckRow } from '../types';
 import { DataTable } from './DataTable';
 import { RowContextMenu } from './RowContextMenu';
@@ -16,15 +17,30 @@ import styles from './DataTable.module.css';
 
 export const LiveMonitorView = () => {
     const filter = useAtomValue(desktopFilterAtom);
+    const forced = useAtomValue(skeletonForcedAtom);
 
     // Pagination State
     const [loadedData, setLoadedData] = useState<LiveCheckRow[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    // Start as true so skeleton is visible from the first frame (no empty-state flash)
+    const [isLoading, setIsLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [cursor, setCursor] = useState(0);
 
+    // Skeleton timing state
+    // First load (view mount) = full 1 s min. Subsequent filter changes = no min unless forced.
+    const isFirstLoadRef = useRef(true);
+    const [skeletonMinMs, setSkeletonMinMs] = useState(1000);
+    const [showHeaderSkeleton, setShowHeaderSkeleton] = useState(true);
+
     // Initial load and filter reset
     useEffect(() => {
+        const isViewChange = isFirstLoadRef.current;
+        isFirstLoadRef.current = false;
+
+        const useMin = isViewChange || forced;
+        setSkeletonMinMs(useMin ? 1000 : 0);
+        setShowHeaderSkeleton(useMin);
+
         setIsLoading(true);
         setLoadedData([]);
         setCursor(0);
@@ -34,7 +50,9 @@ export const LiveMonitorView = () => {
             setHasMore(nextCursor !== null);
             setIsLoading(false);
         });
-    }, [filter]);
+    }, [filter, forced]);
+
+    const showSkeleton = useMinDurationSkeleton(isLoading, skeletonMinMs);
 
     const handleLoadMore = useCallback(() => {
         if (isLoading || !hasMore) return;
@@ -191,8 +209,10 @@ export const LiveMonitorView = () => {
             data={liveRows}
             columns={columns}
             getRowId={(row) => row.id}
-            totalCount={TOTAL_LIVE_RECORDS} // In a real app, this would come from the API Response
+            totalCount={TOTAL_LIVE_RECORDS}
             isLoading={isLoading}
+            showSkeleton={showSkeleton}
+            showHeaderSkeleton={showHeaderSkeleton}
             hasMore={hasMore}
             onLoadMore={handleLoadMore}
             onRowClick={undefined}

@@ -464,3 +464,13 @@ export const refreshButtonStyleAtom = atomWithStorage<RefreshButtonStyle>(
     'icon'
 );
 
+/**
+ * Dev/debug toggle: force the table skeleton to show for the minimum duration
+ * on every data load (not just initial view mount). Useful for previewing the
+ * skeleton design and for simulating slow-network conditions locally.
+ */
+export const skeletonForcedAtom = atomWithStorage<boolean>(
+    `${STORAGE_PREFIX}skeleton_forced`,
+    false
+);
+

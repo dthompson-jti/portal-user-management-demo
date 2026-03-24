@@ -18,6 +18,7 @@
   --surface-bg-quaternary: var(--primitives-neutral-60);
   --surface-bg-primary-solid: var(--primitives-neutral-900);
   --surface-bg-secondary-solid: var(--primitives-neutral-700);
+  --surface-bg-skeleton-shimmer: var(--primitives-neutral-20);
   /* The translucent, blurred background for the main app header and footer. */
   --surface-bg-secondary-translucent: rgba(249, 249, 249, 0.75);
   --surface-bg-tertiary-translucent: rgba(243, 243, 244, 0.75);
@@ -364,6 +365,7 @@
   /* Selection/Active High-Fidelity highlight */
   --surface-bg-active: var(--primitives-neutral-860);
   --surface-bg-secondary-solid: var(--primitives-neutral-700);
+  --surface-bg-skeleton-shimmer: var(--primitives-neutral-800);
 
   /* Header/Footer Translucency - matches secondary bg (neutral-910) and tertiary (neutral-920) */
   --surface-bg-secondary-translucent: rgba(22, 26, 36, 0.85);

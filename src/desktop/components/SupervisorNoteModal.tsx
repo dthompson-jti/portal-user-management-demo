@@ -39,6 +39,8 @@ export const SupervisorNoteModal = () => {
     const [reason, setReason] = useState<SupervisorNoteReason | ''>('Unspecified'); // Strict mode needs empty str
     const [additionalNotes, setAdditionalNotes] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [showBulkConfirm, setShowBulkConfirm] = useState(false);
 
     // Initial load / Edit mode logic
     const [hasExistingComment, setHasExistingComment] = useState(false);
@@ -89,6 +91,18 @@ export const SupervisorNoteModal = () => {
         setReason('');
         setAdditionalNotes('');
         setHasExistingComment(false);
+        setShowDeleteConfirm(false);
+        setShowBulkConfirm(false);
+    };
+
+    const handleConfirmClose = () => {
+        if (isSaving) return;
+        setShowDeleteConfirm(false);
+    };
+
+    const handleBulkConfirmClose = () => {
+        if (isSaving) return;
+        setShowBulkConfirm(false);
     };
 
     const [activeRecord, setActiveRecord] = useAtom(activeDetailRecordAtom);
@@ -152,7 +166,7 @@ export const SupervisorNoteModal = () => {
         }
     };
 
-    const handleDelete = async () => {
+    const handleDelete = async (targetIds: string[]) => {
         if (isSaving) return;
         setIsSaving(true);
 
@@ -164,15 +178,15 @@ export const SupervisorNoteModal = () => {
         };
 
         try {
-            await updateHistoricalCheck(modalState.selectedIds, updates);
+            await updateHistoricalCheck(targetIds, updates);
             setHistoricalChecks((checks) =>
                 checks.map((check) =>
-                    modalState.selectedIds.includes(check.id) ? { ...check, ...updates } : check
+                    targetIds.includes(check.id) ? { ...check, ...updates } : check
                 )
             );
 
             // Sync active record if it's the one being edited
-            if (activeRecord && modalState.selectedIds.includes(activeRecord.id)) {
+            if (activeRecord && targetIds.includes(activeRecord.id)) {
                 setActiveRecord({ ...activeRecord, ...updates });
             }
 
@@ -185,7 +199,7 @@ export const SupervisorNoteModal = () => {
 
             addToast({
                 title: 'Supervisor review removed',
-                message: `Cleared from ${modalState.selectedIds.length} check${modalState.selectedIds.length !== 1 ? 's' : ''}`,
+                message: `Cleared from ${targetIds.length} check${targetIds.length !== 1 ? 's' : ''}`,
                 icon: 'info',
                 variant: 'info',
             });
@@ -199,6 +213,11 @@ export const SupervisorNoteModal = () => {
         }
     };
 
+    // Checks in the current selection that actually have a review — drives Remove button + confirmation copy
+    const checksWithReviews = historicalChecks.filter(
+        (c) => modalState.selectedIds.includes(c.id) && !!c.supervisorNote
+    );
+
     // For the prototype, we want to see the options even in strict mode if they are the chosen pattern
     // However, we must avoid duplicates.
     const visibleReasons = SUPERVISOR_NOTE_REASONS.filter(r => r !== 'Unspecified');
@@ -209,6 +228,7 @@ export const SupervisorNoteModal = () => {
     const isSaveDisabled = isSaving || isReasonMissing || isOtherMissingNote;
 
     return (
+        <>
         <Modal
             isOpen={modalState.isOpen}
             onClose={handleClose}
@@ -296,12 +316,12 @@ export const SupervisorNoteModal = () => {
 
             <Modal.Footer>
                 <div className={styles.footerActions}>
-                    {hasExistingComment && (
+                    {checksWithReviews.length > 0 && (
                         <div style={{ marginRight: 'auto' }}>
                             <Button
                                 variant="secondary"
                                 size="m"
-                                onClick={() => { void handleDelete(); }}
+                                onClick={() => setShowDeleteConfirm(true)}
                                 disabled={isSaving}
                             >
                                 Remove review
@@ -311,7 +331,13 @@ export const SupervisorNoteModal = () => {
                     <Button
                         variant="primary"
                         className={styles.saveButton}
-                        onClick={() => { void handleSave(); }}
+                        onClick={() => {
+                            if (modalState.selectedIds.length > 1) {
+                                setShowBulkConfirm(true);
+                            } else {
+                                void handleSave();
+                            }
+                        }}
                         size="m"
                         loading={isSaving}
                         disabled={isSaveDisabled}
@@ -330,5 +356,107 @@ export const SupervisorNoteModal = () => {
                 </div>
             </Modal.Footer>
         </Modal>
+
+        <Modal
+            isOpen={showDeleteConfirm}
+            onClose={handleConfirmClose}
+            title="Remove review"
+            width="360px"
+            nested
+        >
+            <Modal.Header>
+                <div className={styles.headerLeft}>
+                    <span className={styles.title}>Remove review</span>
+                </div>
+                <Button variant="tertiary" size="s" iconOnly aria-label="Close" onClick={handleConfirmClose} disabled={isSaving}>
+                    <span className="material-symbols-rounded">close</span>
+                </Button>
+            </Modal.Header>
+            <Modal.Content>
+                {(() => {
+                    const count = checksWithReviews.length;
+                    const total = modalState.selectedIds.length;
+                    const isPartial = count < total;
+                    const residentName = count === 1 ? checksWithReviews[0]?.residents?.[0]?.name : null;
+
+                    return (
+                        <div className={styles.confirmBody}>
+                            <div className={styles.warningBannerYellow}>
+                                <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
+                                <span>
+                                    {isPartial
+                                        ? `${count} of your ${total} selected checks have a review. Only those will be cleared.`
+                                        : 'This will clear the supervisor note and revert the check to unreviewed.'
+                                    }
+                                </span>
+                            </div>
+                            <p className={styles.confirmText}>
+                                Are you sure you want to remove the review for{' '}
+                                {residentName
+                                    ? <><strong>{residentName}</strong>?</>
+                                    : <><strong>{count} check{count !== 1 ? 's' : ''}</strong>?</>
+                                }
+                            </p>
+                        </div>
+                    );
+                })()}
+            </Modal.Content>
+            <Modal.Footer>
+                <div className={styles.footerActions}>
+                    <Button
+                        variant="primary"
+                        size="m"
+                        onClick={() => { void handleDelete(checksWithReviews.map(c => c.id)); }}
+                        loading={isSaving}
+                        disabled={isSaving}
+                    >
+                        Remove review
+                    </Button>
+                    <Button variant="secondary" size="m" onClick={handleConfirmClose} disabled={isSaving}>
+                        Cancel
+                    </Button>
+                </div>
+            </Modal.Footer>
+        </Modal>
+
+        <Modal
+            isOpen={showBulkConfirm}
+            onClose={handleBulkConfirmClose}
+            title="Apply review"
+            width="360px"
+            nested
+        >
+            <Modal.Header>
+                <div className={styles.headerLeft}>
+                    <span className={styles.title}>Apply review</span>
+                </div>
+                <Button variant="tertiary" size="s" iconOnly aria-label="Close" onClick={handleBulkConfirmClose} disabled={isSaving}>
+                    <span className="material-symbols-rounded">close</span>
+                </Button>
+            </Modal.Header>
+            <Modal.Content>
+                <p className={styles.confirmText}>
+                    Are you sure you want to apply this review to{' '}
+                    <strong>{modalState.selectedIds.length} checks</strong>?
+                </p>
+            </Modal.Content>
+            <Modal.Footer>
+                <div className={styles.footerActions}>
+                    <Button
+                        variant="primary"
+                        size="m"
+                        onClick={() => { setShowBulkConfirm(false); void handleSave(); }}
+                        loading={isSaving}
+                        disabled={isSaving}
+                    >
+                        Apply review
+                    </Button>
+                    <Button variant="secondary" size="m" onClick={handleBulkConfirmClose} disabled={isSaving}>
+                        Cancel
+                    </Button>
+                </div>
+            </Modal.Footer>
+        </Modal>
+        </>
     );
 };

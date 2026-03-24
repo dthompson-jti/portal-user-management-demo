@@ -8,8 +8,10 @@ import {
     isDetailPanelOpenAtom,
     desktopFilterAtom,
     resetFiltersAtom,
+    skeletonForcedAtom,
     PanelData,
 } from '../atoms';
+import { useMinDurationSkeleton } from '../../hooks/useMinDurationSkeleton';
 import { HistoricalCheck } from '../types';
 import { DataTable } from './DataTable';
 import { BulkActionFooter } from './BulkActionFooter';
@@ -32,16 +34,32 @@ export const HistoricalReviewView = () => {
 
     // Pagination State
     const [loadedData, setLoadedData] = useState<HistoricalCheck[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    // Start as true so skeleton is visible from the first frame (no empty-state flash)
+    const [isLoading, setIsLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [cursor, setCursor] = useState(0);
     const [totalFilteredCount, setTotalFilteredCount] = useState(0);
 
     const filter = useAtomValue(desktopFilterAtom);
+    const forced = useAtomValue(skeletonForcedAtom);
 
-    // Initial load
+    // Skeleton timing state
+    const isFirstLoadRef = useRef(true);
+    const [skeletonMinMs, setSkeletonMinMs] = useState(1000);
+    const [showHeaderSkeleton, setShowHeaderSkeleton] = useState(true);
+
+    // Initial load and filter reset
     useEffect(() => {
+        const isViewChange = isFirstLoadRef.current;
+        isFirstLoadRef.current = false;
+
+        const useMin = isViewChange || forced;
+        setSkeletonMinMs(useMin ? 1000 : 0);
+        setShowHeaderSkeleton(useMin);
+
         setIsLoading(true);
+        setLoadedData([]);
+        setCursor(0);
         void loadHistoricalChecksPage(0, 50, filter).then(({ data, nextCursor, totalCount }) => {
             setLoadedData(data);
             setCursor(nextCursor ?? 0);
@@ -49,7 +67,9 @@ export const HistoricalReviewView = () => {
             setTotalFilteredCount(totalCount);
             setIsLoading(false);
         });
-    }, [filter]);
+    }, [filter, forced]);
+
+    const showSkeleton = useMinDurationSkeleton(isLoading, skeletonMinMs);
 
     const handleLoadMore = useCallback(() => {
         if (isLoading || !hasMore) return;
@@ -330,6 +350,8 @@ export const HistoricalReviewView = () => {
                 getRowId={(row) => row.id}
                 totalCount={totalFilteredCount}
                 isLoading={isLoading}
+                showSkeleton={showSkeleton}
+                showHeaderSkeleton={showHeaderSkeleton}
                 hasMore={hasMore}
                 onLoadMore={handleLoadMore}
                 onRowClick={handleRowClick}

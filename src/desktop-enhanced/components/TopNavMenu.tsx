@@ -10,7 +10,8 @@ import {
     appFontAtom,
     timestampPrecisionModeAtom,
     preciseTooltipAtom,
-    refreshButtonStyleAtom
+    refreshButtonStyleAtom,
+    skeletonForcedAtom,
 } from '../../desktop/atoms';
 
 import { Switch } from '../../components/Switch';
@@ -29,6 +30,7 @@ export const TopNavMenu = () => {
     const [refreshButtonStyle, setRefreshButtonStyle] = useAtom(refreshButtonStyleAtom);
     const [missedCountMode, setMissedCountMode] = useAtom(missedCountModeAtom);
     const [chromeStyle, setChromeStyle] = useAtom(chromeStyleAtom);
+    const [skeletonForced, setSkeletonForced] = useAtom(skeletonForcedAtom);
 
     return (
         <Popover.Root>
@@ -288,6 +290,19 @@ export const TopNavMenu = () => {
                         >
                             <span>Elevated</span>
                         </button>
+                    </div>
+
+                    <div className={styles.divider} />
+
+                    <div className={styles.menuRow}>
+                        <div className={styles.menuRowText}>
+                            <span>Simulate slow table load</span>
+                        </div>
+                        <Switch
+                            checked={skeletonForced}
+                            onCheckedChange={setSkeletonForced}
+                            id="skeleton-forced-toggle"
+                        />
                     </div>
                 </Popover.Content>
             </Popover.Portal>

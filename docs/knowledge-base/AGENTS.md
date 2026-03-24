@@ -126,6 +126,78 @@ For any non-trivial task (e.g., implementing a PRD), the agent must follow this 
 *   **Native Selection Suppression:** Intercept Shift-clicks in `onMouseDown` with `e.preventDefault()` to prevent blue text highlighting "flickers" during range selection.
 *   **UI Isolation:** Apply `user-select: none` to interactive primitives (checkboxes, action buttons) to prevent them from interfering with intentional text drag-selection.
 
+### 28. Confirmation Modal Pattern
+
+Use this structure whenever an action requires explicit user confirmation before proceeding.
+
+**Structure:**
+```
+Modal.Header  — "<Action> <Thing>"  (e.g. "Remove supervisor review")
+─────────────────────────────────────────────────────────────
+Modal.Content
+  [Optional] Warning banner  — consequences explanation (see below)
+  Confirmation sentence      — "Are you sure you want to <action> <bold subject>?"
+─────────────────────────────────────────────────────────────
+Modal.Footer  — [Confirm]  [Cancel]   ← primary LEFT, secondary RIGHT
+```
+
+**Warning banner** — include when the action has meaningful side effects. Keep it brief and factual. Two severity levels:
+
+| Severity | Tokens | Icon | Button variant | Use when |
+|:---|:---|:---|:---|:---|
+| Warning (yellow) | `--surface-bg-warning-primary` / `--surface-border-warning-subtle` / `--surface-fg-warning-primary` | `warning` | `primary` | Reversible or recoverable, but noteworthy (e.g. removing a review) |
+| Alert (red) | `--surface-bg-alert-primary` / `--surface-border-alert-subtle` / `--surface-fg-alert-primary` | `error` | `destructive` | Permanent / irreversible data loss |
+
+```tsx
+{/* Warning (yellow) — recoverable action */}
+<div className={styles.warningBannerYellow}>
+  <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
+  <span>Brief plain-language description of what will change.</span>
+</div>
+```
+
+**Confirmation sentence** — bold the specific subject (resident name for single, count for multi). For partial multi-select, explain the subset:
+```tsx
+<p className={styles.confirmText}>
+  Are you sure you want to remove the review for <strong>{residentName}</strong>?
+  {/* multi all: …for <strong>3 checks</strong>? */}
+  {/* multi partial: banner says "N of M selected have a review. Only those will be cleared." */}
+</p>
+```
+
+**Button order:** Confirm action on the **left**, Cancel on the **right** — opposite of many design system mockups.
+
+**Button variant selection:**
+- Irreversible / permanent data loss: `variant="destructive"` + red alert banner
+- Recoverable / noteworthy: `variant="primary"` + yellow warning banner
+- No side effects: `variant="primary"` + no banner
+
+**Non-hazardous example** — no warning banner, plain confirmation sentence:
+```tsx
+<Modal.Content>
+  <p className={styles.confirmText}>
+    Are you sure you want to apply this review to <strong>5 checks</strong>?
+  </p>
+</Modal.Content>
+<Modal.Footer>
+  <div className={styles.footerActions}>
+    <Button variant="primary" size="m" onClick={handleConfirm}>Apply review</Button>
+    <Button variant="secondary" size="m" onClick={handleClose}>Cancel</Button>
+  </div>
+</Modal.Footer>
+```
+
+**Nested modal overlay:** When this confirmation renders on top of another open modal, pass `nested` to `<Modal>` to ensure correct z-index layering:
+```tsx
+<Modal isOpen={showConfirm} onClose={handleClose} title="..." nested>
+```
+
+**Reference implementations:** `src/desktop/components/SupervisorNoteModal.tsx`
+- Hazardous: "Remove review" (`showDeleteConfirm`)
+- Non-hazardous: "Apply review" (`showBulkConfirm`)
+
+---
+
 ### 26. Desktop-First Architecture
 *   **The Problem:** Desktop requires different patterns than mobile (Tree Views vs Stacked Lists).(
 *   **The Strategy:** Use `PRD-desktop-enhanced.md` as the source of truth for the Desktop V2 experience.

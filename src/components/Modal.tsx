@@ -11,19 +11,21 @@ interface ModalProps {
   // FIX: Add required title and optional description for accessibility.
   title: string;
   description?: string;
+  /** Set true when rendering on top of another open modal to ensure correct overlay stacking. */
+  nested?: boolean;
 }
 
 const Modal: React.FC<ModalProps> & {
   Header: React.FC<React.PropsWithChildren<unknown>>;
   Content: React.FC<React.PropsWithChildren<unknown>>;
   Footer: React.FC<React.PropsWithChildren<unknown>>;
-} = ({ isOpen, onClose, children, width = 'auto', height = 'auto', title, description }) => {
+} = ({ isOpen, onClose, children, width = 'auto', height = 'auto', title, description, nested }) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="modal-backdrop" />
-        <Dialog.Content 
-          className="modal-container" 
+        <Dialog.Overlay className={nested ? 'modal-backdrop modal-backdrop-nested' : 'modal-backdrop'} />
+        <Dialog.Content
+          className={nested ? 'modal-container modal-container-nested' : 'modal-container'}
           style={{ width, height }}
           onEscapeKeyDown={onClose}
         >

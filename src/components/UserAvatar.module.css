@@ -4,7 +4,7 @@
     width: var(--avatar-size-sm);
     height: var(--avatar-size-sm);
     border-radius: 50%;
-    background-color: var(--surface-bg-brand-solid);
+    background-color: var(--surface-bg-theme-solid);
     /* Static blue - overridden by inline style when feature flag is on */
     color: var(--surface-fg-primary-on-brand);
 

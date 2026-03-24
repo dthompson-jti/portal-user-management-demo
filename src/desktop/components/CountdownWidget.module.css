@@ -128,7 +128,7 @@
 }
 
 .progressFg {
-    stroke: var(--surface-bg-brand-solid);
+    stroke: var(--surface-bg-theme-solid);
     transition: stroke-dashoffset 1s linear;
 }
 

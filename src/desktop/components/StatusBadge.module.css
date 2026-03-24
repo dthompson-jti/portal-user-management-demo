@@ -39,7 +39,7 @@
 .badge[data-status='overdue'] {
     background: var(--surface-bg-alert-primary);
     color: var(--surface-fg-alert-primary);
-    border-color: var(--surface-border-alert);
+    border-color: var(--surface-border-alert-subtle);
 }
 
 /* Missed - Reviewed (semantic grey) */
@@ -55,7 +55,7 @@
 .badge[data-status='completed-late'] {
     background: var(--surface-bg-warning-primary);
     color: var(--surface-fg-warning-primary);
-    border-color: var(--surface-border-warning);
+    border-color: var(--surface-border-warning-subtle);
 }
 
 /* Pending / Upcoming */
@@ -71,14 +71,14 @@
 .badge[data-status='verified'] {
     background: var(--surface-bg-success);
     color: var(--surface-fg-success-primary);
-    border-color: var(--surface-border-success);
+    border-color: var(--surface-border-success-subtle);
 }
 
 /* Completed (semantic green) */
 .badge[data-status='completed'] {
     background: var(--surface-bg-success);
     color: var(--surface-fg-success-primary);
-    border-color: var(--surface-border-success);
+    border-color: var(--surface-border-success-subtle);
 }
 
 
@@ -93,7 +93,7 @@
 .badge[data-status='special'] {
     background: var(--surface-bg-warning-primary);
     color: var(--surface-fg-warning-primary);
-    border-color: var(--surface-border-warning);
+    border-color: var(--surface-border-warning-subtle);
 }
 
 .badge[data-status='special'] .icon {
@@ -105,14 +105,14 @@
     /* Same as default */
     background: var(--surface-bg-warning-primary);
     color: var(--surface-fg-warning-primary);
-    border-color: var(--surface-border-warning);
+    border-color: var(--surface-border-warning-subtle);
 }
 
 .badge[data-status='special'][data-color-mode='info'] {
     background: var(--surface-bg-info);
     /* User requested bg-info */
     color: var(--surface-fg-info-primary);
-    border-color: var(--surface-border-info);
+    border-color: var(--surface-border-info-subtle);
 }
 
 .badge[data-status='special'][data-color-mode='info'] .icon {

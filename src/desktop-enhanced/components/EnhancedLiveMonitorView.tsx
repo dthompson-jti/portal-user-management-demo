@@ -1,8 +1,9 @@
 // src/desktop-enhanced/components/EnhancedLiveMonitorView.tsx
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState, useEffect, useRef } from 'react';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import { ColumnDef, RowSelectionState, Updater } from '@tanstack/react-table';
-import { desktopFilterAtom, selectedLiveRowsAtom, activeDetailRecordAtom, residentDisplayModeAtom, residentBadgeTextAtom, isDetailPanelOpenAtom, dimLocationBreadcrumbsAtom, tableFontWeightAtom, isNoResultsAtom } from '../../desktop/atoms';
+import { desktopFilterAtom, selectedLiveRowsAtom, activeDetailRecordAtom, residentDisplayModeAtom, residentBadgeTextAtom, isDetailPanelOpenAtom, dimLocationBreadcrumbsAtom, tableFontWeightAtom, isNoResultsAtom, skeletonForcedAtom } from '../../desktop/atoms';
+import { useMinDurationSkeleton } from '../../hooks/useMinDurationSkeleton';
 import { LiveCheckRow } from '../../desktop/types';
 import { DataTable } from '../../desktop/components/DataTable';
 import { EmptyStateMessage } from '../../components/EmptyStateMessage';
@@ -16,21 +17,35 @@ import styles from '../../desktop/components/DataTable.module.css';
 
 export const EnhancedLiveMonitorView = () => {
     const filter = useAtomValue(desktopFilterAtom);
+    const forced = useAtomValue(skeletonForcedAtom);
     const residentDisplayMode = useAtomValue(residentDisplayModeAtom);
     const badgeTextMode = useAtomValue(residentBadgeTextAtom);
     const dimBreadcrumbs = useAtomValue(dimLocationBreadcrumbsAtom);
     const tableFontWeight = useAtomValue(tableFontWeightAtom);
     // Pagination State
     const [loadedData, setLoadedData] = useState<LiveCheckRow[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [cursor, setCursor] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const setIsNoResults = useSetAtom(isNoResultsAtom);
 
+    const isFirstLoadRef = useRef(true);
+    const [skeletonMinMs, setSkeletonMinMs] = useState(1000);
+    const [showHeaderSkeleton, setShowHeaderSkeleton] = useState(true);
+
     // Initial load and filter reset
     useEffect(() => {
+        const isViewChange = isFirstLoadRef.current;
+        isFirstLoadRef.current = false;
+
+        const useMin = isViewChange || forced;
+        setSkeletonMinMs(useMin ? 1000 : 0);
+        setShowHeaderSkeleton(useMin);
+
         setIsLoading(true);
+        setLoadedData([]);
+        setCursor(0);
         void loadEnhancedLivePage(0, 50, filter).then(({ data, nextCursor, totalCount }) => {
             setLoadedData(data);
             setCursor(nextCursor ?? 0);
@@ -41,7 +56,9 @@ export const EnhancedLiveMonitorView = () => {
             // Sync no results state
             setIsNoResults(data.length === 0);
         });
-    }, [filter, setIsNoResults]);
+    }, [filter, forced, setIsNoResults]);
+
+    const showSkeleton = useMinDurationSkeleton(isLoading, skeletonMinMs);
 
     const handleLoadMore = useCallback(() => {
         if (isLoading || !hasMore) return;
@@ -271,6 +288,8 @@ export const EnhancedLiveMonitorView = () => {
                 getRowId={(row) => row.id}
                 totalCount={totalCount}
                 isLoading={isLoading}
+                showSkeleton={showSkeleton}
+                showHeaderSkeleton={showHeaderSkeleton}
                 hasMore={hasMore}
                 onLoadMore={handleLoadMore}
                 enableRowSelection={true}

@@ -710,7 +710,7 @@
 
 .resizer:hover::after,
 .resizer.isResizing::after {
-    background-color: var(--surface-bg-brand-solid);
+    background-color: var(--surface-bg-theme-solid);
     width: 2px;
 }
 
@@ -750,10 +750,12 @@
     align-items: center;
     gap: var(--spacing-2);
     color: var(--surface-fg-primary);
+    font-weight: 500;
+    font-size: 13px;
 }
 
 .loadingSpinner {
-    font-size: var(--icon-size-sm);
+    font-size: var(--icon-size-md);
     animation: spin 1s linear infinite;
 }
 
@@ -774,60 +776,97 @@
 
 /* Skeleton Loader */
 @keyframes shimmer {
-    0% {
-        background-position: -200% 0;
-    }
-
-    100% {
-        background-position: 200% 0;
-    }
+    0%   { background-position: 0% 0; }
+    100% { background-position: 100% 0; }
 }
 
+/* ─── Shared shimmer mixin (applied to all skeleton shapes) ─────────────── */
 .skeletonRow td {
     padding: var(--spacing-3) var(--spacing-4);
     border-bottom: 1px solid var(--surface-border-secondary);
 }
 
+/* Wrapper inside each skeleton <th> — sets the same content height as rendered text
+   so the header row matches the real header's height exactly. */
+.skeletonHeaderContent {
+    display: flex;
+    align-items: center;
+    height: var(--spacing-5); /* 20px ≈ font-size-sm × line-height-normal */
+}
+
+/* ─── Skeleton shapes ────────────────────────────────────────────────────── */
+
+/* Body cells: text / generic content */
 .skeletonCell {
     height: 20px;
     width: 100%;
-    /* Higher contrast gradient: secondary -> tertiary -> secondary */
     background: linear-gradient(90deg,
-            var(--surface-bg-secondary) 25%,
-            var(--surface-bg-tertiary) 37%,
-            var(--surface-bg-secondary) 63%);
+            var(--surface-bg-skeleton) 25%,
+            var(--surface-bg-skeleton-shimmer) 37%,
+            var(--surface-bg-skeleton) 63%);
     background-size: 400% 100%;
-    /* Slower pulse */
-    animation: shimmer 3s ease-in-out infinite;
+    animation: shimmer 2s linear infinite;
     border-radius: var(--radius-sm);
 }
 
+/* Vary bar widths across rows for a more realistic text-length impression */
+.skeletonRow:nth-child(3n + 1) .skeletonCell { width: 88%; }
+.skeletonRow:nth-child(3n + 2) .skeletonCell { width: 68%; }
+.skeletonRow:nth-child(3n)     .skeletonCell { width: 78%; }
+
+/* Header cells: shorter/thinner than body cells */
+.skeletonHeaderCell {
+    height: 12px;
+    width: 55%;
+    background: linear-gradient(90deg,
+            var(--surface-bg-skeleton) 25%,
+            var(--surface-bg-skeleton-shimmer) 37%,
+            var(--surface-bg-skeleton) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: var(--radius-sm);
+}
+
+/* Status column: badge-shaped placeholder */
+.skeletonStatusPill {
+    height: 22px;
+    width: 90px;
+    background: linear-gradient(90deg,
+            var(--surface-bg-skeleton) 25%,
+            var(--surface-bg-skeleton-shimmer) 37%,
+            var(--surface-bg-skeleton) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: var(--radius-sm);
+}
+
+/* Select column: square checkbox placeholder */
 .skeletonCheckbox {
     height: 20px;
     width: 20px;
+    flex-shrink: 0;
     margin: 0 auto;
-    /* Reuse same gradient */
     background: linear-gradient(90deg,
-            var(--surface-bg-secondary) 25%,
-            var(--surface-bg-tertiary) 37%,
-            var(--surface-bg-secondary) 63%);
+            var(--surface-bg-skeleton) 25%,
+            var(--surface-bg-skeleton-shimmer) 37%,
+            var(--surface-bg-skeleton) 63%);
     background-size: 400% 100%;
-    animation: shimmer 3s ease-in-out infinite;
+    animation: shimmer 2s linear infinite;
     border-radius: var(--radius-xs);
 }
 
+/* Actions column: rounded-square placeholder matching the trigger hover geometry */
 .skeletonAction {
-    height: 24px;
-    width: 24px;
+    height: 28px;
+    width: 28px;
     margin: 0 auto;
-    /* Reuse same gradient */
     background: linear-gradient(90deg,
-            var(--surface-bg-secondary) 25%,
-            var(--surface-bg-tertiary) 37%,
-            var(--surface-bg-secondary) 63%);
+            var(--surface-bg-skeleton) 25%,
+            var(--surface-bg-skeleton-shimmer) 37%,
+            var(--surface-bg-skeleton) 63%);
     background-size: 400% 100%;
-    animation: shimmer 3s ease-in-out infinite;
-    border-radius: var(--radius-full);
+    animation: shimmer 2s linear infinite;
+    border-radius: var(--radius-xl);
 }
 
 /* Single Row Cell (Date/Time merge) */

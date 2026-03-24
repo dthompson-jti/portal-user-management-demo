@@ -82,6 +82,15 @@
   }
 }
 
+/* Nested modal — rendered on top of another open modal */
+.modal-backdrop-nested {
+  z-index: calc(var(--z-modal) + 2);
+}
+
+.modal-container-nested {
+  z-index: calc(var(--z-modal) + 3);
+}
+
 /* Sub-component styles for Modal structure */
 .modal-header {
   display: flex;
