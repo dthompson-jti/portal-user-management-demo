@@ -1,11 +1,11 @@
 {
-  "name": "safety-check-desktop",
+  "name": "portal-management",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JTI-Product-Design/safety-check-desktop.git"
+    "url": "https://github.com/JTI-Product-Design/portal-management.git"
   },
   "homepage": "https://probable-adventure-3qvnpzy.pages.github.io",
   "scripts": {
