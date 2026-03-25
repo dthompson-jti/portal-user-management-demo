@@ -37,7 +37,7 @@
 
 /* --- Info --- */
 [data-appearance-type="info"] {
-  background-color: var(--surface-bg-info);
+  background-color: var(--surface-bg-info-primary);
 }
 [data-appearance-type="info"][data-bordered="true"] {
   border: 1px solid var(--surface-border-info);

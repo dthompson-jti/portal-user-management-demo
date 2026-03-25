@@ -38,13 +38,13 @@
 }
 
 .success {
-    background-color: var(--surface-bg-success, #f6fef9);
+    background-color: var(--surface-bg-success-primary, #f6fef9);
     color: var(--surface-fg-success-primary, #067647);
     border-color: var(--primitives-green-200, #abefc6);
 }
 
 .info {
-    background-color: var(--surface-bg-info, #f5faff);
+    background-color: var(--surface-bg-info-primary, #f5faff);
     color: var(--surface-fg-info-primary, #1570ef);
     border-color: var(--primitives-blue-200, #b2ddff);
 }

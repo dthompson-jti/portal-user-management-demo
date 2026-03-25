@@ -15,6 +15,7 @@
 @import url('./generated/figma-primitives-core.css') layer(tokens);
 @import url('./generated/figma-typography-core.css') layer(tokens);
 @import url('./generated/figma-semantics-core.css') layer(tokens);
+@import url('./generated/radius-core.css') layer(tokens);
 @import url('./generated/token-bridges.css') layer(tokens);
 
 /* Layer 2: Base Styles */

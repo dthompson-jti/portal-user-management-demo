@@ -1,39 +1,18 @@
-# Figma Token Delta Review
+# Figma Convergence Delta Review
 
-Current authoritative source:
-- [canonical figma-delta-structured.md](/c:/Users/dthompson/Documents/CODE/design-tokens-canonical/reports/figma-delta-structured.md)
+Generated: 2026-03-24T23:59:36.460Z
 
-## Project Note
+Decision tracking format:
+- check each token item
+- confirm approved value
+- mark remaining exceptions for follow-up
 
-This project-local file is a pointer to the canonical structured delta report.
+## Primitives (Core)
 
-Use the canonical report when you need:
-- token-by-token Figma vs canonical comparison
-- latest structured alignment snapshot
-- review evidence for convergence decisions
-
-Use local project docs for repo-specific cleanup:
-- [token-audit-report.md](/c:/Users/dthompson/Documents/CODE/safeguard-desktop/docs/token-audit-report.md)
-- [desktop-update-list.md](/c:/Users/dthompson/Documents/CODE/safeguard-desktop/docs/desktop-update-list.md)
-
-## Historical Snapshot Below
-
-Do not use the copied content below as the current source of truth. It is retained only as an older local snapshot. Use the canonical report above for current review work.
-  - figma: `#F3F3F3BF`
-  - desktop: `#F3F3F3BF`
-  - concept: `#F3F3F3BF`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--primitives-neutral-translucent-860-translucent`
-  - figma: `#202531BF`
-  - desktop: `#202531BF`
-  - concept: `#202531BF`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--primitives-neutral-translucent-940-translucent`
-  - figma: `#0E1017BF`
-  - desktop: `#0E1017BF`
-  - concept: `#0E1017BF`
+- [ ] `--primitives-base-white`
+  - figma: `#FFFFFF`
+  - desktop: `#FFFFFF`
+  - concept: `#FFFFFF`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-10`
@@ -91,27 +70,33 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-100`
-  - figma: `#E2E2E4`
-  - desktop: `#E2E2E4`
-  - concept: `#E2E2E4`
+  - figma: `#EBECEC`
+  - desktop: `#EBECEC`
+  - concept: `#EBECEC`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-120`
-  - figma: `#DDDDDD`
-  - desktop: `#DDDDDD`
-  - concept: `#DDDDDD`
+  - figma: `#E9E9EA`
+  - desktop: `#E9E9EA`
+  - concept: `#E9E9EA`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-200`
-  - figma: `#E9E9EB`
-  - desktop: `#E9E9EB`
-  - concept: `#E9E9EB`
+  - figma: `#E0E1E3`
+  - desktop: `#E0E1E3`
+  - concept: `#E0E1E3`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-300`
   - figma: `#D5D6D9`
   - desktop: `#D5D6D9`
   - concept: `#D5D6D9`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-350`
+  - figma: `#BCBEC3`
+  - desktop: `#BCBEC3`
+  - concept: `#BCBEC3`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-400`
@@ -124,6 +109,12 @@ Do not use the copied content below as the current source of truth. It is retain
   - figma: `#717680`
   - desktop: `#717680`
   - concept: `#717680`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-550`
+  - figma: `#626771`
+  - desktop: `#626771`
+  - concept: `#626771`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-600`
@@ -139,9 +130,9 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-800`
-  - figma: `#252B37`
-  - desktop: `#252B37`
-  - concept: `#252B37`
+  - figma: `#2C313D`
+  - desktop: `#2C313D`
+  - concept: `#2C313D`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-840`
@@ -162,16 +153,34 @@ Do not use the copied content below as the current source of truth. It is retain
   - concept: `#1C212C`
   - recommendation: keep
   - status: `aligned`
+- [ ] `--primitives-neutral-890`
+  - figma: `#1A1F2A`
+  - desktop: `#1A1F2A`
+  - concept: `#1A1F2A`
+  - recommendation: keep
+  - status: `aligned`
 - [ ] `--primitives-neutral-900`
   - figma: `#181D27`
   - desktop: `#181D27`
   - concept: `#181D27`
   - recommendation: keep
   - status: `aligned`
+- [ ] `--primitives-neutral-905`
+  - figma: `#171C26`
+  - desktop: `#171C26`
+  - concept: `#171C26`
+  - recommendation: keep
+  - status: `aligned`
 - [ ] `--primitives-neutral-910`
-  - figma: `#161A24`
-  - desktop: `#161A24`
-  - concept: `#161A24`
+  - figma: `#171A25`
+  - desktop: `#171A25`
+  - concept: `#171A25`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-915`
+  - figma: `#151922`
+  - desktop: `#151922`
+  - concept: `#151922`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-920`
@@ -180,22 +189,94 @@ Do not use the copied content below as the current source of truth. It is retain
   - concept: `#141820`
   - recommendation: keep
   - status: `aligned`
+- [ ] `--primitives-neutral-925`
+  - figma: `#13171F`
+  - desktop: `#13171F`
+  - concept: `#13171F`
+  - recommendation: keep
+  - status: `aligned`
 - [ ] `--primitives-neutral-930`
-  - figma: `#11141B`
-  - desktop: `#11141B`
-  - concept: `#11141B`
+  - figma: `#13161D`
+  - desktop: `#13161D`
+  - concept: `#13161D`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-935`
+  - figma: `#12151C`
+  - desktop: `#12151C`
+  - concept: `#12151C`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-940`
-  - figma: `#0E1017`
-  - desktop: `#0E1017`
-  - concept: `#0E1017`
+  - figma: `#11141A`
+  - desktop: `#11141A`
+  - concept: `#11141A`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-945`
+  - figma: `#101319`
+  - desktop: `#101319`
+  - concept: `#101319`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-neutral-950`
-  - figma: `#0A0C12`
-  - desktop: `#0A0C12`
-  - concept: `#0A0C12`
+  - figma: `#101217`
+  - desktop: `#101217`
+  - concept: `#101217`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-955`
+  - figma: `#090A10`
+  - desktop: `#090A10`
+  - concept: `#090A10`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-960`
+  - figma: `#07080D`
+  - desktop: `#07080D`
+  - concept: `#07080D`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-970`
+  - figma: `#0D0E12`
+  - desktop: `#0D0E12`
+  - concept: `#0D0E12`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-white-translucent`
+  - figma: `#FFFFFFBF`
+  - desktop: `#FFFFFFBF`
+  - concept: `#FFFFFFBF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-20`
+  - figma: `#F9F9F9BF`
+  - desktop: `#F9F9F9BF`
+  - concept: `#F9F9F9BF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-40`
+  - figma: `#F3F3F3BF`
+  - desktop: `#F3F3F3BF`
+  - concept: `#F3F3F3BF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-940`
+  - figma: `#0E1017BF`
+  - desktop: `#0E1017BF`
+  - concept: `#0E1017BF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-950`
+  - figma: `#0A0C12BF`
+  - desktop: `#0A0C12BF`
+  - concept: `#0A0C12BF`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-neutral-translucent-955`
+  - figma: `#090A10BF`
+  - desktop: `#090A10BF`
+  - concept: `#090A10BF`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-theme-25`
@@ -247,33 +328,45 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-theme-700`
-  - figma: `#155ACA`
-  - desktop: `#155ACA`
-  - concept: `#155ACA`
+  - figma: `#195BC7`
+  - desktop: `#195BC7`
+  - concept: `#195BC7`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-theme-800`
-  - figma: `#174B9F`
-  - desktop: `#174B9F`
-  - concept: `#174B9F`
+  - figma: `#1550AD`
+  - desktop: `#1550AD`
+  - concept: `#1550AD`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-theme-850`
+  - figma: `#19448D`
+  - desktop: `#19448D`
+  - concept: `#19448D`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-theme-900`
-  - figma: `#123D82`
-  - desktop: `#123D82`
-  - concept: `#123D82`
+  - figma: `#193665`
+  - desktop: `#193665`
+  - concept: `#193665`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-theme-925`
+  - figma: `#112340`
+  - desktop: `#112340`
+  - concept: `#112340`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-theme-950`
-  - figma: `#022762`
-  - desktop: `#022762`
-  - concept: `#022762`
+  - figma: `#0E1D34`
+  - desktop: `#0E1D34`
+  - concept: `#0E1D34`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-theme-975`
-  - figma: `#011A42`
-  - desktop: `#011A42`
-  - concept: `#011A42`
+  - figma: `#0A1527`
+  - desktop: `#0A1527`
+  - concept: `#0A1527`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-base-black`
@@ -331,57 +424,63 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-400`
-  - figma: `#FF6B5E`
-  - desktop: `#FF6B5E`
-  - concept: `#FF6B5E`
+  - figma: `#F87164`
+  - desktop: `#F87164`
+  - concept: `#F87164`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-500`
-  - figma: `#F04940`
-  - desktop: `#F04940`
-  - concept: `#F04940`
+  - figma: `#F2453D`
+  - desktop: `#F2453D`
+  - concept: `#F2453D`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-600`
-  - figma: `#D63230`
-  - desktop: `#D63230`
-  - concept: `#D63230`
+  - figma: `#D33834`
+  - desktop: `#D33834`
+  - concept: `#D33834`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-700`
-  - figma: `#BB2E28`
-  - desktop: `#BB2E28`
-  - concept: `#BB2E28`
+  - figma: `#B03E36`
+  - desktop: `#B03E36`
+  - concept: `#B03E36`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-800`
-  - figma: `#9A271F`
-  - desktop: `#9A271F`
-  - concept: `#9A271F`
+  - figma: `#8C3930`
+  - desktop: `#8C3930`
+  - concept: `#8C3930`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-850`
-  - figma: `#7A1F18`
-  - desktop: `#7A1F18`
-  - concept: `#7A1F18`
+  - figma: `#6D2F27`
+  - desktop: `#6D2F27`
+  - concept: `#6D2F27`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-900`
-  - figma: `#5E1812`
-  - desktop: `#5E1812`
-  - concept: `#5E1812`
+  - figma: `#4F2722`
+  - desktop: `#4F2722`
+  - concept: `#4F2722`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-red-925`
+  - figma: `#351C19`
+  - desktop: `#351C19`
+  - concept: `#351C19`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-950`
-  - figma: `#42110C`
-  - desktop: `#42110C`
-  - concept: `#42110C`
+  - figma: `#291613`
+  - desktop: `#291613`
+  - concept: `#291613`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-red-975`
-  - figma: `#2A0A07`
-  - desktop: `#2A0A07`
-  - concept: `#2A0A07`
+  - figma: `#1C0F0D`
+  - desktop: `#1C0F0D`
+  - concept: `#1C0F0D`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-25`
@@ -433,51 +532,57 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-500`
-  - figma: `#E58D0A`
-  - desktop: `#E58D0A`
-  - concept: `#E58D0A`
+  - figma: `#E58D03`
+  - desktop: `#E58D03`
+  - concept: `#E58D03`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-600`
-  - figma: `#C45500`
-  - desktop: `#C45500`
-  - concept: `#C45500`
+  - figma: `#BF5A1B`
+  - desktop: `#BF5A1B`
+  - concept: `#BF5A1B`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-700`
-  - figma: `#A84000`
-  - desktop: `#A84000`
-  - concept: `#A84000`
+  - figma: `#9C4B27`
+  - desktop: `#9C4B27`
+  - concept: `#9C4B27`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-800`
-  - figma: `#7A3005`
-  - desktop: `#7A3005`
-  - concept: `#7A3005`
+  - figma: `#743516`
+  - desktop: `#743516`
+  - concept: `#743516`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-850`
-  - figma: `#5E2504`
-  - desktop: `#5E2504`
-  - concept: `#5E2504`
+  - figma: `#5D2607`
+  - desktop: `#5D2607`
+  - concept: `#5D2607`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-900`
-  - figma: `#471C03`
-  - desktop: `#471C03`
-  - concept: `#471C03`
+  - figma: `#472315`
+  - desktop: `#472315`
+  - concept: `#472315`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-yellow-925`
+  - figma: `#341E13`
+  - desktop: `#341E13`
+  - concept: `#341E13`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-950`
-  - figma: `#4E1D08`
-  - desktop: `#4E1D08`
-  - concept: `#4E1D08`
+  - figma: `#25140B`
+  - desktop: `#25140B`
+  - concept: `#25140B`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-yellow-975`
-  - figma: `#1F0C01`
-  - desktop: `#1F0C01`
-  - concept: `#1F0C01`
+  - figma: `#190F08`
+  - desktop: `#190F08`
+  - concept: `#190F08`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-green-25`
@@ -541,39 +646,45 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-green-700`
-  - figma: `#017647`
-  - desktop: `#017647`
-  - concept: `#017647`
+  - figma: `#007647`
+  - desktop: `#007647`
+  - concept: `#007647`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-green-800`
-  - figma: `#005D37`
-  - desktop: `#005D37`
-  - concept: `#005D37`
+  - figma: `#015D37`
+  - desktop: `#015D37`
+  - concept: `#015D37`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-green-850`
-  - figma: `#004A2C`
-  - desktop: `#004A2C`
-  - concept: `#004A2C`
+  - figma: `#014A2C`
+  - desktop: `#014A2C`
+  - concept: `#014A2C`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-green-900`
-  - figma: `#003921`
-  - desktop: `#003921`
-  - concept: `#003921`
+  - figma: `#0D3823`
+  - desktop: `#0D3823`
+  - concept: `#0D3823`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-green-925`
+  - figma: `#102A1D`
+  - desktop: `#102A1D`
+  - concept: `#102A1D`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-green-950`
-  - figma: `#002817`
-  - desktop: `#002817`
-  - concept: `#002817`
+  - figma: `#0B1F15`
+  - desktop: `#0B1F15`
+  - concept: `#0B1F15`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-green-975`
-  - figma: `#00180E`
-  - desktop: `#00180E`
-  - concept: `#00180E`
+  - figma: `#0A1711`
+  - desktop: `#0A1711`
+  - concept: `#0A1711`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-25`
@@ -775,9 +886,9 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-150`
-  - figma: `#DFF2FE`
-  - desktop: `#DFF2FE`
-  - concept: `#DFF2FE`
+  - figma: `#CCEBFD`
+  - desktop: `#CCEBFD`
+  - concept: `#CCEBFD`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-200`
@@ -799,9 +910,9 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-400`
-  - figma: `#36BFF9`
-  - desktop: `#36BFF9`
-  - concept: `#36BFF9`
+  - figma: `#31BFFA`
+  - desktop: `#31BFFA`
+  - concept: `#31BFFA`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-500`
@@ -817,39 +928,45 @@ Do not use the copied content below as the current source of truth. It is retain
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-700`
-  - figma: `#016AA2`
-  - desktop: `#016AA2`
-  - concept: `#016AA2`
+  - figma: `#066AA1`
+  - desktop: `#066AA1`
+  - concept: `#066AA1`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-800`
-  - figma: `#055986`
-  - desktop: `#055986`
-  - concept: `#055986`
+  - figma: `#0B5985`
+  - desktop: `#0B5985`
+  - concept: `#0B5985`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-850`
-  - figma: `#044568`
-  - desktop: `#044568`
-  - concept: `#044568`
+  - figma: `#004569`
+  - desktop: `#004569`
+  - concept: `#004569`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-900`
-  - figma: `#03344F`
-  - desktop: `#03344F`
-  - concept: `#03344F`
+  - figma: `#0D344B`
+  - desktop: `#0D344B`
+  - concept: `#0D344B`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--primitives-blue-925`
+  - figma: `#102735`
+  - desktop: `#102735`
+  - concept: `#102735`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-950`
-  - figma: `#022438`
-  - desktop: `#022438`
-  - concept: `#022438`
+  - figma: `#0A1A25`
+  - desktop: `#0A1A25`
+  - concept: `#0A1A25`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--primitives-blue-975`
-  - figma: `#011522`
-  - desktop: `#011522`
-  - concept: `#011522`
+  - figma: `#09141B`
+  - desktop: `#09141B`
+  - concept: `#09141B`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--spacing-0`
@@ -860,198 +977,210 @@ Do not use the copied content below as the current source of truth. It is retain
   - status: `aligned`
 - [ ] `--spacing-0p25`
   - figma: `1`
-  - desktop: `1`
-  - concept: `1`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `1px`
+  - concept: `1px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-0p5`
   - figma: `2`
-  - desktop: `2`
-  - concept: `2`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `2px`
+  - concept: `2px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-1`
   - figma: `4`
-  - desktop: `4`
-  - concept: `4`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `4px`
+  - concept: `4px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-1p5`
   - figma: `6`
-  - desktop: `6`
-  - concept: `6`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `6px`
+  - concept: `6px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-2`
   - figma: `8`
-  - desktop: `8`
-  - concept: `8`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `8px`
+  - concept: `8px`
+  - recommendation: review and approve canonical value
+  - status: `review`
+- [ ] `--spacing-2p5`
+  - figma: `10`
+  - desktop: `10px`
+  - concept: `10px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-3`
   - figma: `12`
-  - desktop: `12`
-  - concept: `12`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `12px`
+  - concept: `12px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-4`
   - figma: `16`
-  - desktop: `16`
-  - concept: `16`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `16px`
+  - concept: `16px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-5`
   - figma: `20`
-  - desktop: `20`
-  - concept: `20`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `20px`
+  - concept: `20px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-6`
   - figma: `24`
-  - desktop: `24`
-  - concept: `24`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `24px`
+  - concept: `24px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-8`
   - figma: `32`
-  - desktop: `32`
-  - concept: `32`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `32px`
+  - concept: `32px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-10`
   - figma: `40`
-  - desktop: `40`
-  - concept: `40`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `40px`
+  - concept: `40px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-12`
   - figma: `48`
-  - desktop: `48`
-  - concept: `48`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `48px`
+  - concept: `48px`
+  - recommendation: review and approve canonical value
+  - status: `review`
+- [ ] `--spacing-14`
+  - figma: `56`
+  - desktop: `56px`
+  - concept: `56px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-16`
   - figma: `64`
-  - desktop: `64`
-  - concept: `64`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `64px`
+  - concept: `64px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-20`
   - figma: `80`
-  - desktop: `80`
-  - concept: `80`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `80px`
+  - concept: `80px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-24`
   - figma: `96`
-  - desktop: `96`
-  - concept: `96`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `96px`
+  - concept: `96px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-32`
   - figma: `128`
-  - desktop: `128`
-  - concept: `128`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `128px`
+  - concept: `128px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-40`
   - figma: `160`
-  - desktop: `160`
-  - concept: `160`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `160px`
+  - concept: `160px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-48`
   - figma: `192`
-  - desktop: `192`
-  - concept: `192`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `192px`
+  - concept: `192px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-56`
   - figma: `224`
-  - desktop: `224`
-  - concept: `224`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `224px`
+  - concept: `224px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-64`
   - figma: `256`
-  - desktop: `256`
-  - concept: `256`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `256px`
+  - concept: `256px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-80`
   - figma: `320`
-  - desktop: `320`
-  - concept: `320`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `320px`
+  - concept: `320px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-96`
   - figma: `384`
-  - desktop: `384`
-  - concept: `384`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `384px`
+  - concept: `384px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-120`
   - figma: `480`
-  - desktop: `480`
-  - concept: `480`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `480px`
+  - concept: `480px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-140`
   - figma: `560`
-  - desktop: `560`
-  - concept: `560`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `560px`
+  - concept: `560px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-160`
   - figma: `640`
-  - desktop: `640`
-  - concept: `640`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `640px`
+  - concept: `640px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-180`
   - figma: `720`
-  - desktop: `720`
-  - concept: `720`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `720px`
+  - concept: `720px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-192`
   - figma: `768`
-  - desktop: `768`
-  - concept: `768`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `768px`
+  - concept: `768px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-256`
   - figma: `1024`
-  - desktop: `1024`
-  - concept: `1024`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `1024px`
+  - concept: `1024px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-320`
   - figma: `1280`
-  - desktop: `1280`
-  - concept: `1280`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `1280px`
+  - concept: `1280px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-360`
   - figma: `1440`
-  - desktop: `1440`
-  - concept: `1440`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `1440px`
+  - concept: `1440px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-400`
   - figma: `1600`
-  - desktop: `1600`
-  - concept: `1600`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `1600px`
+  - concept: `1600px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 - [ ] `--spacing-480`
   - figma: `1920`
-  - desktop: `1920`
-  - concept: `1920`
-  - recommendation: keep
-  - status: `aligned`
+  - desktop: `1920px`
+  - concept: `1920px`
+  - recommendation: review and approve canonical value
+  - status: `review`
 
-Section totals: aligned=175, review=0, total=175
+Section totals: aligned=161, review=34, total=195
 
 ## Semantics Light (Core)
 
@@ -1065,6 +1194,12 @@ Section totals: aligned=175, review=0, total=175
   - figma: `var(--primitives-neutral-30)`
   - desktop: `var(--primitives-neutral-30)`
   - concept: `var(--primitives-neutral-30)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--surface-bg-primary-translucent`
+  - figma: `var(--primitives-neutral-translucent-white-translucent)`
+  - desktop: `var(--primitives-neutral-translucent-white-translucent)`
+  - concept: `var(--primitives-neutral-translucent-white-translucent)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-secondary`
@@ -1091,10 +1226,22 @@ Section totals: aligned=175, review=0, total=175
   - concept: `var(--primitives-neutral-50)`
   - recommendation: keep
   - status: `aligned`
+- [ ] `--surface-bg-secondary-translucent`
+  - figma: `var(--primitives-neutral-translucent-20)`
+  - desktop: `var(--primitives-neutral-translucent-20)`
+  - concept: `var(--primitives-neutral-translucent-20)`
+  - recommendation: keep
+  - status: `aligned`
 - [ ] `--surface-bg-tertiary`
   - figma: `var(--primitives-neutral-40)`
   - desktop: `var(--primitives-neutral-40)`
   - concept: `var(--primitives-neutral-40)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--surface-bg-tertiary-translucent`
+  - figma: `var(--primitives-neutral-translucent-40)`
+  - desktop: `var(--primitives-neutral-translucent-40)`
+  - concept: `var(--primitives-neutral-translucent-40)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-quaternary`
@@ -1109,16 +1256,10 @@ Section totals: aligned=175, review=0, total=175
   - concept: `var(--primitives-neutral-100)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-bg-primary-translucent`
-  - figma: `#F9F9F9BF`
-  - desktop: `#F9F9F9BF`
-  - concept: `#F9F9F9BF`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--surface-bg-tertiary-translucent`
-  - figma: `#F3F3F3BF`
-  - desktop: `#F3F3F3BF`
-  - concept: `#F3F3F3BF`
+- [ ] `--surface-bg-blackout`
+  - figma: `var(--primitives-neutral-900)`
+  - desktop: `var(--primitives-neutral-900)`
+  - concept: `var(--primitives-neutral-900)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-primary-solid`
@@ -1236,9 +1377,9 @@ Section totals: aligned=175, review=0, total=175
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-overlay`
-  - figma: `#252B37CC`
-  - desktop: `#252B37CC`
-  - concept: `#252B37CC`
+  - figma: `var(--primitives-neutral-translucent-940)`
+  - desktop: `var(--primitives-neutral-translucent-940)`
+  - concept: `var(--primitives-neutral-translucent-940)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-fg-primary`
@@ -1290,9 +1431,9 @@ Section totals: aligned=175, review=0, total=175
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-fg-on-solid-faint`
-  - figma: `var(--primitives-alpha-black-70)`
-  - desktop: `var(--primitives-alpha-black-70)`
-  - concept: `var(--primitives-alpha-black-70)`
+  - figma: `var(--primitives-alpha-white-70)`
+  - desktop: `var(--primitives-alpha-white-70)`
+  - concept: `var(--primitives-alpha-white-70)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-fg-theme-intense`
@@ -1505,127 +1646,127 @@ Section totals: aligned=175, review=0, total=175
   - concept: `var(--primitives-blue-200)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xs`
+- [ ] `--surface-shadow-xs`
   - figma: `#0A0C120C`
   - desktop: `#0A0C120C`
   - concept: `#0A0C120C`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-sm-01`
+- [ ] `--surface-shadow-sm-01`
   - figma: `#0A0C1219`
   - desktop: `#0A0C1219`
   - concept: `#0A0C1219`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-sm-02`
+- [ ] `--surface-shadow-sm-02`
   - figma: `#0A0C1219`
   - desktop: `#0A0C1219`
   - concept: `#0A0C1219`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-md-01`
+- [ ] `--surface-shadow-md-01`
   - figma: `#0A0C1219`
   - desktop: `#0A0C1219`
   - concept: `#0A0C1219`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-md-02`
+- [ ] `--surface-shadow-md-02`
   - figma: `#0A0C120F`
   - desktop: `#0A0C120F`
   - concept: `#0A0C120F`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-lg-01`
+- [ ] `--surface-shadow-lg-01`
   - figma: `#0A0C1214`
   - desktop: `#0A0C1214`
   - concept: `#0A0C1214`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-lg-02`
+- [ ] `--surface-shadow-lg-02`
   - figma: `#0A0C1207`
   - desktop: `#0A0C1207`
   - concept: `#0A0C1207`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-lg-03`
+- [ ] `--surface-shadow-lg-03`
   - figma: `#0A0C120A`
   - desktop: `#0A0C120A`
   - concept: `#0A0C120A`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xl-01`
+- [ ] `--surface-shadow-xl-01`
   - figma: `#0A0C1214`
   - desktop: `#0A0C1214`
   - concept: `#0A0C1214`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xl-02`
+- [ ] `--surface-shadow-xl-02`
   - figma: `#0A0C1207`
   - desktop: `#0A0C1207`
   - concept: `#0A0C1207`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xl-03`
+- [ ] `--surface-shadow-xl-03`
   - figma: `#0A0C120A`
   - desktop: `#0A0C120A`
   - concept: `#0A0C120A`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-2xl-01`
+- [ ] `--surface-shadow-2xl-01`
   - figma: `#0A0C122D`
   - desktop: `#0A0C122D`
   - concept: `#0A0C122D`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-2xl-02`
+- [ ] `--surface-shadow-2xl-02`
   - figma: `#0A0C120A`
   - desktop: `#0A0C120A`
   - concept: `#0A0C120A`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-3xl-01`
+- [ ] `--surface-shadow-3xl-01`
   - figma: `#0A0C1223`
   - desktop: `#0A0C1223`
   - concept: `#0A0C1223`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-3xl-02`
+- [ ] `--surface-shadow-3xl-02`
   - figma: `#0A0C120A`
   - desktop: `#0A0C120A`
   - concept: `#0A0C120A`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-skeumorphic-inner`
+- [ ] `--surface-shadow-skeumorphic-inner`
   - figma: `#0A0C120C`
   - desktop: `#0A0C120C`
   - concept: `#0A0C120C`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-skeumorphic-inner-border`
+- [ ] `--surface-shadow-skeumorphic-inner-border`
   - figma: `#0A0C122D`
   - desktop: `#0A0C122D`
   - concept: `#0A0C122D`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-main-centre-md`
+- [ ] `--surface-shadow-main-centre-md`
   - figma: `#0A0C1223`
   - desktop: `#0A0C1223`
   - concept: `#0A0C1223`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-main-centre-lg`
+- [ ] `--surface-shadow-main-centre-lg`
   - figma: `#0A0C122D`
   - desktop: `#0A0C122D`
   - concept: `#0A0C122D`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-overlay-lg`
+- [ ] `--surface-shadow-overlay-lg`
   - figma: `#0A0C121E`
   - desktop: `#0A0C121E`
   - concept: `#0A0C121E`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-grid-md`
+- [ ] `--surface-shadow-grid-md`
   - figma: `#0A0C1214`
   - desktop: `#0A0C1214`
   - concept: `#0A0C1214`
@@ -1695,6 +1836,12 @@ Section totals: aligned=175, review=0, total=175
   - figma: `var(--primitives-theme-200)`
   - desktop: `var(--primitives-theme-200)`
   - concept: `var(--primitives-theme-200)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--control-bg-tertiary`
+  - figma: `var(--primitives-alpha-grey-10)`
+  - desktop: `var(--primitives-alpha-grey-10)`
+  - concept: `var(--primitives-alpha-grey-10)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-bg-tertiary-hover`
@@ -1901,19 +2048,19 @@ Section totals: aligned=175, review=0, total=175
   - concept: `var(--primitives-neutral-400)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-selected-default`
+- [ ] `--control-fg-selected`
   - figma: `var(--primitives-theme-700)`
   - desktop: `var(--primitives-theme-700)`
   - concept: `var(--primitives-theme-700)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-selected-default-hover`
+- [ ] `--control-fg-selected-hover`
   - figma: `var(--primitives-theme-800)`
   - desktop: `var(--primitives-theme-800)`
   - concept: `var(--primitives-theme-800)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-selected-faint-rest`
+- [ ] `--control-fg-selected-faint`
   - figma: `var(--primitives-theme-500)`
   - desktop: `var(--primitives-theme-500)`
   - concept: `var(--primitives-theme-500)`
@@ -1925,7 +2072,7 @@ Section totals: aligned=175, review=0, total=175
   - concept: `var(--primitives-theme-600)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-placeholder-default`
+- [ ] `--control-fg-placeholder`
   - figma: `var(--primitives-neutral-500)`
   - desktop: `var(--primitives-neutral-500)`
   - concept: `var(--primitives-neutral-500)`
@@ -2237,14 +2384,14 @@ Section totals: aligned=175, review=0, total=175
   - concept: `var(--primitives-blue-500)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-focus-ring-error`
+- [ ] `--control-focus-ring-alert`
   - figma: `var(--primitives-red-500)`
   - desktop: `var(--primitives-red-500)`
   - concept: `var(--primitives-red-500)`
   - recommendation: keep
   - status: `aligned`
 
-Section totals: aligned=198, review=0, total=198
+Section totals: aligned=201, review=0, total=201
 
 ## Semantics Dark (Core)
 
@@ -2255,45 +2402,63 @@ Section totals: aligned=198, review=0, total=198
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-primary-hover`
-  - figma: `var(--primitives-neutral-880)`
-  - desktop: `var(--primitives-neutral-880)`
-  - concept: `var(--primitives-neutral-880)`
+  - figma: `var(--primitives-neutral-890)`
+  - desktop: `var(--primitives-neutral-890)`
+  - concept: `var(--primitives-neutral-890)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--surface-bg-primary-translucent`
+  - figma: `var(--primitives-neutral-translucent-940)`
+  - desktop: `var(--primitives-neutral-translucent-940)`
+  - concept: `var(--primitives-neutral-translucent-940)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-secondary`
-  - figma: `var(--primitives-neutral-940)`
-  - desktop: `var(--primitives-neutral-940)`
-  - concept: `var(--primitives-neutral-940)`
+  - figma: `var(--primitives-neutral-920)`
+  - desktop: `var(--primitives-neutral-920)`
+  - concept: `var(--primitives-neutral-920)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-secondary-subtle`
-  - figma: `var(--primitives-neutral-930)`
-  - desktop: `var(--primitives-neutral-930)`
-  - concept: `var(--primitives-neutral-930)`
+  - figma: `var(--primitives-neutral-915)`
+  - desktop: `var(--primitives-neutral-915)`
+  - concept: `var(--primitives-neutral-915)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-secondary-strong`
-  - figma: `var(--primitives-neutral-950)`
-  - desktop: `var(--primitives-neutral-950)`
-  - concept: `var(--primitives-neutral-950)`
+  - figma: `var(--primitives-neutral-925)`
+  - desktop: `var(--primitives-neutral-925)`
+  - concept: `var(--primitives-neutral-925)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-secondary-hover`
-  - figma: `var(--primitives-neutral-930)`
-  - desktop: `var(--primitives-neutral-930)`
-  - concept: `var(--primitives-neutral-930)`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--surface-bg-tertiary`
   - figma: `var(--primitives-neutral-900)`
   - desktop: `var(--primitives-neutral-900)`
   - concept: `var(--primitives-neutral-900)`
   - recommendation: keep
   - status: `aligned`
+- [ ] `--surface-bg-secondary-translucent`
+  - figma: `var(--primitives-neutral-translucent-955)`
+  - desktop: `var(--primitives-neutral-translucent-955)`
+  - concept: `var(--primitives-neutral-translucent-955)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--surface-bg-tertiary`
+  - figma: `var(--primitives-neutral-930)`
+  - desktop: `var(--primitives-neutral-930)`
+  - concept: `var(--primitives-neutral-930)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--surface-bg-tertiary-translucent`
+  - figma: `var(--primitives-neutral-translucent-940)`
+  - desktop: `var(--primitives-neutral-translucent-940)`
+  - concept: `var(--primitives-neutral-translucent-940)`
+  - recommendation: keep
+  - status: `aligned`
 - [ ] `--surface-bg-quaternary`
-  - figma: `var(--primitives-neutral-920)`
-  - desktop: `var(--primitives-neutral-920)`
-  - concept: `var(--primitives-neutral-920)`
+  - figma: `var(--primitives-neutral-945)`
+  - desktop: `var(--primitives-neutral-945)`
+  - concept: `var(--primitives-neutral-945)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-skeleton`
@@ -2302,16 +2467,10 @@ Section totals: aligned=198, review=0, total=198
   - concept: `var(--primitives-neutral-860)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-bg-primary-translucent`
-  - figma: `#0E1017BF`
-  - desktop: `#0E1017BF`
-  - concept: `#0E1017BF`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--surface-bg-tertiary-translucent`
-  - figma: `#202531BF`
-  - desktop: `#202531BF`
-  - concept: `#202531BF`
+- [ ] `--surface-bg-blackout`
+  - figma: `var(--primitives-neutral-955)`
+  - desktop: `var(--primitives-neutral-955)`
+  - concept: `var(--primitives-neutral-955)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-primary-solid`
@@ -2429,9 +2588,9 @@ Section totals: aligned=198, review=0, total=198
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-bg-overlay`
-  - figma: `#252B37CC`
-  - desktop: `#252B37CC`
-  - concept: `#252B37CC`
+  - figma: `var(--primitives-neutral-translucent-940)`
+  - desktop: `var(--primitives-neutral-translucent-940)`
+  - concept: `var(--primitives-neutral-translucent-940)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-fg-primary`
@@ -2585,15 +2744,15 @@ Section totals: aligned=198, review=0, total=198
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-border-primary`
-  - figma: `var(--primitives-neutral-700)`
-  - desktop: `var(--primitives-neutral-700)`
-  - concept: `var(--primitives-neutral-700)`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--surface-border-secondary`
   - figma: `var(--primitives-neutral-800)`
   - desktop: `var(--primitives-neutral-800)`
   - concept: `var(--primitives-neutral-800)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--surface-border-secondary`
+  - figma: `var(--primitives-neutral-840)`
+  - desktop: `var(--primitives-neutral-840)`
+  - concept: `var(--primitives-neutral-840)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--surface-border-tertiary`
@@ -2698,127 +2857,127 @@ Section totals: aligned=198, review=0, total=198
   - concept: `var(--primitives-blue-800)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xs`
+- [ ] `--surface-shadow-xs`
   - figma: `#00000033`
   - desktop: `#00000033`
   - concept: `#00000033`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-sm-01`
+- [ ] `--surface-shadow-sm-01`
   - figma: `#0000003F`
   - desktop: `#0000003F`
   - concept: `#0000003F`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-sm-02`
+- [ ] `--surface-shadow-sm-02`
   - figma: `#0000003F`
   - desktop: `#0000003F`
   - concept: `#0000003F`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-md-01`
+- [ ] `--surface-shadow-md-01`
   - figma: `#0000004C`
   - desktop: `#0000004C`
   - concept: `#0000004C`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-md-02`
+- [ ] `--surface-shadow-md-02`
   - figma: `#0000003F`
   - desktop: `#0000003F`
   - concept: `#0000003F`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-lg-01`
+- [ ] `--surface-shadow-lg-01`
   - figma: `#00000059`
   - desktop: `#00000059`
   - concept: `#00000059`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-lg-02`
+- [ ] `--surface-shadow-lg-02`
   - figma: `#0000003F`
   - desktop: `#0000003F`
   - concept: `#0000003F`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-lg-03`
+- [ ] `--surface-shadow-lg-03`
   - figma: `#0000004C`
   - desktop: `#0000004C`
   - concept: `#0000004C`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xl-01`
+- [ ] `--surface-shadow-xl-01`
   - figma: `#00000066`
   - desktop: `#00000066`
   - concept: `#00000066`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xl-02`
+- [ ] `--surface-shadow-xl-02`
   - figma: `#0000004C`
   - desktop: `#0000004C`
   - concept: `#0000004C`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-xl-03`
+- [ ] `--surface-shadow-xl-03`
   - figma: `#00000059`
   - desktop: `#00000059`
   - concept: `#00000059`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-2xl-01`
+- [ ] `--surface-shadow-2xl-01`
   - figma: `#0000007F`
   - desktop: `#0000007F`
   - concept: `#0000007F`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-2xl-02`
+- [ ] `--surface-shadow-2xl-02`
   - figma: `#00000066`
   - desktop: `#00000066`
   - concept: `#00000066`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-3xl-01`
+- [ ] `--surface-shadow-3xl-01`
   - figma: `#00000072`
   - desktop: `#00000072`
   - concept: `#00000072`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-3xl-02`
+- [ ] `--surface-shadow-3xl-02`
   - figma: `#00000066`
   - desktop: `#00000066`
   - concept: `#00000066`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-skeumorphic-inner`
+- [ ] `--surface-shadow-skeumorphic-inner`
   - figma: `#0C0E120C`
   - desktop: `#0C0E120C`
   - concept: `#0C0E120C`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-skeumorphic-inner-border`
+- [ ] `--surface-shadow-skeumorphic-inner-border`
   - figma: `#0C0E122D`
   - desktop: `#0C0E122D`
   - concept: `#0C0E122D`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-main-centre-md`
+- [ ] `--surface-shadow-main-centre-md`
   - figma: `#00000000`
   - desktop: `#00000000`
   - concept: `#00000000`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-main-centre-lg`
+- [ ] `--surface-shadow-main-centre-lg`
   - figma: `#00000000`
   - desktop: `#00000000`
   - concept: `#00000000`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-overlay-lg`
+- [ ] `--surface-shadow-overlay-lg`
   - figma: `#00000000`
   - desktop: `#00000000`
   - concept: `#00000000`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--surface-shadows-shadow-grid-md`
+- [ ] `--surface-shadow-grid-md`
   - figma: `#00000000`
   - desktop: `#00000000`
   - concept: `#00000000`
@@ -2888,6 +3047,12 @@ Section totals: aligned=198, review=0, total=198
   - figma: `var(--primitives-theme-800)`
   - desktop: `var(--primitives-theme-800)`
   - concept: `var(--primitives-theme-800)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--control-bg-tertiary`
+  - figma: `var(--primitives-alpha-grey-10)`
+  - desktop: `var(--primitives-alpha-grey-10)`
+  - concept: `var(--primitives-alpha-grey-10)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-bg-tertiary-hover`
@@ -3094,19 +3259,19 @@ Section totals: aligned=198, review=0, total=198
   - concept: `var(--primitives-neutral-600)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-selected-default`
+- [ ] `--control-fg-selected`
   - figma: `var(--primitives-theme-300)`
   - desktop: `var(--primitives-theme-300)`
   - concept: `var(--primitives-theme-300)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-selected-default-hover`
+- [ ] `--control-fg-selected-hover`
   - figma: `var(--primitives-theme-200)`
   - desktop: `var(--primitives-theme-200)`
   - concept: `var(--primitives-theme-200)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-selected-faint-rest`
+- [ ] `--control-fg-selected-faint`
   - figma: `var(--primitives-theme-500)`
   - desktop: `var(--primitives-theme-500)`
   - concept: `var(--primitives-theme-500)`
@@ -3118,7 +3283,7 @@ Section totals: aligned=198, review=0, total=198
   - concept: `var(--primitives-theme-400)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-fg-placeholder-default`
+- [ ] `--control-fg-placeholder`
   - figma: `var(--primitives-neutral-500)`
   - desktop: `var(--primitives-neutral-500)`
   - concept: `var(--primitives-neutral-500)`
@@ -3287,21 +3452,21 @@ Section totals: aligned=198, review=0, total=198
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-border-secondary`
-  - figma: `var(--primitives-neutral-400)`
-  - desktop: `var(--primitives-neutral-400)`
-  - concept: `var(--primitives-neutral-400)`
+  - figma: `var(--primitives-neutral-600)`
+  - desktop: `var(--primitives-neutral-600)`
+  - concept: `var(--primitives-neutral-600)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-border-secondary-hover`
-  - figma: `var(--primitives-neutral-300)`
-  - desktop: `var(--primitives-neutral-300)`
-  - concept: `var(--primitives-neutral-300)`
+  - figma: `var(--primitives-neutral-700)`
+  - desktop: `var(--primitives-neutral-700)`
+  - concept: `var(--primitives-neutral-700)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-border-secondary-pressed`
-  - figma: `var(--primitives-neutral-300)`
-  - desktop: `var(--primitives-neutral-300)`
-  - concept: `var(--primitives-neutral-300)`
+  - figma: `var(--primitives-neutral-700)`
+  - desktop: `var(--primitives-neutral-700)`
+  - concept: `var(--primitives-neutral-700)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-border-tertiary`
@@ -3341,15 +3506,15 @@ Section totals: aligned=198, review=0, total=198
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-border-disabled`
-  - figma: `var(--primitives-neutral-700)`
-  - desktop: `var(--primitives-neutral-700)`
-  - concept: `var(--primitives-neutral-700)`
-  - recommendation: keep
-  - status: `aligned`
-- [ ] `--control-border-disabled-faint`
   - figma: `var(--primitives-neutral-800)`
   - desktop: `var(--primitives-neutral-800)`
   - concept: `var(--primitives-neutral-800)`
+  - recommendation: keep
+  - status: `aligned`
+- [ ] `--control-border-disabled-faint`
+  - figma: `var(--primitives-neutral-840)`
+  - desktop: `var(--primitives-neutral-840)`
+  - concept: `var(--primitives-neutral-840)`
   - recommendation: keep
   - status: `aligned`
 - [ ] `--control-border-alert`
@@ -3430,14 +3595,14 @@ Section totals: aligned=198, review=0, total=198
   - concept: `var(--primitives-blue-500)`
   - recommendation: keep
   - status: `aligned`
-- [ ] `--control-focus-ring-error`
+- [ ] `--control-focus-ring-alert`
   - figma: `var(--primitives-red-500)`
   - desktop: `var(--primitives-red-500)`
   - concept: `var(--primitives-red-500)`
   - recommendation: keep
   - status: `aligned`
 
-Section totals: aligned=198, review=0, total=198
+Section totals: aligned=201, review=0, total=201
 
 ## Typography (Valid Only)
 
@@ -3592,67 +3757,56 @@ Section totals: aligned=22, review=0, total=22
 ## Non-Figma Tokens (Flagged)
 
 ### Desktop
-- `--font-size-sm` (usage count: 60)
-- `--radius-sm` (usage count: 36)
-- `--control-fg-selected` (usage count: 31)
-- `--radius-md` (usage count: 28)
+- `--font-size-sm` (usage count: 64)
+- `--radius-sm` (usage count: 47)
+- `--radius-md` (usage count: 33)
 - `--font-weight-medium` (usage count: 23)
-- `--icon-size-sm` (usage count: 20)
+- `--icon-size-md` (usage count: 22)
 - `--font-family-sans` (usage count: 19)
 - `--font-weight-semibold` (usage count: 19)
-- `--icon-size-md` (usage count: 19)
+- `--icon-size-sm` (usage count: 19)
 - `--font-weight-regular` (usage count: 16)
 - `--control-height-sm` (usage count: 14)
-- `--control-fg-placeholder` (usage count: 12)
-- `--primitives-grey-500` (usage count: 11)
-- `--control-fg-selected-hover` (usage count: 10)
 - `--control-height-md` (usage count: 9)
-- `--primitives-grey-50` (usage count: 9)
-- `--primitives-grey-700` (usage count: 9)
+- `--radius-xs` (usage count: 9)
 - `--tree-indent-step` (usage count: 9)
 - `--col-` (usage count: 8)
-- `--primitives-grey-300` (usage count: 8)
+- `--radius-xl` (usage count: 8)
 - `--ring-width-focus` (usage count: 8)
 - `--z-dropdown` (usage count: 8)
 - `--control-height-lg` (usage count: 7)
-- `--primitives-grey-600` (usage count: 7)
-- `--primitives-grey-900` (usage count: 7)
-- `--radius-xs` (usage count: 7)
+- `--radius-surface-popover` (usage count: 7)
 - `--surface-shadow-sm` (usage count: 7)
 - `--top-nav-fg` (usage count: 7)
 - `--font-size-2xs` (usage count: 6)
 - `--font-size-md` (usage count: 6)
-- `--primitives-grey-400` (usage count: 6)
-- `--primitives-grey-800` (usage count: 6)
-- `--radius-button-sm` (usage count: 6)
-- `--radius-container` (usage count: 6)
+- `--radius-control-button-sm` (usage count: 6)
 - `--font-size-lg` (usage count: 5)
 - `--font-size-xs` (usage count: 5)
-- `--primitives-grey-200` (usage count: 5)
-- `--primitives-grey-30` (usage count: 5)
-- `--primitives-grey-880` (usage count: 5)
-- `--radius-badge` (usage count: 5)
-- `--radius-button-md` (usage count: 5)
-- `--surface-bg-brand-solid` (usage count: 5)
+- `--radius-control-button-md` (usage count: 5)
+- `--radius-surface-badge` (usage count: 5)
+- `--radius-surface-pill` (usage count: 5)
+- `--surface-bg-skeleton-shimmer` (usage count: 5)
+- `--surface-bg-trim` (usage count: 5)
 - `--surface-shadow-xl` (usage count: 5)
 - `--table-font-weight` (usage count: 5)
 - `--tree-icon-center` (usage count: 5)
 - `--avatar-size-md` (usage count: 4)
 - `--blur-glass` (usage count: 4)
+- `--control-bg-primary-active` (usage count: 4)
 - `--control-width-checkbox` (usage count: 4)
 - `--font-family-body` (usage count: 4)
 - `--icon-size-lg` (usage count: 4)
 - `--line-height-tight` (usage count: 4)
 - `--nav-group-fg-selected` (usage count: 4)
-- `--primitives-grey-950` (usage count: 4)
-- `--radius-input` (usage count: 4)
-- `--radius-pill` (usage count: 4)
+- `--radius-control-input` (usage count: 4)
+- `--radius-lg` (usage count: 4)
 - `--radix-popover-trigger-width` (usage count: 4)
 - `--status-danger-fg` (usage count: 4)
-- `--surface-bg-error-primary` (usage count: 4)
 - `--surface-fg-primary-on-brand` (usage count: 4)
 - `--surface-shadow-md` (usage count: 4)
 - `--top-nav-search-bg-hover` (usage count: 4)
+- `--z-modal` (usage count: 4)
 - `--z-resizer` (usage count: 4)
 - `--control-border-destructive-pressed` (usage count: 3)
 - `--control-border-theme` (usage count: 3)
@@ -3660,23 +3814,16 @@ Section totals: aligned=22, review=0, total=22
 - `--control-min-touch` (usage count: 3)
 - `--nav-indent-base` (usage count: 3)
 - `--nav-item-bg-selected-hover` (usage count: 3)
-- `--primitives-grey-840` (usage count: 3)
-- `--primitives-grey-860` (usage count: 3)
-- `--primitives-grey-920` (usage count: 3)
-- `--radius-lg` (usage count: 3)
-- `--radius-xl` (usage count: 3)
-- `--surface-bg-info` (usage count: 3)
-- `--surface-bg-success` (usage count: 3)
-- `--utility-alpha-grey-10` (usage count: 3)
-- `--utility-alpha-grey-30` (usage count: 3)
 - `--avatar-size-sm` (usage count: 2)
 - `--brand-logo-text` (usage count: 2)
+- `--control-bg-inset` (usage count: 2)
 - `--control-border-destructive` (usage count: 2)
 - `--control-fg-disabled` (usage count: 2)
 - `--control-width-thumb` (usage count: 2)
 - `--depth` (usage count: 2)
 - `--font-size-xl` (usage count: 2)
 - `--icon-size-2xl` (usage count: 2)
+- `--letter-spacing-tight` (usage count: 2)
 - `--max-width-empty-state` (usage count: 2)
 - `--nav-control-bg-hover` (usage count: 2)
 - `--nav-control-fg-hover` (usage count: 2)
@@ -3688,149 +3835,150 @@ Section totals: aligned=22, review=0, total=22
 - `--nav-indent-step` (usage count: 2)
 - `--nav-item-fg-selected` (usage count: 2)
 - `--nav-surface-border` (usage count: 2)
+- `--nav-toggle-pill-bg` (usage count: 2)
 - `--panel-width` (usage count: 2)
-- `--primitives-gray-tint-700` (usage count: 2)
-- `--primitives-grey-100` (usage count: 2)
-- `--primitives-grey-20` (usage count: 2)
-- `--primitives-grey-910` (usage count: 2)
+- `--primitives-neutral-translucent-860-translucent` (usage count: 2)
+- `--radius-2xl` (usage count: 2)
 - `--radius-full` (usage count: 2)
+- `--radius-input` (usage count: 2)
+- `--radius-surface-tooltip` (usage count: 2)
 - `--radix-select-trigger-width` (usage count: 2)
 - `--search-input-bg-primary` (usage count: 2)
 - `--search-input-border-primary` (usage count: 2)
 - `--search-input-focused-border-theme` (usage count: 2)
 - `--shadow-color-brand` (usage count: 2)
-- `--spacing-2p5` (usage count: 2)
 - `--status-warning-fg` (usage count: 2)
 - `--surface-bg-brand-section` (usage count: 2)
 - `--surface-shadow-2xl` (usage count: 2)
 - `--surface-shadow-lg` (usage count: 2)
-- `--text-primary` (usage count: 2)
 - `--top-nav-fg-secondary` (usage count: 2)
 - `--top-nav-search-bg` (usage count: 2)
 - `--top-nav-search-focused-fg` (usage count: 2)
-- `--utility-alpha-black-10` (usage count: 2)
-- `--utility-alpha-black-50` (usage count: 2)
-- `--utility-alpha-grey-60` (usage count: 2)
-- `--utility-alpha-white-10` (usage count: 2)
+- `--z-tooltip` (usage count: 2)
+- `--brand-primary` (usage count: 1)
+- `--brand-subtle` (usage count: 1)
+- `--breakpoint-mobile` (usage count: 1)
+- `--calendar-icon-filter` (usage count: 1)
+- `--color-critical-default` (usage count: 1)
+- `--control-bg-destructive` (usage count: 1)
+- `--control-bg-destructive-hover` (usage count: 1)
+- `--control-bg-destructive-pressed` (usage count: 1)
+- `--control-border-focus` (usage count: 1)
+- `--control-fg-alert-pressed` (usage count: 1)
+- `--control-fg-destructive` (usage count: 1)
+- `--control-focus-ring-error` (usage count: 1)
+- `--control-width-switch` (usage count: 1)
+- `--desktop-panel-width` (usage count: 1)
+- `--font-size-6xl` (usage count: 1)
+- `--font-weight-bold` (usage count: 1)
+- `--footer-height` (usage count: 1)
+- `--geom-footer-height-default` (usage count: 1)
+- `--geom-form-footer-height-default` (usage count: 1)
+- `--geom-header-height-default` (usage count: 1)
+- `--layout-nav-indent-step` (usage count: 1)
+- `--layout-surface-width-menu-min` (usage count: 1)
 
 ### Concept
+- `--radius-sm` (usage count: 42)
 - `--font-size-sm` (usage count: 39)
-- `--radius-sm` (usage count: 36)
-- `--radius-md` (usage count: 24)
+- `--radius-md` (usage count: 34)
 - `--font-family-sans` (usage count: 20)
 - `--font-weight-semibold` (usage count: 18)
-- `--surface-bg-secondary-translucent` (usage count: 14)
+- `--radius-lg` (usage count: 14)
+- `--radius-2xl` (usage count: 13)
 - `--icon-size-md` (usage count: 12)
-- `--radius-lg` (usage count: 12)
 - `--control-height-lg` (usage count: 11)
-- `--radius-2xl` (usage count: 11)
 - `--font-size-md` (usage count: 10)
-- `--primitives-grey-700` (usage count: 10)
-- `--surface-bg-error-solid` (usage count: 10)
-- `--surface-shadow-xs` (usage count: 10)
+- `--radius-xl` (usage count: 10)
 - `--control-height-md` (usage count: 9)
 - `--magma-end` (usage count: 9)
 - `--magma-mid` (usage count: 9)
 - `--magma-start` (usage count: 9)
-- `--primitives-grey-400` (usage count: 9)
-- `--primitives-grey-50` (usage count: 9)
-- `--primitives-grey-500` (usage count: 9)
 - `--blur-glass` (usage count: 8)
 - `--control-min-touch` (usage count: 8)
 - `--glass-sync-delay` (usage count: 8)
-- `--primitives-grey-300` (usage count: 8)
-- `--primitives-grey-800` (usage count: 8)
 - `--font-size-xs` (usage count: 7)
 - `--icon-size-lg` (usage count: 7)
-- `--radius-pill` (usage count: 7)
+- `--radius-surface-pill` (usage count: 7)
 - `--surface-bg-pulse-min` (usage count: 7)
 - `--font-size-xl` (usage count: 6)
-- `--footer-action-height` (usage count: 6)
-- `--primitives-grey-200` (usage count: 6)
-- `--primitives-grey-30` (usage count: 6)
-- `--primitives-grey-600` (usage count: 6)
-- `--primitives-grey-900` (usage count: 6)
-- `--surface-bg-error-primary` (usage count: 6)
+- `--layout-surface-height-footer-action` (usage count: 6)
 - `--surface-bg-pulse-max` (usage count: 6)
-- `--control-fg-selected` (usage count: 5)
 - `--font-size-2xs` (usage count: 5)
 - `--font-size-6xl` (usage count: 5)
 - `--font-size-lg` (usage count: 5)
-- `--footer-height` (usage count: 5)
-- `--modal-header-height` (usage count: 5)
-- `--surface-bg-info` (usage count: 5)
+- `--layout-surface-height-modal-header` (usage count: 5)
+- `--max-width-empty-state` (usage count: 5)
+- `--radius-full` (usage count: 5)
+- `--radius-xs` (usage count: 5)
+- `--runtime-layout-height-footer` (usage count: 5)
 - `--surface-bg-pulse-static` (usage count: 5)
 - `--surface-shadow-md` (usage count: 5)
 - `--brand-logo-text` (usage count: 4)
 - `--control-height-sm` (usage count: 4)
 - `--control-width-checkbox` (usage count: 4)
 - `--font-size-2xl` (usage count: 4)
+- `--font-weight-regular` (usage count: 4)
 - `--line-height-trim` (usage count: 4)
-- `--primitives-grey-860` (usage count: 4)
-- `--primitives-grey-880` (usage count: 4)
-- `--primitives-grey-950` (usage count: 4)
-- `--radius-xl` (usage count: 4)
-- `--radius-xs` (usage count: 4)
 - `--ring-width-focus` (usage count: 4)
+- `--runtime-layout-height-header` (usage count: 4)
+- `--runtime-layout-height-visual-viewport` (usage count: 4)
 - `--surface-bg-primary-pressed` (usage count: 4)
-- `--surface-bg-success` (usage count: 4)
 - `--surface-shadow-lg` (usage count: 4)
 - `--surface-shadow-xl` (usage count: 4)
-- `--visual-viewport-height` (usage count: 4)
 - `--card-sync-delay` (usage count: 3)
 - `--control-fg-disabled` (usage count: 3)
 - `--control-height-xs` (usage count: 3)
-- `--font-weight-medium` (usage count: 3)
-- `--font-weight-regular` (usage count: 3)
-- `--header-height` (usage count: 3)
-- `--max-width-card` (usage count: 3)
-- `--max-width-empty-state` (usage count: 3)
+- `--layout-surface-width-modal-max` (usage count: 3)
 - `--max-width-scanner` (usage count: 3)
-- `--primitives-grey-100` (usage count: 3)
-- `--primitives-grey-840` (usage count: 3)
 - `--primitives-white` (usage count: 3)
-- `--radius-full` (usage count: 3)
+- `--radius-surface-popover` (usage count: 3)
 - `--sheet-handle-height` (usage count: 3)
 - `--surface-fg-white` (usage count: 3)
 - `--surface-shadow-2xl` (usage count: 3)
 - `--surface-shadow-sm` (usage count: 3)
 - `--avatar-size-md` (usage count: 2)
 - `--avatar-size-sm` (usage count: 2)
-- `--control-bg-tertiary` (usage count: 2)
-- `--control-fg-placeholder` (usage count: 2)
 - `--control-width-thumb` (usage count: 2)
 - `--font-family-mono` (usage count: 2)
-- `--geom-form-footer-height-default` (usage count: 2)
-- `--geom-header-height-default` (usage count: 2)
+- `--font-weight-medium` (usage count: 2)
 - `--icon-size-sm` (usage count: 2)
-- `--primitives-gray-tint-700` (usage count: 2)
-- `--primitives-grey-20` (usage count: 2)
-- `--primitives-grey-910` (usage count: 2)
-- `--primitives-grey-930` (usage count: 2)
+- `--letter-spacing-tight` (usage count: 2)
+- `--radius-control-button-lg` (usage count: 2)
+- `--radius-surface-modal` (usage count: 2)
+- `--radius-surface-tooltip` (usage count: 2)
 - `--ring-width-underline` (usage count: 2)
 - `--shadow-color-brand` (usage count: 2)
 - `--sheet-handle-width` (usage count: 2)
-- `--space-3` (usage count: 2)
-- `--spacing-px` (usage count: 2)
 - `--status-animation-name` (usage count: 2)
-- `--utility-alpha-black-50` (usage count: 2)
-- `--utility-alpha-grey-30` (usage count: 2)
-- `--utility-alpha-grey-60` (usage count: 2)
-- `--utility-alpha-white-20` (usage count: 2)
+- `--z-toast` (usage count: 2)
 - `--breakpoint-mobile` (usage count: 1)
 - `--color-control-tertiary-border` (usage count: 1)
 - `--color-surface-tertiary` (usage count: 1)
 - `--color-text-secondary` (usage count: 1)
 - `--control-action-height` (usage count: 1)
-- `--control-fg-selected-hover` (usage count: 1)
+- `--control-focus-ring-error` (usage count: 1)
 - `--control-width-switch` (usage count: 1)
 - `--font-size-4xl` (usage count: 1)
 - `--font-size-5xl` (usage count: 1)
-- `--form-footer-height` (usage count: 1)
 - `--geom-footer-height-default` (usage count: 1)
+- `--geom-form-footer-height-default` (usage count: 1)
+- `--geom-header-height-default` (usage count: 1)
+- `--layout-surface-height-form-footer-default` (usage count: 1)
+- `--layout-surface-height-header-default` (usage count: 1)
+- `--layout-surface-width-nav-primary` (usage count: 1)
 - `--line-height-relaxed` (usage count: 1)
 - `--line-height-tight` (usage count: 1)
 - `--list-leading-width` (usage count: 1)
 - `--magma-base` (usage count: 1)
-- `--primitives-gray-tint-100` (usage count: 1)
-- `--primitives-gray-tint-200` (usage count: 1)
+- `--radius-surface-card` (usage count: 1)
+- `--radix-toast-swipe-move-x` (usage count: 1)
+- `--runtime-layout-height-form-footer` (usage count: 1)
+- `--surface-bg-brand-solid` (usage count: 1)
+- `--surface-border-faint` (usage count: 1)
+- `--surface-border-focus` (usage count: 1)
+- `--surface-fg-primary-on-brand` (usage count: 1)
+- `--surface-fg-secondary-on-brand` (usage count: 1)
+- `--surface-shadow-scan-button` (usage count: 1)
+- `--swatch-display` (usage count: 1)
+

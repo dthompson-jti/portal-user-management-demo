@@ -32,10 +32,8 @@
   --surface-bg-warning-secondary: var(--primitives-yellow-100);
   --surface-bg-warning-solid: var(--primitives-yellow-600);
   --surface-bg-success-primary: var(--primitives-green-50);
-  --surface-bg-success: var(--surface-bg-success-primary);
   --surface-bg-success-secondary: var(--primitives-green-100);
   --surface-bg-success-solid: var(--primitives-green-600);
-  --surface-bg-info: var(--primitives-blue-50);
   --surface-bg-info-secondary: var(--primitives-blue-100);
   --surface-bg-info-solid: var(--primitives-blue-600);
   --surface-bg-overlay: var(--primitives-neutral-translucent-860-translucent);
@@ -201,11 +199,7 @@
   --control-fg-quaternary-hover: var(--primitives-neutral-600);
   --control-fg-senary: var(--primitives-neutral-300);
   --control-fg-senary-hover: var(--primitives-neutral-400);
-  --control-fg-selected: var(--primitives-theme-700);
-  --control-fg-selected-hover: var(--primitives-theme-800);
-  --control-fg-selected-faint: var(--primitives-theme-500);
   --control-fg-selected-faint-hover: var(--primitives-theme-600);
-  --control-fg-placeholder: var(--primitives-neutral-500);
   --control-fg-placeholder-subtle: var(--primitives-neutral-300);
   --control-fg-disabled: var(--primitives-neutral-500);
   --control-fg-disabled-faint: var(--primitives-neutral-400);
@@ -404,9 +398,7 @@
   --surface-bg-warning-secondary: var(--primitives-yellow-850);
   --surface-bg-alert-primary: var(--primitives-red-900);
   --surface-bg-alert-secondary: var(--primitives-red-850);
-  --surface-bg-success: var(--primitives-green-900);
   --surface-bg-success-secondary: var(--primitives-green-850);
-  --surface-bg-info: var(--primitives-blue-900);
   --surface-bg-info-secondary: var(--primitives-blue-850);
 
   /* Status Borders - shifted up for visibility (700 vs 850) */
@@ -501,7 +493,6 @@
   --control-fg-tertiary-hover: var(--primitives-neutral-300);
   --control-fg-quaternary: var(--primitives-neutral-500);
   --control-fg-quaternary-hover: var(--primitives-neutral-400);
-  --control-fg-placeholder: var(--primitives-neutral-500);
   --control-fg-disabled: var(--primitives-neutral-600);
 
   /* Selected State Foregrounds */

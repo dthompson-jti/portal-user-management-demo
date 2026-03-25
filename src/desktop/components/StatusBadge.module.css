@@ -69,14 +69,14 @@
 /* Complete / Verified */
 .badge[data-status='complete'],
 .badge[data-status='verified'] {
-    background: var(--surface-bg-success);
+    background: var(--surface-bg-success-primary);
     color: var(--surface-fg-success-primary);
     border-color: var(--surface-border-success-subtle);
 }
 
 /* Completed (semantic green) */
 .badge[data-status='completed'] {
-    background: var(--surface-bg-success);
+    background: var(--surface-bg-success-primary);
     color: var(--surface-fg-success-primary);
     border-color: var(--surface-border-success-subtle);
 }
@@ -109,7 +109,7 @@
 }
 
 .badge[data-status='special'][data-color-mode='info'] {
-    background: var(--surface-bg-info);
+    background: var(--surface-bg-info-primary);
     /* User requested bg-info */
     color: var(--surface-fg-info-primary);
     border-color: var(--surface-border-info-subtle);
