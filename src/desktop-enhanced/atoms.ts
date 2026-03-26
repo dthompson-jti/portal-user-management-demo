@@ -1,4 +1,6 @@
 import { atom } from 'jotai';
+import { PortalAccessRecord } from './types/portalTypes';
+import { INITIAL_PORTAL_RESULTS } from './data/portalMockData';
 
 export type DesktopEnhancedView = 'live' | 'historical';
 
@@ -31,3 +33,31 @@ export const missedCountModeAtom = atom<MissedCountMode>('rooms');
 // Chrome trim style: 'default' = tertiary bg, 'elevated' = lighter in dark mode
 export type ChromeStyle = 'default' | 'elevated';
 export const chromeStyleAtom = atom<ChromeStyle>('default');
+// Portal Management State
+export type PortalActionResult = {
+    id: string;
+    status: 'pending' | 'success' | 'failure';
+    message?: string;
+};
+
+import { desktopFilterAtom } from '../desktop/atoms';
+
+export const portalResultsAtom = atom<PortalAccessRecord[]>(INITIAL_PORTAL_RESULTS);
+
+export const filteredPortalResultsAtom = atom((get) => {
+    const results = get(portalResultsAtom);
+    const filter = get(desktopFilterAtom);
+    const search = filter.search?.toLowerCase();
+
+    if (!search) return results;
+
+    return results.filter(r => {
+        const email = r.email?.toLowerCase() || '';
+        const name = (r.caseName || '').toLowerCase();
+        const caseNum = (r.caseNumber || '').toLowerCase();
+        return email.includes(search) || name.includes(search) || caseNum.includes(search);
+    });
+});
+
+export const isPortalActionExecutingAtom = atom<boolean>(false);
+export const portalActionResultsAtom = atom<Record<string, PortalActionResult>>({});

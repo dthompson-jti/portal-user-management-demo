@@ -1,0 +1,12 @@
+
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\components\PortalCaseSearch.tsx
+  31:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\components\PortalEmailSearch.tsx
+  43:30  error  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  43:35  error  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  64:64  error  Promise-returning function provided to attribute where a void return was expected  @typescript-eslint/no-misused-promises
+
+Γ£û 5 problems (5 errors, 0 warnings)
+

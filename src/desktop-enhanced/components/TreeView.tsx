@@ -142,7 +142,7 @@ export const TreeView: React.FC = () => {
             }
 
             // Auto-select if nothing selected
-            if (!selection.id) {
+            if (!selection.id || selection.id === 'root') {
                 setSelection({ type: 'root', id: rootId });
             }
         }

@@ -19,6 +19,7 @@ import {
 } from '../desktop/atoms';
 import { EnhancedLiveMonitorView as LiveMonitorView } from './components/EnhancedLiveMonitorView';
 import { EnhancedHistoricalReviewView as HistoricalReviewView } from './components/EnhancedHistoricalReviewView';
+import { PortalManagementView } from './components/PortalManagementView';
 import { DesktopToolbar } from '../desktop/components/DesktopToolbar';
 import { DetailPanel } from '../desktop/components/DetailPanel';
 import { SupervisorNoteModal } from '../desktop/components/SupervisorNoteModal';
@@ -134,95 +135,109 @@ export default function DesktopEnhancedApp() {
                     >
                         <div className={styles.contentWrapper}>
                             <div className={styles.navContainer}>
-                                <div className={styles.navRow1}>
-                                    <Breadcrumbs />
-                                </div>
+                                {!activePage.startsWith('portal-') && (
+                                    <div className={styles.navRow1}>
+                                        <Breadcrumbs />
+                                    </div>
+                                )}
                                 <div className={styles.navRow2}>
                                     <h2 className={styles.pageTitle}>
-                                        {isNoResults ? 'No search results' : `Safeguard checks – ${view === 'live' ? 'Live view' : 'Historical view'}`}
+                                        {isNoResults ? 'No search results' : 
+                                         activePage.startsWith('portal-') ? 'Portal Management Audit' :
+                                         `Safeguard checks – ${view === 'live' ? 'Live view' : 'Historical view'}`}
                                     </h2>
 
-                                    <div className={styles.row2Actions}>
-                                        <Tooltip content="Refresh data">
-                                            {refreshButtonStyle === 'icon' ? (
+                                    {!activePage.startsWith('portal-') && (
+                                        <div className={styles.row2Actions}>
+                                            <Tooltip content="Refresh data">
+                                                {refreshButtonStyle === 'icon' ? (
+                                                    <Button
+                                                        variant="secondary"
+                                                        size="s"
+                                                        iconOnly
+                                                        onClick={handleRefresh}
+                                                        disabled={isRefreshing}
+                                                    >
+                                                        <span
+                                                            className={`material-symbols-rounded ${styles.refreshIcon}`}
+                                                            data-refreshing={isRefreshing}
+                                                        >
+                                                            {isRefreshing ? 'progress_activity' : 'refresh'}
+                                                        </span>
+                                                    </Button>
+                                                ) : (
+                                                    <Button
+                                                        variant="secondary"
+                                                        size="s"
+                                                        onClick={handleRefresh}
+                                                        disabled={isRefreshing}
+                                                        className={styles.refreshButton}
+                                                    >
+                                                        {isRefreshing ? (
+                                                            <span
+                                                                className={`material-symbols-rounded ${styles.refreshSpinner}`}
+                                                            >
+                                                                progress_activity
+                                                            </span>
+                                                        ) : (
+                                                            'Refresh'
+                                                        )}
+                                                    </Button>
+                                                )}
+                                            </Tooltip>
+
+                                            <Tooltip content="Export data">
+                                                <Button
+                                                    variant="secondary"
+                                                    size="s"
+                                                    onClick={() => {}}
+                                                >
+                                                    Export
+                                                </Button>
+                                            </Tooltip>
+
+                                            <Tooltip content={showPanel ? "Close side panel" : "Open side panel"}>
                                                 <Button
                                                     variant="secondary"
                                                     size="s"
                                                     iconOnly
-                                                    onClick={handleRefresh}
-                                                    disabled={isRefreshing}
+                                                    active={isPanelOpen}
+                                                    onClick={() => {
+                                                        if (showPanel) {
+                                                            // Close and Clear Selection
+                                                            setIsPanelOpen(false);
+                                                            setSelectedLive(new Set());
+                                                            setSelectedHistory(new Set());
+                                                        } else {
+                                                            // Open/Pin
+                                                            setIsPanelOpen(true);
+                                                        }
+                                                    }}
                                                 >
-                                                    <span
-                                                        className={`material-symbols-rounded ${styles.refreshIcon}`}
-                                                        data-refreshing={isRefreshing}
-                                                    >
-                                                        {isRefreshing ? 'progress_activity' : 'refresh'}
+                                                    <span className="material-symbols-rounded">
+                                                        {showPanel ? 'right_panel_close' : 'right_panel_open'}
                                                     </span>
                                                 </Button>
-                                            ) : (
-                                                <Button
-                                                    variant="secondary"
-                                                    size="s"
-                                                    onClick={handleRefresh}
-                                                    disabled={isRefreshing}
-                                                    className={styles.refreshButton}
-                                                >
-                                                    {isRefreshing ? (
-                                                        <span
-                                                            className={`material-symbols-rounded ${styles.refreshSpinner}`}
-                                                        >
-                                                            progress_activity
-                                                        </span>
-                                                    ) : (
-                                                        'Refresh'
-                                                    )}
-                                                </Button>
-                                            )}
-                                        </Tooltip>
-
-                                        <Tooltip content="Export data">
-                                            <Button
-                                                variant="secondary"
-                                                size="s"
-                                                onClick={() => {}}
-                                            >
-                                                Export
-                                            </Button>
-                                        </Tooltip>
-
-                                        <Tooltip content={showPanel ? "Close side panel" : "Open side panel"}>
-                                            <Button
-                                                variant="secondary"
-                                                size="s"
-                                                iconOnly
-                                                active={isPanelOpen}
-                                                onClick={() => {
-                                                    if (showPanel) {
-                                                        // Close and Clear Selection
-                                                        setIsPanelOpen(false);
-                                                        setSelectedLive(new Set());
-                                                        setSelectedHistory(new Set());
-                                                    } else {
-                                                        // Open/Pin
-                                                        setIsPanelOpen(true);
-                                                    }
-                                                }}
-                                            >
-                                                <span className="material-symbols-rounded">
-                                                    {showPanel ? 'right_panel_close' : 'right_panel_open'}
-                                                </span>
-                                            </Button>
-                                        </Tooltip>
-                                    </div>
+                                            </Tooltip>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
-                            <div className={styles.toolbarWrapper}>
-                                <DesktopToolbar isEnhanced={true} />
-                            </div>
+                            {!activePage.startsWith('portal-') && (
+                                <div className={styles.toolbarWrapper}>
+                                    <DesktopToolbar isEnhanced={true} />
+                                </div>
+                            )}
 
                             <div className={styles.viewWrapper}>
-                                {view === 'live' ? <LiveMonitorView /> : <HistoricalReviewView />}
+                                {activePage.startsWith('portal-') ? (
+                                    <PortalManagementView />
+                                ) : view === 'live' ? (
+                                    <LiveMonitorView />
+                                ) : (
+                                    <HistoricalReviewView />
+                                )}
                             </div>
                         </div>
 

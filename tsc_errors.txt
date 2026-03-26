@@ -1,0 +1,15 @@
+src/desktop-enhanced/components/PortalCaseSearch.tsx(64,33): error TS2322: Type 'ColumnDef<PortalUserRecord, unknown>[]' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>[]'.
+  Type 'ColumnDef<PortalUserRecord, unknown>' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>'.
+    Type 'ColumnDefBase<PortalUserRecord, unknown> & StringHeaderIdentifier' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>'.
+      Type 'ColumnDefBase<PortalUserRecord, unknown> & StringHeaderIdentifier' is not assignable to type 'AccessorFnColumnDefBase<PortalAccessRecord | PortalUserRecord, unknown> & IdIdentifier<PortalAccessRecord | PortalUserRecord, unknown>'.
+        Property 'accessorFn' is missing in type 'ColumnDefBase<PortalUserRecord, unknown> & StringHeaderIdentifier' but required in type 'AccessorFnColumnDefBase<PortalAccessRecord | PortalUserRecord, unknown>'.
+src/desktop-enhanced/components/PortalCaseSearch.tsx(77,25): error TS2322: Type 'ColumnDef<PortalUserRecord, unknown>[]' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>[]'.
+  Type 'ColumnDef<PortalUserRecord, unknown>' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>'.
+    Type 'ColumnDefBase<PortalUserRecord, unknown> & StringHeaderIdentifier' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>'.
+      Type 'ColumnDefBase<PortalUserRecord, unknown> & StringHeaderIdentifier' is not assignable to type 'AccessorFnColumnDefBase<PortalAccessRecord | PortalUserRecord, unknown> & IdIdentifier<PortalAccessRecord | PortalUserRecord, unknown>'.
+        Property 'accessorFn' is missing in type 'ColumnDefBase<PortalUserRecord, unknown> & StringHeaderIdentifier' but required in type 'AccessorFnColumnDefBase<PortalAccessRecord | PortalUserRecord, unknown>'.
+src/desktop-enhanced/components/PortalEmailSearch.tsx(72,21): error TS2322: Type 'ColumnDef<PortalAccessRecord, unknown>[]' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>[]'.
+  Type 'ColumnDef<PortalAccessRecord, unknown>' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>'.
+    Type 'ColumnDefBase<PortalAccessRecord, unknown> & StringHeaderIdentifier' is not assignable to type 'ColumnDef<PortalAccessRecord | PortalUserRecord, unknown>'.
+      Type 'ColumnDefBase<PortalAccessRecord, unknown> & StringHeaderIdentifier' is not assignable to type 'AccessorFnColumnDefBase<PortalAccessRecord | PortalUserRecord, unknown> & IdIdentifier<PortalAccessRecord | PortalUserRecord, unknown>'.
+        Property 'accessorFn' is missing in type 'ColumnDefBase<PortalAccessRecord, unknown> & StringHeaderIdentifier' but required in type 'AccessorFnColumnDefBase<PortalAccessRecord | PortalUserRecord, unknown>'.

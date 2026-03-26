@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { sidebarExpandedAtom, sidebarSearchQueryAtom } from '../../atoms';
-import { activePageAtom } from '../../../data/activePageAtom';
+import { activePageAtom, ActivePage } from '../../../data/activePageAtom';
 import { SearchController } from './SearchController';
 import { LeftNavigationSection } from './LeftNavigationSection';
 import { LeftNavigationSubSection } from './LeftNavigationSubSection';
@@ -34,6 +34,16 @@ const NAVIGATION_DATA: NavNode[] = [
             { type: 'link', id: 'safeguard', label: 'Safeguard checks' },
             { type: 'link', id: 'open-till', label: 'Open Till' },
             { type: 'link', id: 'close-till', label: 'Close Till' },
+        ]
+    },
+    {
+        type: 'section',
+        id: 'portal-mgmt',
+        label: 'Portal management A',
+        children: [
+            { type: 'link', id: 'portal-email-search', label: 'Email search' },
+            { type: 'link', id: 'portal-case-search', label: 'Case search' },
+            { type: 'link', id: 'portal-case-example', label: 'Case example' },
         ]
     },
     {
@@ -168,7 +178,7 @@ export function SideBar() {
                     ? activePage === 'settings'
                     : isSafeguard
                         ? activePage === 'checks'
-                        : false;
+                        : activePage === node.id;
                 return (
                     <LeftNavigationLinkItem
                         key={node.id}
@@ -181,6 +191,7 @@ export function SideBar() {
                             if (node.id === 'settings') setActivePage('settings');
                             else if (node.id === 'settings-tabs') setActivePage('settings-tabs');
                             else if (isSafeguard) setActivePage('checks');
+                            else if (node.id.startsWith('portal-')) setActivePage(node.id as ActivePage);
                         }}
                         level={depth}
                     />

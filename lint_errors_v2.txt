@@ -1,0 +1,13 @@
+
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\components\PortalCaseSearch.tsx
+  32:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\components\PortalDataTable.tsx
+  10:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\components\PortalEmailSearch.tsx
+  44:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 4 problems (4 errors, 0 warnings)
+

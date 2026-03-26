@@ -34,7 +34,8 @@
 /* Instant (Filter) - Default */
 .wrapper[data-flavor="instant"] {
   background-color: var(--search-input-bg-primary);
-  border-color: var(--search-input-border-primary);
+  border: 1px solid var(--control-border-tertiary);
+  border-color: var(--control-border-tertiary);
   color: var(--search-input-fg-primary);
   padding-right: var(--spacing-2);
   /* Default */
@@ -55,8 +56,12 @@
 }
 
 .wrapper[data-flavor="instant"]:focus-within {
-  border-color: var(--search-input-focused-border-theme);
-  box-shadow: 0 0 0 var(--ring-width-focus) var(--control-focus-ring-standard);
+  border-color: var(--control-border-theme);
+  box-shadow: 0 0 0 2px var(--control-focus-ring-standard);
+}
+
+.wrapper:hover {
+  border-color: var(--control-border-tertiary-hover);
 }
 
 /* Trigger (Action) - TopNav Style */

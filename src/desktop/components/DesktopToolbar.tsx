@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     desktopViewAtom,
@@ -11,7 +11,7 @@ import {
     isAdvancedSearchOpenAtom
 } from '../atoms';
 import { LiveStatusFilter, HistoricalStatusFilter, TimeRangePreset } from '../types';
-import { SearchInput } from '../../components/SearchInput';
+import { TriggeredSearch } from '../../components/TriggeredSearch';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { FilterSelect } from './FilterSelect';
@@ -76,21 +76,20 @@ export const DesktopToolbar = ({ isEnhanced = false }: DesktopToolbarProps) => {
     const resetFilters = useSetAtom(resetFiltersAtom);
     const [isAdvancedOpen, setIsAdvancedOpen] = useAtom(isAdvancedSearchOpenAtom);
 
+    const [localSearch, setLocalSearch] = useState(filter.search);
     const [isCustomRangeOpen, setIsCustomRangeOpen] = useState(false);
     const [customStart, setCustomStart] = useState('');
     const [customEnd, setCustomEnd] = useState('');
 
-
-    const handleSearchChange = (val: string) => {
+    const handleSearchExecute = useCallback((val: string) => {
         updateFilter({ search: val });
-    };
+    }, [updateFilter]);
 
     const handleLiveStatusFilterChange = (val: string) => {
         updateFilter({ statusFilter: val as LiveStatusFilter });
     };
 
     const handleHistoricalStatusFilterChange = (vals: string[]) => {
-        // MultiSelect returns string[], but our atom expects HistoricalStatusFilter[]
         updateFilter({ historicalStatusFilter: vals as HistoricalStatusFilter[] });
     };
 
@@ -158,6 +157,7 @@ export const DesktopToolbar = ({ isEnhanced = false }: DesktopToolbarProps) => {
 
     const handleReset = () => {
         resetFilters();
+        setLocalSearch('');
     };
 
     const dateRangeLabel = useMemo(() => {
@@ -167,23 +167,22 @@ export const DesktopToolbar = ({ isEnhanced = false }: DesktopToolbarProps) => {
         return undefined;
     }, [filter.timeRangePreset, filter.dateStart, filter.dateEnd]);
 
-    if (view === 'historical' && isAdvancedOpen) {
+    if (view === 'historical' && !isEnhanced && isAdvancedOpen) {
         return <AdvancedSearch onClose={() => setIsAdvancedOpen(false)} />;
     }
 
     return (
         <div className={styles.toolbar}>
-            {/* Left Side: Search + Advanced */}
             <div className={styles.leftSection}>
-                <SearchInput
-                    value={filter.search}
-                    onChange={handleSearchChange}
+                <TriggeredSearch
+                    value={localSearch}
+                    onChange={setLocalSearch}
+                    onSearch={handleSearchExecute}
                     placeholder="Find records"
-                    flavor="instant"
-                    size="md"
+                    className={styles.triggeredSearchWidth}
                 />
 
-                {view === 'historical' && (
+                {view === 'historical' && !isEnhanced && (
                     <button
                         className="btn"
                         data-variant={isAdvancedOpen ? "primary" : "secondary"}
@@ -197,7 +196,6 @@ export const DesktopToolbar = ({ isEnhanced = false }: DesktopToolbarProps) => {
                 )}
             </div>
 
-            {/* Right Side: Quick Filters */}
             <div className={styles.filterChips}>
                 {isCustomized && (
                     <Button

@@ -95,6 +95,10 @@ export function DataTable<T>({
 
     const sentinelRef = useRef<HTMLTableRowElement>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const isInteractiveTarget = (target: EventTarget | null) => {
+        if (!(target instanceof HTMLElement)) return false;
+        return !!target.closest('button, a, input, select, textarea, label, summary, [role="button"], [role="menuitem"], [data-row-click-ignore="true"]');
+    };
     // Initial Width Distribution Logic
     const hasInitializedRef = useRef(false);
 
@@ -118,7 +122,7 @@ export function DataTable<T>({
             if (currentTotalWidth > 0 && currentTotalWidth < containerWidth) {
                 const excess = containerWidth - currentTotalWidth;
 
-                // Columns to grow: Resident (Primary), Notes (Secondary), Officer (Tertiary)
+                // Match safeguard-desktop: only explicit primary content columns auto-grow.
                 const growableColumns = {
                     'resident': 3,
                     'notes': 2,
@@ -134,9 +138,9 @@ export function DataTable<T>({
                     const pixelPerShare = excess / totalShares;
 
                     Object.entries(growableColumns).forEach(([id, share]) => {
-                        const column = table.getColumn(id);
-                        if (column && column.getIsVisible()) {
-                            const currentSize = column.getSize();
+                        const col = table.getColumn(id);
+                        if (col && col.getIsVisible()) {
+                            const currentSize = col.getSize();
                             newSizing[id] = Math.floor(currentSize + (pixelPerShare * share));
                         }
                     });
@@ -234,6 +238,7 @@ export function DataTable<T>({
                                                 right: isPinned === 'right' ? 0 : undefined,
                                                 left: isPinned === 'left' ? `var(--col-${safeId}-left)` : undefined,
                                             }}
+                                            data-column-id={header.column.id}
                                             data-pinned={isPinned || undefined}
                                             data-sortable={!isHeaderSkeleton && header.column.getCanSort()}
                                             data-sorted={!isHeaderSkeleton && !!header.column.getIsSorted()}
@@ -348,12 +353,14 @@ export function DataTable<T>({
                                     }
                                 }}
                                 onClick={(e) => {
+                                    if (isInteractiveTarget(e.target)) return;
                                     if (onRowClick) {
                                         const visualIds = table.getRowModel().rows.map(r => r.id);
                                         onRowClick(row.original, e, visualIds);
                                     }
                                 }}
                                 onDoubleClick={(e) => {
+                                    if (isInteractiveTarget(e.target)) return;
                                     if (onRowDoubleClick) {
                                         const visualIds = table.getRowModel().rows.map(r => r.id);
                                         onRowDoubleClick(row.original, e, visualIds);
@@ -375,6 +382,8 @@ export function DataTable<T>({
                                         <td
                                             key={cell.id}
                                             className={`${styles.td} ${pinnedClass}`}
+                                            data-column-id={cell.column.id}
+                                            data-pinned={isPinned || undefined}
                                             style={{
                                                 width: isSpacer ? 'auto' : `var(--col-${safeId}-width)`,
                                                 padding: isSpacer ? 0 : undefined,
@@ -382,7 +391,6 @@ export function DataTable<T>({
                                                 right: isPinned === 'right' ? 0 : undefined,
                                                 left: isPinned === 'left' ? `var(--col-${safeId}-left)` : undefined,
                                             }}
-                                            data-pinned={isPinned || undefined}
                                         >
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>

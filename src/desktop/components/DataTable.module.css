@@ -229,9 +229,11 @@
     padding: var(--spacing-2) var(--spacing-4);
 }
 
-/* Actions column - last cell: centered */
-.td:last-child,
-.th:last-child {
+/* Utility columns must preserve their fixed widths without padding compression. */
+.td[data-column-id="select"],
+.th[data-column-id="select"],
+.td[data-column-id="actions"],
+.th[data-column-id="actions"] {
     padding: 0 !important;
 }
 

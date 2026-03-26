@@ -1,0 +1,5 @@
+.viewWrapper {
+    height: 100%;
+    width: 100%;
+    background: var(--surface-bg-primary);
+}

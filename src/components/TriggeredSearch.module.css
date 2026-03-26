@@ -1,0 +1,81 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--search-input-bg-primary);
+    border: 1px solid var(--control-border-tertiary);
+    border-radius: var(--radius-md);
+    height: 44px; /* Taller to accommodate inset medium button with padding */
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    padding-left: var(--spacing-3);
+    gap: var(--spacing-2);
+}
+
+.wrapper:focus-within {
+    border-color: var(--control-border-theme);
+    box-shadow: 0 0 0 2px var(--control-focus-ring-standard);
+}
+
+.wrapper:hover {
+    border-color: var(--control-border-tertiary-hover);
+}
+
+.searchIcon {
+    font-size: var(--icon-size-md);
+    color: var(--surface-fg-tertiary);
+    flex-shrink: 0;
+}
+
+.input {
+    flex: 1;
+    border: none !important;
+    background: transparent;
+    color: var(--surface-fg-primary);
+    font-size: var(--font-size-sm);
+    outline: none !important; /* Force remove browser default */
+    padding: 0;
+    height: 100%;
+}
+
+.input:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.input::placeholder {
+    color: var(--surface-fg-tertiary);
+    opacity: 1;
+}
+
+.clearButton {
+    flex-shrink: 0;
+    color: var(--surface-fg-tertiary) !important;
+    border-radius: var(--radius-sm) !important;
+}
+
+.buttonWrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2px; /* Precise 2px gap as requested */
+    padding: 4px; /* Even padding top, right, bottom */
+}
+
+.searchButton {
+    border-radius: var(--radius-sm) !important; /* Square-ish shape as requested */
+    min-width: unset !important;
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

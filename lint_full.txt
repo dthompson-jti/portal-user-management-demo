@@ -1,0 +1,10 @@
+
+> portal-management@0.0.0 lint
+> eslint .
+
+
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\atoms.ts
+  41:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 1 problem (1 error, 0 warnings)
+
