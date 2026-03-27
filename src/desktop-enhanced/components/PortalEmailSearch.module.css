@@ -21,7 +21,7 @@
 
 .quickFilterRow {
     padding: var(--spacing-2p5) var(--spacing-6);
-    background: var(--surface-bg-primary);
+    background: var(--surface-bg-secondary);
     border-bottom: 1px solid var(--surface-border-primary);
     display: flex;
     align-items: center;
@@ -58,7 +58,7 @@
     width: 100%;
     height: 100%;
     gap: var(--spacing-3);
-    color: var(--surface-fg-tertiary);
+    color: var(--control-fg-placeholder);
 }
 
 .empty span {
@@ -75,28 +75,6 @@
     margin: 0;
     font-size: var(--font-size-lg);
     color: var(--surface-fg-primary);
-}
-
-.statusBadge {
-    padding: var(--spacing-0p5) var(--spacing-2);
-    border-radius: var(--radius-pill);
-    font-size: var(--font-size-2xs);
-    font-weight: var(--font-weight-semibold);
-}
-
-.statusBadge[data-status="Active"] {
-    background: var(--status-success-subtle);
-    color: var(--status-success);
-}
-
-.statusBadge[data-status="Revoked"] {
-    background: var(--surface-bg-warning-secondary);
-    color: var(--surface-fg-warning-primary);
-}
-
-.statusBadge[data-status="Expired"] {
-    background: var(--status-error-subtle);
-    color: var(--status-error);
 }
 
 /* DataTable Context Styles */

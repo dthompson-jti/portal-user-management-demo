@@ -617,7 +617,7 @@
     align-items: center;
     justify-content: center;
     padding: var(--spacing-10);
-    color: var(--surface-fg-tertiary);
+    color: var(--control-fg-placeholder);
     gap: var(--spacing-2);
 }
 

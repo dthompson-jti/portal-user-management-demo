@@ -63,4 +63,23 @@ original completion claim.
 ## Current Position
 - Better than primitive-only styling.
 - Not yet at canonical end state.
-- Should be treated as a partial adapter layer that still needs cleanup and renaming.
+
+---
+
+## [Unreleased] (2026-03-27) - Portal UI & Interaction Refinement
+
+### Enhanced Visual Hierarchy
+- **Filter Row Background**: Updated the "Find within results" filter row (`.quickFilterRow`) in Case and Email search views to use `surface-bg-secondary`. This provides a clear visual distinction between the primary search bar and secondary result filtering.
+- **Proof**: 
+    - ![Filter Row Background](file:///C:/Users/dthompson/.gemini/antigravity/brain/b5892972-7f17-4607-b658-911120b64143/case_search_filter_row_1774638565995.png)
+
+### Access Ledger Side Panel Restricted to Manual Toggle
+- **Behavior Update**: Removed the automatic opening of the side panel when a single record is selected.
+- **Manual Control**: The panel now ONLY opens and closes via the "Open/Close side panel" toggle in the header.
+- **Content Sync**: The panel still correctly updates its content to reflect the current selection whenever it is visible.
+- **Proof**: 
+    - ![Access Ledger Manual Control](file:///C:/Users/dthompson/.gemini/antigravity/brain/b5892972-7f17-4607-b658-911120b64143/access_ledger_panel_verify_1774639481532.png)
+    - [Interactive Verification Recording](file:///C:/Users/dthompson/.gemini/antigravity/brain/b5892972-7f17-4607-b658-911120b64143/verify_manual_panel_control_1774639317088.webp)
+
+### Design Standards Enforcement
+- **Rules Codification**: Updated `.agent/rules/design-layout-panels.md` to define "Visibility & Auto-Behavior" invariants, ensuring future agents adhere to the manual-control pattern for management views.

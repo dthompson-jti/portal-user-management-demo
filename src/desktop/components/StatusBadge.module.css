@@ -36,7 +36,8 @@
 /* Missed - Uncommented (semantic red) */
 .badge[data-status='missed'],
 .badge[data-status='missed-not-reviewed'],
-.badge[data-status='overdue'] {
+.badge[data-status='overdue'],
+.badge[data-status='Revoked'] {
     background: var(--surface-bg-alert-primary);
     color: var(--surface-fg-alert-primary);
     border-color: var(--surface-border-alert-subtle);
@@ -52,7 +53,8 @@
 /* Due & Late (semantic warning) */
 .badge[data-status='due'],
 .badge[data-status='late'],
-.badge[data-status='completed-late'] {
+.badge[data-status='completed-late'],
+.badge[data-status='Expired'] {
     background: var(--surface-bg-warning-primary);
     color: var(--surface-fg-warning-primary);
     border-color: var(--surface-border-warning-subtle);
@@ -68,7 +70,8 @@
 
 /* Complete / Verified */
 .badge[data-status='complete'],
-.badge[data-status='verified'] {
+.badge[data-status='verified'],
+.badge[data-status='Active'] {
     background: var(--surface-bg-success-primary);
     color: var(--surface-fg-success-primary);
     border-color: var(--surface-border-success-subtle);

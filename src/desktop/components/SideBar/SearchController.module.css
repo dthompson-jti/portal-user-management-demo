@@ -11,7 +11,7 @@
 .inputWrapper {
     flex: 1;
     min-width: 0;
-    /* Ensure no double border/background - let SearchInput handle it */
+    /* Ensure no double border/background - let InstantSearch handle it */
     padding: 0;
     background: transparent;
     border: none;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 import { sidebarSearchQueryAtom, sidebarExpandedAtom } from '../../atoms';
-import { SearchInput } from '../../../components/SearchInput';
+import { InstantSearch } from '../../../components/InstantSearch';
 import styles from './SearchController.module.css';
 
 
@@ -25,11 +25,10 @@ export const SearchController: React.FC = () => {
         <div className={styles.container} data-collapsed={!isExpanded}>
             {isExpanded ? (
                 <div className={styles.inputWrapper}>
-                    <SearchInput
+                    <InstantSearch
                         value={query}
                         onChange={setQuery}
                         placeholder="Search nav items"
-                        flavor="instant"
                         size="sm"
                     />
                 </div>

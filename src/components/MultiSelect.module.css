@@ -43,6 +43,10 @@
   transition: none !important;
 }
 
+.trigger[data-variant='filter']:not([data-active='true']) {
+  background-color: var(--control-bg-secondary);
+}
+
 .trigger[data-active='true'] .icon {
   color: var(--control-fg-selected) !important;
 }
@@ -53,8 +57,8 @@
   .trigger[data-variant='filter']:not([data-active='true']):hover:not(:disabled) {
     background-color: var(--control-bg-secondary-hover);
     border-color: var(--control-border-secondary-hover);
-    /* 1px physical + 2px inset shadow = 3px visual bottom lip */
-    box-shadow: inset 0 -1px 0 0 var(--control-border-secondary-hover) !important;
+    /* Match secondary button hover border weight */
+    box-shadow: inset 0 -2px 0 0 var(--control-border-secondary-hover) !important;
   }
 
   /* High-Fidelity Skeuomorphic Hover (Active Filter) */
@@ -72,8 +76,8 @@
 .trigger[data-variant='filter']:not([data-active='true'])[data-state='open'] {
   background-color: var(--control-bg-secondary-pressed);
   border-color: var(--control-border-secondary-pressed);
-  /* Refined Pressed State: 3px visual bottom */
-  box-shadow: inset 0 -1px 0 0 var(--control-border-secondary-pressed) !important;
+  /* Match secondary button pressed border weight */
+  box-shadow: inset 0 -2px 0 0 var(--control-border-secondary-pressed) !important;
 }
 
 /* High-Fidelity Skeuomorphic Active/Open (Active Filter) */

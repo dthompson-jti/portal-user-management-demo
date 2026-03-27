@@ -69,10 +69,10 @@
 
 .searchContainer {
     width: 100%;
-    /* Let SearchInput handle height and visuals */
+    /* Let TriggeredSearch handle height and visuals */
 }
 
-/* Removed .searchInput, .searchButton as they are replaced by SearchInput component */
+/* Removed .searchInput, .searchButton as they are replaced by TriggeredSearch */
 
 .logoText {
     font-family: 'Inter', sans-serif;

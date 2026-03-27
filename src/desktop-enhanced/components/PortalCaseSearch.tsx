@@ -6,8 +6,9 @@ import { PortalDataTable } from './PortalDataTable';
 import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
 import { BulkActionFooter } from '../../desktop/components/BulkActionFooter';
 import { TriggeredSearch } from '../../components/TriggeredSearch';
-import { SearchInput } from '../../components/SearchInput';
+import { InstantSearch } from '../../components/InstantSearch';
 import { FilterSelect } from '../../desktop/components/FilterSelect';
+import { StatusBadge, StatusBadgeType } from '../../desktop/components/StatusBadge';
 import { addToastAtom } from '../../data/toastAtoms';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
@@ -154,11 +155,7 @@ export const PortalCaseSearch: React.FC<PortalCaseSearchProps> = ({ isInsideCase
             minSize: 100,
             cell: ({ getValue }) => {
                 const val = getValue() as string;
-                return val ? (
-                    <span className={styles.statusBadge} data-status={val}>
-                        {val}
-                    </span>
-                ) : null;
+                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
             }
         },
     ];
@@ -193,11 +190,10 @@ export const PortalCaseSearch: React.FC<PortalCaseSearchProps> = ({ isInsideCase
                 <div className={styles.quickFilterRow}>
                     <div className={styles.quickFilterLeft}>
                         <div className={styles.quickFilterWrapper}>
-                            <SearchInput
+                            <InstantSearch
                                 value={quickFilter}
                                 onChange={setQuickFilter}
                                 placeholder="Find within results..."
-                                flavor="instant"
                                 size="sm"
                             />
                         </div>

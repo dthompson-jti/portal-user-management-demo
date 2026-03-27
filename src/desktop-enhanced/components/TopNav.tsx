@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './TopNav.module.css';
 import { TopNavAvatar } from './TopNavAvatar';
 import { TopNavMenu } from './TopNavMenu';
-import { SearchInput } from '../../components/SearchInput';
+import { TriggeredSearch } from '../../components/TriggeredSearch';
 
 export const TopNav = React.forwardRef<HTMLDivElement>((_, ref) => {
     const [searchValue, setSearchValue] = useState('');
@@ -34,13 +34,14 @@ export const TopNav = React.forwardRef<HTMLDivElement>((_, ref) => {
             {/* CENTER GROUP: Global Search */}
             <div className={styles.centerSection}>
                 <div className={styles.searchContainer}>
-                    <SearchInput
+                    <TriggeredSearch
                         value={searchValue}
                         onChange={setSearchValue}
                         onSearch={() => handleSearch()}
                         placeholder="Search people and cases"
-                        flavor="trigger"
                         size="sm"
+                        variant="top-nav"
+                        minSearchLength={1}
                     />
                 </div>
             </div>

@@ -7,6 +7,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ---
 
 ## [Unreleased]
+### Changed (2026-03-27) - Portal Management UI Refinement
+- **Filter Row Background**:
+    - Updated the "Find within results" filter row (`.quickFilterRow`) in `PortalCaseSearch` and `PortalEmailSearch` to use the `surface-bg-secondary` background token.
+    - Improved visual hierarchy by distinguishing the secondary filter row from the primary search results.
+- **Access Ledger Detail Panel Behavior**:
+    - Restricted the side panel visibility to purely manual control via the header toggle button.
+    - Removed "auto-open" behavior that previously triggered whenever a single record was selected.
+    - Simplified `DesktopEnhancedApp.tsx` logic by removing `portalSelectedCount` dependency for panel visibility.
+- **Design System Rules**:
+    - Codified new layout invariants for "Visibility & Auto-Behavior" in `.agent/rules/design-layout-panels.md` to prevent future regressions of manual-control patterns.
 ### Changed (2026-03-09) - Settings Refactoring
 - **Safety Checks Settings Layout**:
     - Reorganized the settings page into a lean, single-column layout for better readability on desktop.

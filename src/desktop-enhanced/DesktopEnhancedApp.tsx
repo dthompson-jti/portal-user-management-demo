@@ -22,6 +22,7 @@ import { EnhancedHistoricalReviewView as HistoricalReviewView } from './componen
 import { PortalManagementView } from './components/PortalManagementView';
 import { DesktopToolbar } from '../desktop/components/DesktopToolbar';
 import { DetailPanel } from '../desktop/components/DetailPanel';
+import { AccessLedgerDetailPanel } from './components/AccessLedgerDetailPanel';
 import { SupervisorNoteModal } from '../desktop/components/SupervisorNoteModal';
 import { ToastContainer } from '../components/ToastContainer';
 import { ToastMessage } from '../components/Toast';
@@ -67,6 +68,9 @@ export default function DesktopEnhancedApp() {
     const setActiveRecord = useSetAtom(activeDetailRecordAtom);
     const totalSelected = selectedLive.size + selectedHistory.size;
 
+    // Portal (Access Ledger) detail panel state
+    const isLedger = activePage === 'portal-access-ledger';
+
     // Track mount state to prevent resetting persisted filters on reload
     const isMountedRef = useRef(false);
 
@@ -106,8 +110,11 @@ export default function DesktopEnhancedApp() {
      * The panel is visible if:
      * 1. It is explicitly "Open" (Preview Mode) (isPanelOpen === true)
      * 2. Auto-open is ENABLED AND exactly one record is selected (Transient Mode)
+     * 3. For Access Ledger: panel open OR a single record is selected
      */
-    const showPanel = isPanelOpen || (autoOpenPanel && totalSelected === 1);
+    const showChecksPanel = isPanelOpen || (autoOpenPanel && totalSelected === 1);
+    const showLedgerPanel = isLedger && isPanelOpen;
+    const showPanel = isLedger ? showLedgerPanel : showChecksPanel;
     const [isResizing, setIsResizing] = useState(false);
 
     // Grid styling removed in favor of Flexbox optimization
@@ -142,11 +149,13 @@ export default function DesktopEnhancedApp() {
                                 )}
                                 <div className={styles.navRow2}>
                                     <h2 className={styles.pageTitle}>
-                                        {isNoResults ? 'No search results' : 
+                                        {isNoResults ? 'No search results' :
+                                         activePage === 'portal-access-ledger' ? 'Access Ledger' :
                                          activePage.startsWith('portal-') ? 'Portal Management Audit' :
                                          `Safeguard checks – ${view === 'live' ? 'Live view' : 'Historical view'}`}
                                     </h2>
 
+                                    {/* Checks header actions */}
                                     {!activePage.startsWith('portal-') && (
                                         <div className={styles.row2Actions}>
                                             <Tooltip content="Refresh data">
@@ -221,6 +230,25 @@ export default function DesktopEnhancedApp() {
                                             </Tooltip>
                                         </div>
                                     )}
+
+                                    {/* Access Ledger header actions */}
+                                    {isLedger && (
+                                        <div className={styles.row2Actions}>
+                                            <Tooltip content={showLedgerPanel ? "Close side panel" : "Open side panel"}>
+                                                <Button
+                                                    variant="secondary"
+                                                    size="s"
+                                                    iconOnly
+                                                    active={isPanelOpen}
+                                                    onClick={() => setIsPanelOpen(!isPanelOpen)}
+                                                >
+                                                    <span className="material-symbols-rounded">
+                                                        {showLedgerPanel ? 'right_panel_close' : 'right_panel_open'}
+                                                    </span>
+                                                </Button>
+                                            </Tooltip>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
@@ -259,12 +287,19 @@ export default function DesktopEnhancedApp() {
                                     style={{ overflow: 'hidden' }}
                                     data-resizing={isResizing}
                                 >
-                                    <DetailPanel
-                                        record={activeRecord}
-                                        selectedCount={totalSelected}
-                                        onResizeStart={() => setIsResizing(true)}
-                                        onResizeEnd={() => setIsResizing(false)}
-                                    />
+                                    {isLedger ? (
+                                        <AccessLedgerDetailPanel
+                                            onResizeStart={() => setIsResizing(true)}
+                                            onResizeEnd={() => setIsResizing(false)}
+                                        />
+                                    ) : (
+                                        <DetailPanel
+                                            record={activeRecord}
+                                            selectedCount={totalSelected}
+                                            onResizeStart={() => setIsResizing(true)}
+                                            onResizeEnd={() => setIsResizing(false)}
+                                        />
+                                    )}
                                 </motion.div>
                             )}
                         </AnimatePresence>

@@ -10,6 +10,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessType: 'Direct access',
         status: 'Active',
         email: 'dave.thompson@journaltech.com',
+        dateGranted: '2024-01-15',
         author: 'Dave Thompson',
         sharedWith: 'Specific users only',
         purpose: 'Standardized documentation for portal management module'
@@ -23,6 +24,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessType: 'Direct access',
         status: 'Active',
         email: 'agnes.schlauerheide@outlook.com',
+        dateGranted: '2024-02-03',
         author: 'Dave Thompson',
         sharedWith: 'All project users',
         purpose: 'Standardized documentation for jti design system'
@@ -36,6 +38,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessType: 'Direct access',
         status: 'Active',
         email: 'dave.solis@partner.com',
+        dateGranted: '2024-03-20',
         author: 'Dave Thompson',
         sharedWith: 'Specific users only',
         purpose: 'Standardized documentation for user permission matrix'
@@ -49,6 +52,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessType: 'Direct access',
         status: 'Active',
         email: 'dave.ware@example.com',
+        dateGranted: '2024-04-08',
         author: 'Dave Thompson',
         sharedWith: 'Specific users only',
         purpose: 'Standardized documentation for mobile access strategy'
@@ -62,6 +66,8 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessType: 'Direct access',
         status: 'Expired',
         email: 'agnes.dave@outlook.com',
+        dateGranted: '2023-11-10',
+        dateRevoked: '2024-02-28',
         author: 'Dave Thompson',
         sharedWith: 'All project users',
         purpose: 'Standardized documentation for confluence api'
@@ -75,6 +81,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessType: 'Direct access',
         status: 'Active',
         email: 'dave.audit@eseries.gov',
+        dateGranted: '2024-05-14',
         author: 'Dave Thompson',
         sharedWith: 'Specific users only',
         purpose: 'Standardized documentation for eseries'

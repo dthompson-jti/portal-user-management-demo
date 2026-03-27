@@ -7,6 +7,9 @@ export interface PortalAccessRecord {
     accessType: string;
     status: 'Active' | 'Revoked' | 'Expired';
     email: string; // Used for the search trigger
+    // Access history
+    dateGranted: string;
+    dateRevoked?: string;
     // Metadata for audit
     author: string;
     sharedWith: string;

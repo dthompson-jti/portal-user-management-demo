@@ -11,7 +11,7 @@ import {
     isAdvancedSearchOpenAtom
 } from '../atoms';
 import { LiveStatusFilter, HistoricalStatusFilter, TimeRangePreset } from '../types';
-import { TriggeredSearch } from '../../components/TriggeredSearch';
+import { InstantSearch } from '../../components/InstantSearch';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { FilterSelect } from './FilterSelect';
@@ -76,12 +76,11 @@ export const DesktopToolbar = ({ isEnhanced = false }: DesktopToolbarProps) => {
     const resetFilters = useSetAtom(resetFiltersAtom);
     const [isAdvancedOpen, setIsAdvancedOpen] = useAtom(isAdvancedSearchOpenAtom);
 
-    const [localSearch, setLocalSearch] = useState(filter.search);
     const [isCustomRangeOpen, setIsCustomRangeOpen] = useState(false);
     const [customStart, setCustomStart] = useState('');
     const [customEnd, setCustomEnd] = useState('');
 
-    const handleSearchExecute = useCallback((val: string) => {
+    const handleSearchChange = useCallback((val: string) => {
         updateFilter({ search: val });
     }, [updateFilter]);
 
@@ -157,7 +156,6 @@ export const DesktopToolbar = ({ isEnhanced = false }: DesktopToolbarProps) => {
 
     const handleReset = () => {
         resetFilters();
-        setLocalSearch('');
     };
 
     const dateRangeLabel = useMemo(() => {
@@ -174,12 +172,11 @@ export const DesktopToolbar = ({ isEnhanced = false }: DesktopToolbarProps) => {
     return (
         <div className={styles.toolbar}>
             <div className={styles.leftSection}>
-                <TriggeredSearch
-                    value={localSearch}
-                    onChange={setLocalSearch}
-                    onSearch={handleSearchExecute}
+                <InstantSearch
+                    value={filter.search}
+                    onChange={handleSearchChange}
                     placeholder="Find records"
-                    className={styles.triggeredSearchWidth}
+                    className={styles.searchWidth}
                 />
 
                 {view === 'historical' && !isEnhanced && (

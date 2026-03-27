@@ -61,3 +61,7 @@ export const filteredPortalResultsAtom = atom((get) => {
 
 export const isPortalActionExecutingAtom = atom<boolean>(false);
 export const portalActionResultsAtom = atom<Record<string, PortalActionResult>>({});
+
+// Access Ledger detail panel state
+export const portalInspectedRecordAtom = atom<PortalAccessRecord | null>(null);
+export const portalSelectedCountAtom = atom<number>(0);
