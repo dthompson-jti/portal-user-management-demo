@@ -39,12 +39,12 @@ const NAVIGATION_DATA: NavNode[] = [
     {
         type: 'section',
         id: 'portal-mgmt',
-        label: 'Portal management A',
+        label: 'Portal Management',
         children: [
-            { type: 'link', id: 'portal-email-search', label: 'Email search' },
-            { type: 'link', id: 'portal-case-search', label: 'Case search' },
-            { type: 'link', id: 'portal-case-example', label: 'Case example' },
-            { type: 'link', id: 'portal-access-ledger', label: 'Access Ledger' },
+            { type: 'link', id: 'portal-email-search', label: 'A1. Email Search' },
+            { type: 'link', id: 'portal-case-search', label: 'A2. Case Search' },
+            { type: 'link', id: 'portal-case-example', label: 'A3. Case Example' },
+            { type: 'link', id: 'portal-access-ledger', label: 'B1. Access Ledger' },
         ]
     },
     {

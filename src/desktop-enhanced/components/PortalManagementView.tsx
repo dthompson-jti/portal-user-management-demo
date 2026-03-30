@@ -1,8 +1,8 @@
 import React from 'react';
 import { useAtomValue } from 'jotai';
 import { activePageAtom } from '../../data/activePageAtom';
-import { PortalEmailSearch } from './PortalEmailSearch';
-import { PortalCaseSearch } from './PortalCaseSearch';
+import { PortalOmnisearch } from './PortalOmnisearch';
+import { PortalCaseAccessManager } from './PortalCaseAccessManager';
 import { AccessLedger } from './AccessLedger';
 import styles from './PortalManagementView.module.css';
 
@@ -12,15 +12,15 @@ export const PortalManagementView: React.FC = () => {
     const renderContent = () => {
         switch (activePage) {
             case 'portal-email-search':
-                return <PortalEmailSearch />;
+                return <PortalOmnisearch mode="email" />;
             case 'portal-case-search':
-                return <PortalCaseSearch />;
+                return <PortalOmnisearch mode="case" />;
             case 'portal-case-example':
-                return <PortalCaseSearch isInsideCase={true} caseNum="CIV-24-0000013" />;
+                return <PortalCaseAccessManager caseNum="CIV-24-0000013" />;
             case 'portal-access-ledger':
                 return <AccessLedger />;
             default:
-                return <PortalEmailSearch />;
+                return <PortalOmnisearch />;
         }
     };
 

@@ -1,42 +1,29 @@
 
-> safeguard-desktop@0.0.0 lint
+> portal-management@0.0.0 lint
 > eslint .
 
 
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\components\MultiSelect.tsx
-  34:11  error  'handleClear' is assigned a value but never used  @typescript-eslint/no-unused-vars
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\components\PortalDataTable.tsx
+   27:75  error  Unexpected any. Specify a different type                                 @typescript-eslint/no-explicit-any
+   89:33  error  Unexpected any. Specify a different type                                 @typescript-eslint/no-explicit-any
+   94:34  error  Unsafe assignment of an `any` value                                      @typescript-eslint/no-unsafe-assignment
+   94:34  error  Unsafe call of a(n) `any` typed value                                    @typescript-eslint/no-unsafe-call
+   94:40  error  Unsafe member access .getIsAllRowsSelected on an `any` value             @typescript-eslint/no-unsafe-member-access
+   96:35  error  Unsafe assignment of an `any` value                                      @typescript-eslint/no-unsafe-assignment
+   96:35  error  Unsafe call of a(n) `any` typed value                                    @typescript-eslint/no-unsafe-call
+   96:41  error  Unsafe member access .getToggleAllRowsSelectedHandler on an `any` value  @typescript-eslint/no-unsafe-member-access
+  101:29  error  Unexpected any. Specify a different type                                 @typescript-eslint/no-explicit-any
+  106:34  error  Unsafe assignment of an `any` value                                      @typescript-eslint/no-unsafe-assignment
+  106:34  error  Unsafe call of a(n) `any` typed value                                    @typescript-eslint/no-unsafe-call
+  106:38  error  Unsafe member access .getIsSelected on an `any` value                    @typescript-eslint/no-unsafe-member-access
+  108:35  error  Unsafe assignment of an `any` value                                      @typescript-eslint/no-unsafe-assignment
+  108:35  error  Unsafe call of a(n) `any` typed value                                    @typescript-eslint/no-unsafe-call
+  108:39  error  Unsafe member access .getToggleSelectedHandler on an `any` value         @typescript-eslint/no-unsafe-member-access
+  109:55  error  Unsafe member access .id on an `any` value                               @typescript-eslint/no-unsafe-member-access
 
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\data\useTheme.ts
-  10:24  error  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+C:\Users\dthompson\Documents\CODE\portal-management\src\desktop-enhanced\components\PortalOmnisearch.tsx
+  191:68  error  Unsafe argument of type `any` assigned to a parameter of type `SetStateAction<"compact" | "quick-actions">`  @typescript-eslint/no-unsafe-argument
+  191:75  error  Unexpected any. Specify a different type                                                                     @typescript-eslint/no-explicit-any
 
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\desktop-enhanced\DesktopEnhancedApp.tsx
-  69:32  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
-  78:32  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
-
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\desktop-enhanced\Layout.tsx
-  28:32  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
-  30:32  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
-  32:32  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
-
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\desktop-enhanced\components\EnhancedHistoricalReviewView.tsx
-  488:9  warning  React Hook useMemo has an unnecessary dependency: 'loadedData'. Either exclude it or remove the dependency array  react-hooks/exhaustive-deps
-
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\desktop-enhanced\data\mockData.ts
-  594:52  error  Unsafe argument of type `any` assigned to a parameter of type `HistoricalStatusFilter`  @typescript-eslint/no-unsafe-argument
-  594:61  error  Unexpected any. Specify a different type                                                @typescript-eslint/no-explicit-any
-
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\desktop-enhanced\data\simulationConfig.ts
-  79:19  error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
-  80:24  error  Unsafe member access .target on an `any` value  @typescript-eslint/no-unsafe-member-access
-  80:50  error  Unsafe member access .target on an `any` value  @typescript-eslint/no-unsafe-member-access
-  81:17  error  Unsafe return of a value of type `any`          @typescript-eslint/no-unsafe-return
-  81:31  error  Unsafe member access .mode on an `any` value    @typescript-eslint/no-unsafe-member-access
-  84:14  error  'e' is defined but never used                   @typescript-eslint/no-unused-vars
-
-C:\Users\dthompson\Documents\CODE\safeguard-desktop\src\desktop\atoms.ts
-   72:27  error  Unexpected any. Specify a different type                                                @typescript-eslint/no-explicit-any
-  114:94  error  Unsafe argument of type `any` assigned to a parameter of type `HistoricalStatusFilter`  @typescript-eslint/no-unsafe-argument
-
-Γ£û 18 problems (17 errors, 1 warning)
-  1 error and 0 warnings potentially fixable with the `--fix` option.
+Γ£û 18 problems (18 errors, 0 warnings)
 

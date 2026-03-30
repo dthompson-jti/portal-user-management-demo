@@ -151,7 +151,10 @@ export default function DesktopEnhancedApp() {
                                     <h2 className={styles.pageTitle}>
                                         {isNoResults ? 'No search results' :
                                          activePage === 'portal-access-ledger' ? 'Access Ledger' :
-                                         activePage.startsWith('portal-') ? 'Portal Management Audit' :
+                                         activePage === 'portal-case-example' ? 'Case Example' :
+                                         activePage === 'portal-case-search' ? 'Case Search' :
+                                         activePage === 'portal-email-search' ? 'Email Search' :
+                                         activePage.startsWith('portal-') ? 'Portal Management' :
                                          `Safeguard checks – ${view === 'live' ? 'Live view' : 'Historical view'}`}
                                     </h2>
 

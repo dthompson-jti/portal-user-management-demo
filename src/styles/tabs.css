@@ -89,3 +89,25 @@
 .panel-tabs .tab-underline {
   bottom: -1px;
 }
+
+/* Pill badge for tab counts */
+.tab-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--spacing-1p5);
+  margin-left: var(--spacing-2);
+  border-radius: var(--radius-full, 9999px);
+  background-color: var(--surface-bg-tertiary);
+  color: var(--surface-fg-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.tab-button[data-state='active'] .tab-pill {
+  background-color: var(--surface-bg-theme-subtle);
+  color: var(--surface-fg-theme-strong);
+}

@@ -85,6 +85,16 @@ To avoid a jarring "empty table" on first load (where the Spacer takes up 80% of
         *   **Officer**: 1x share (Secondary identifier)
 *   **Persistence**: This distribution sets the *initial* state. It does not lock the columns. The user can immediately resize them, and the system reverts to standard rules.
 
+### 3.4 Data Density & Action Layouts
+Tables handling dense administrative tasks (e.g., Portal Management) should support user-selectable density modes to balance readability against single-click action speed:
+*   **Quick Actions Mode:** Explicit primary buttons (`[ Grant ]`, `[ Revoke ]`) displayed inline on every row. Optimizes for rapid single-item operations but consumes horizontal space.
+*   **Default / Compact Mode:** Standard table layout where actions are collapsed under an `[ ⋮ ]` overflow menu or relegated to bulk-action footers. Optimizes for maximum data visibility and multi-select workflows.
+
+### 3.5 Explanatory Grouping
+When flat datatables become overwhelming (e.g., returning 200+ results), they should support inline grouping.
+*   **Controls:** Grouping should be primarily controlled by a localized, explicit dropdown filter (e.g., `Group by: Status ▼`) next to other table filters, **not** buried in a generic hamburger or settings menu. *(Note: For rapid prototyping purposes in some modules, this may temporarily reside in a hamburger menu, but production implementation must elevate it to the filter bar).*
+*   **Behavior:** Tables group into collapsable header rows depicting the category and count (e.g., `Active Access (12)`).
+
 ---
 
 ## 4. Visual Specs & Constants

@@ -12,7 +12,7 @@ import { StatusBadge, StatusBadgeType } from '../../desktop/components/StatusBad
 import { addToastAtom } from '../../data/toastAtoms';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
-import styles from './PortalEmailSearch.module.css';
+import styles from './PortalEmailSearch.module.css'; // Reusing CSS
 
 const STATUS_OPTIONS = [
     { value: 'all', label: 'All Statuses' },
@@ -21,20 +21,41 @@ const STATUS_OPTIONS = [
     { value: 'Expired', label: 'Expired' },
 ];
 
-export const PortalEmailSearch: React.FC = () => {
+const GROUP_OPTIONS = [
+    { value: 'none', label: 'No grouping' },
+    { value: 'status', label: 'Group by Status' },
+    { value: 'participantRole', label: 'Group by Role' },
+];
+
+const DENSITY_OPTIONS = [
+    { value: 'compact', label: 'Compact Mode' },
+    { value: 'quick-actions', label: 'Quick Actions Mode' },
+];
+
+interface PortalOmnisearchProps {
+    mode?: 'email' | 'case';
+}
+
+export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({ mode }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
     
+    // Search & Context State
     const [localQuery, setLocalQuery] = useState('');
     const [searchTrigger, setSearchTrigger] = useState('');
+    const [queryContext, setQueryContext] = useState<'email' | 'case' | null>(null);
+
+    // Filters & View State
     const [quickFilter, setQuickFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
+    const [groupBy, setGroupBy] = useState('none');
+    const [densityMode, setDensityMode] = useState<'compact' | 'quick-actions'>('compact');
+
+    // Selection & Actions
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
     const [isRevokeConfirmOpen, setIsRevokeConfirmOpen] = useState(false);
     const [pendingRevokeIds, setPendingRevokeIds] = useState<string[]>([]);
-
-    // sticky results: once searched, these remain even if they no longer match the broad filter
     const [visibleResults, setVisibleResults] = useState<PortalAccessRecord[]>([]);
 
     const handleSearch = useCallback((val: string) => {
@@ -42,8 +63,12 @@ export const PortalEmailSearch: React.FC = () => {
         setQuickFilter(''); 
         setStatusFilter('all');
         const q = val.toLowerCase();
+
+        // If mode is locked, use it; otherwise auto-detect from query
+        let context:'email' | 'case' = mode ?? (q.includes('@') ? 'email' : 'case');
+        setQueryContext(context);
         
-        // Capture initial results
+        // Very basic mock matching logic
         const matches = results.filter(r => 
             r.email.toLowerCase().includes(q) || 
             r.caseNumber.toLowerCase().includes(q) ||
@@ -52,7 +77,6 @@ export const PortalEmailSearch: React.FC = () => {
         setVisibleResults(matches);
     }, [results]);
 
-    // Stage 2: Quick filter + Status filter (Sub-filtering the sticky results)
     const finalResults = useMemo(() => {
         let current = visibleResults;
         
@@ -65,7 +89,8 @@ export const PortalEmailSearch: React.FC = () => {
             current = current.filter(r => 
                 r.caseNumber.toLowerCase().includes(q) || 
                 r.caseName.toLowerCase().includes(q) ||
-                r.participantRole.toLowerCase().includes(q)
+                r.participantRole.toLowerCase().includes(q) ||
+                r.email.toLowerCase().includes(q)
             );
         }
 
@@ -77,62 +102,36 @@ export const PortalEmailSearch: React.FC = () => {
         if (ids.length === 0) return;
 
         setIsExecuting(true);
-        const count = ids.length;
-        
         await new Promise(r => setTimeout(r, 1200));
 
         setResults(prev => prev.map(r =>
             ids.includes(r.id) ? { ...r, status: 'Revoked' as const } : r
         ));
 
-        // Update local sticky results so they don't disappear
         setVisibleResults(prev => prev.map(r => 
             ids.includes(r.id) ? { ...r, status: 'Revoked' as const } : r
         ));
 
         setIsExecuting(false);
         setPendingRevokeIds([]);
-        setSelectedIds(prev => {
-            const next = { ...prev };
-            ids.forEach(id => delete next[id]);
-            return next;
-        });
+        setSelectedIds({});
         
         addToast({
             title: 'Access Revoked',
-            message: `Successfully removed portal access for ${count} record${count > 1 ? 's' : ''}.`,
+            message: `Successfully removed portal access for ${ids.length} record${ids.length > 1 ? 's' : ''}.`,
             icon: 'no_accounts',
             variant: 'success'
         });
     };
 
-    const openBulkRevokeConfirm = () => {
-        const ids = Object.keys(selectedIds).filter(id => selectedIds[id]);
-        if (ids.length === 0) return;
-        setPendingRevokeIds(ids);
-        setIsRevokeConfirmOpen(true);
-    };
-
-    const openSingleRevokeConfirm = (record: PortalAccessRecord) => {
-        setPendingRevokeIds([record.id]);
-        setIsRevokeConfirmOpen(true);
-    };
-
-    const columns: ColumnDef<PortalAccessRecord, unknown>[] = [
-        { 
-            accessorKey: 'caseNumber',
-            header: 'Case Number', 
-            size: 150,
-            minSize: 120
-        },
-        { accessorKey: 'caseName', header: 'Case Name', size: 250, minSize: 200 },
-        { accessorKey: 'participantRole', header: 'Case Participant Role', size: 250, minSize: 200 },
-        { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
+    const caseColumns: ColumnDef<PortalAccessRecord, unknown>[] = [
+        { accessorKey: 'email', header: 'Email Address', size: 250, minSize: 200 },
+        { accessorKey: 'participantRole', header: 'Participant Role', size: 250, minSize: 200 },
+        { accessorKey: 'accessType', header: 'Portal Role(s)', size: 150, minSize: 120 },
         { 
             accessorKey: 'status', 
             header: 'Status', 
             size: 120,
-            minSize: 100,
             cell: ({ getValue }) => {
                 const val = getValue() as string;
                 return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
@@ -140,6 +139,23 @@ export const PortalEmailSearch: React.FC = () => {
         },
     ];
 
+    const emailColumns: ColumnDef<PortalAccessRecord, unknown>[] = [
+        { accessorKey: 'caseNumber', header: 'Case Number', size: 150, minSize: 120 },
+        { accessorKey: 'caseName', header: 'Case Name', size: 250, minSize: 200 },
+        { accessorKey: 'participantRole', header: 'Case Participant Role', size: 250, minSize: 200 },
+        { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
+        { 
+            accessorKey: 'status', 
+            header: 'Status', 
+            size: 120,
+            cell: ({ getValue }) => {
+                const val = getValue() as string;
+                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+            }
+        },
+    ];
+
+    const activeColumns = queryContext === 'case' ? caseColumns : emailColumns;
     const selectedCount = Object.keys(selectedIds).filter(k => selectedIds[k]).length;
     const pendingCount = pendingRevokeIds.length;
 
@@ -152,62 +168,85 @@ export const PortalEmailSearch: React.FC = () => {
                             value={localQuery}
                             onChange={setLocalQuery}
                             onSearch={(q) => void handleSearch(q)}
-                            placeholder="Enter email or case ID to search..."
+                            placeholder={mode === 'email' ? 'Search by email' : mode === 'case' ? 'Search by case ID' : 'Search by email or case ID'}
+                        />
+                </div>
+            </div>
+
+            {/* Row 2: Settings & Filters */}
+            <div className={styles.quickFilterRow} style={{ marginTop: '16px', opacity: searchTrigger ? 1 : 0.5, pointerEvents: searchTrigger ? 'auto' : 'none' }}>
+                <div className={styles.quickFilterLeft}>
+                    <div className={styles.quickFilterWrapper}>
+                        <InstantSearch
+                            value={quickFilter}
+                            onChange={setQuickFilter}
+                            placeholder="Find within results..."
+                            size="sm"
                         />
                     </div>
                 </div>
-
-            {/* Row 2: (Conditional) Quick Filter + Dropdowns */}
-            {searchTrigger && (
-                <div className={styles.quickFilterRow}>
-                    <div className={styles.quickFilterLeft}>
-                        <div className={styles.quickFilterWrapper}>
-                            <InstantSearch
-                                value={quickFilter}
-                                onChange={setQuickFilter}
-                                placeholder="Find within results..."
-                                size="sm"
-                            />
-                        </div>
-                    </div>
-                    <div className={styles.quickFilterRight}>
-                        <div className={styles.filterGroup}>
-                            <FilterSelect
-                                value={statusFilter}
-                                onValueChange={setStatusFilter}
-                                placeholder="All Statuses"
-                                options={STATUS_OPTIONS}
-                                onClear={() => setStatusFilter('all')}
-                                isCustomized={statusFilter !== 'all'}
-                            />
-                        </div>
+                <div className={styles.quickFilterRight}>
+                    <div className={styles.filterGroup}>
+                        <FilterSelect
+                            value={densityMode}
+                            onValueChange={(val) => setDensityMode(val as 'compact' | 'quick-actions')}
+                            placeholder="Density Mode"
+                            options={DENSITY_OPTIONS}
+                            onClear={() => setDensityMode('compact')}
+                            isCustomized={densityMode !== 'compact'}
+                        />
+                        <FilterSelect
+                            value={groupBy}
+                            onValueChange={setGroupBy}
+                            placeholder="Grouping"
+                            options={GROUP_OPTIONS}
+                            onClear={() => setGroupBy('none')}
+                            isCustomized={groupBy !== 'none'}
+                        />
+                        <FilterSelect
+                            value={statusFilter}
+                            onValueChange={setStatusFilter}
+                            placeholder="All Statuses"
+                            options={STATUS_OPTIONS}
+                            onClear={() => setStatusFilter('all')}
+                            isCustomized={statusFilter !== 'all'}
+                        />
                     </div>
                 </div>
-            )}
+            </div>
 
             <div className={styles.tableWrapper}>
                 {!searchTrigger ? (
                     <div className={styles.empty}>
                         <span className="material-symbols-rounded">search</span>
-                        <p>Search by email or case ID to see results.</p>
+                        <p>{mode === 'email' ? 'Search by email to retrieve access records.' : mode === 'case' ? 'Search by case ID to retrieve access records.' : 'Search by email or case ID to retrieve access records.'}</p>
                     </div>
                 ) : (
                     <PortalDataTable 
                         data={finalResults} 
-                        columns={columns} 
+                        columns={activeColumns} 
                         rowSelection={selectedIds}
                         onRowSelectionChange={setSelectedIds}
-                        onRevokeRow={openSingleRevokeConfirm}
+                        onRevokeRow={(row) => {
+                            setPendingRevokeIds([row.id]);
+                            setIsRevokeConfirmOpen(true);
+                        }}
+                        densityMode={densityMode}
+                        groupBy={groupBy}
                         isLoading={isExecuting && finalResults.length === 0}
-                        emptyState={<div className={styles.empty}>No matching projects found.</div>}
+                        emptyState={<div className={styles.empty}>No matching access records found.</div>}
                     />
                 )}
             </div>
 
-            {selectedCount > 0 && (
+            {selectedCount > 0 && densityMode !== 'quick-actions' && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
-                    onAction={openBulkRevokeConfirm}
+                    onAction={() => {
+                        const ids = Object.keys(selectedIds).filter(id => selectedIds[id]);
+                        setPendingRevokeIds(ids);
+                        setIsRevokeConfirmOpen(true);
+                    }}
                     onClear={() => setSelectedIds({})}
                     actionLabel="Revoke access"
                     actionIcon="no_accounts"

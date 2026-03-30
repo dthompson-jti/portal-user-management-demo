@@ -1,8 +1,9 @@
 import React from 'react';
-import { ColumnDef, RowSelectionState, OnChangeFn } from '@tanstack/react-table';
+import { ColumnDef, RowSelectionState, OnChangeFn, HeaderContext, CellContext } from '@tanstack/react-table';
 import { DataTable } from '../../desktop/components/DataTable';
 import { RowContextMenu } from '../../desktop/components/RowContextMenu';
 import { COLUMN_WIDTHS } from '../../desktop/components/tableConstants';
+import { Button } from '../../components/Button';
 import styles from './PortalDataTable.module.css';
 
 interface PortalDataTableProps<T> {
@@ -12,7 +13,15 @@ interface PortalDataTableProps<T> {
     emptyState?: React.ReactNode;
     rowSelection?: RowSelectionState;
     onRowSelectionChange?: OnChangeFn<RowSelectionState>;
-    onRevokeRow?: (row: T) => void;
+    onRowAction?: (row: T) => void;
+    // Backwards compat for old onRevokeRow calls
+    onRevokeRow?: (row: T) => void; 
+    
+    // New Feature Props
+    densityMode?: 'compact' | 'quick-actions';
+    groupBy?: string; // e.g. 'status', 'role'
+    actionLabel?: string;
+    actionIcon?: string;
 }
 
 export function PortalDataTable<T extends { id: string }>({
@@ -22,9 +31,16 @@ export function PortalDataTable<T extends { id: string }>({
     emptyState,
     rowSelection = {},
     onRowSelectionChange,
-    onRevokeRow
+    onRowAction,
+    onRevokeRow,
+    densityMode = 'compact',
+    groupBy = 'none',
+    actionLabel = 'Revoke',
+    actionIcon = 'no_accounts'
 }: PortalDataTableProps<T>) {
     const lastClickedRowRef = React.useRef<string | null>(null);
+
+    const handleRowAction = onRowAction || onRevokeRow;
 
     const handleRowClick = React.useCallback((row: T, event: React.MouseEvent, visualIds: string[]) => {
         if (!onRowSelectionChange) return;
@@ -65,10 +81,12 @@ export function PortalDataTable<T extends { id: string }>({
         });
     }, [onRowSelectionChange]);
 
+    const isQuickActions = densityMode === 'quick-actions';
+
     const augmentedColumns: ColumnDef<T, unknown>[] = [
-        {
+        ...(isQuickActions ? [] : [{
             id: 'select',
-            header: ({ table }) => (
+            header: ({ table }: HeaderContext<T, unknown>) => (
                 <div className={styles.checkboxCell}>
                     <input
                         type="checkbox"
@@ -80,7 +98,7 @@ export function PortalDataTable<T extends { id: string }>({
                     />
                 </div>
             ),
-            cell: ({ row }) => (
+            cell: ({ row }: CellContext<T, unknown>) => (
                 <div className={styles.checkboxCell}>
                     <input
                         type="checkbox"
@@ -93,37 +111,94 @@ export function PortalDataTable<T extends { id: string }>({
                 </div>
             ),
             ...COLUMN_WIDTHS.CHECKBOX,
-        },
+        }]),
         ...columns,
         {
             id: 'actions',
             header: () => null,
-            ...COLUMN_WIDTHS.ACTIONS,
+            size: isQuickActions ? 120 : 48,
+            minSize: isQuickActions ? 120 : 48,
+            maxSize: isQuickActions ? 120 : 48,
             enableSorting: false,
             cell: ({ row }) => {
                 return (
                     <div className={styles.actionsCellWrapper}>
-                        <RowContextMenu
-                            actions={[
-                                {
-                                    label: 'View details',
-                                    icon: 'info',
-                                    onClick: () => { /* View details */ },
-                                },
-                                {
-                                    label: 'Revoke access',
-                                    icon: 'no_accounts',
-                                    onClick: () => onRevokeRow?.(row.original),
-                                    destructive: true,
-                                }
-                            ]}
-                        />
+                        {isQuickActions ? (
+                            <Button 
+                                variant={actionLabel === 'Revoke' ? 'secondary' : 'primary'}
+                                size="s"
+                                onClick={() => handleRowAction?.(row.original)}
+                            >
+                                <span className={`material-symbols-rounded`} style={{ fontSize: '18px', marginRight: '4px' }}>
+                                    {actionIcon}
+                                </span>
+                                {actionLabel}
+                            </Button>
+                        ) : (
+                            <RowContextMenu
+                                actions={[
+                                    {
+                                        label: 'View details',
+                                        icon: 'info',
+                                        onClick: () => { /* View details */ },
+                                    },
+                                    {
+                                        label: actionLabel,
+                                        icon: actionIcon,
+                                        onClick: () => handleRowAction?.(row.original),
+                                        destructive: actionLabel.includes('Revoke'),
+                                    }
+                                ]}
+                            />
+                        )}
                     </div>
                 );
             }
         }
     ];
 
+    // Option B Implementation: Partitioned Data Grouping (Prototype only)
+    if (groupBy !== 'none' && data.length > 0) {
+        // Group data
+        const groupedData = data.reduce((acc, row) => {
+            const rawValue = (row as Record<string, unknown>)[groupBy];
+            const key = typeof rawValue === 'string' ? rawValue : 'Unknown';
+            if (!acc[key]) acc[key] = [];
+            acc[key].push(row);
+            return acc;
+        }, {} as Record<string, T[]>);
+
+        return (
+            <div className={styles.wrapper}>
+                {Object.entries(groupedData).map(([groupName, groupItems]) => (
+                    <div key={groupName} className={styles.groupContainer} style={{ marginBottom: '24px' }}>
+                        <div className={styles.groupHeader} style={{
+                            padding: '12px 16px',
+                            background: 'var(--surface-bg-tertiary)',
+                            borderBottom: '1px solid var(--surface-border-primary)',
+                            fontWeight: 600,
+                            borderRadius: '8px 8px 0 0'
+                        }}>
+                            {groupName} <span style={{ color: 'var(--text-secondary)', fontWeight: 400, marginLeft: '8px' }}>({groupItems.length})</span>
+                        </div>
+                        <DataTable
+                            data={groupItems}
+                            columns={augmentedColumns}
+                            isLoading={isLoading}
+                            emptyState={emptyState}
+                            enableRowSelection={!isQuickActions}
+                            rowSelection={rowSelection}
+                            onRowSelectionChange={onRowSelectionChange}
+                            getRowId={(row: T) => row.id}
+                            onRowClick={handleRowClick}
+                        />
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+    // Default Render
     return (
         <div className={styles.wrapper}>
             <DataTable
@@ -131,7 +206,7 @@ export function PortalDataTable<T extends { id: string }>({
                 columns={augmentedColumns}
                 isLoading={isLoading}
                 emptyState={emptyState}
-                enableRowSelection={true}
+                enableRowSelection={!isQuickActions}
                 rowSelection={rowSelection}
                 onRowSelectionChange={onRowSelectionChange}
                 getRowId={(row: T) => row.id}
