@@ -617,6 +617,7 @@
     align-items: center;
     justify-content: center;
     padding: var(--spacing-10);
+    min-height: 400px;
     color: var(--control-fg-placeholder);
     gap: var(--spacing-2);
 }

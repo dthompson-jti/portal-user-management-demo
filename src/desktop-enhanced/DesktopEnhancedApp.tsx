@@ -152,6 +152,7 @@ export default function DesktopEnhancedApp() {
                                         {isNoResults ? 'No search results' :
                                          activePage === 'portal-access-ledger' ? 'Access Ledger' :
                                          activePage === 'portal-case-example' ? 'Case Example' :
+                                         activePage === 'portal-omnisearch' ? 'Omnisearch' :
                                          activePage === 'portal-case-search' ? 'Case Search' :
                                          activePage === 'portal-email-search' ? 'Email Search' :
                                          activePage.startsWith('portal-') ? 'Portal Management' :

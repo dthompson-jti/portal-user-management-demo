@@ -12,9 +12,11 @@ export const PortalManagementView: React.FC = () => {
     const renderContent = () => {
         switch (activePage) {
             case 'portal-email-search':
-                return <PortalOmnisearch mode="email" />;
+                return <PortalOmnisearch key="email" mode="email" />;
             case 'portal-case-search':
-                return <PortalOmnisearch mode="case" />;
+                return <PortalOmnisearch key="case" mode="case" />;
+            case 'portal-omnisearch':
+                return <PortalOmnisearch key="omni" />;
             case 'portal-case-example':
                 return <PortalCaseAccessManager caseNum="CIV-24-0000013" />;
             case 'portal-access-ledger':

@@ -102,6 +102,50 @@ The legacy screenshots are provided for **functional reference only** — the ac
 
 ---
 
+## Vet Notes — Claude Opus 4.6
+
+> The following annotations assess each JIRA idea against architectural soundness, UX best practices, and alignment with the approved UX patterns in `docs/working/PRD-portal-management-ux.md`.
+
+### Solid — keep as-is
+
+| Idea | Verdict | Rationale |
+|------|---------|-----------|
+| Two search modes (email vs case) | **Keep** | Core feature. Different input yields different result shape. Omnisearch context-switching is the approved production pattern. |
+| Inside-a-case tabbed layout (Active / Missing) | **Keep** | Correct mental model. When case context is fixed, search is irrelevant — tabs segment the two states cleanly. Already built as A3. |
+| Confirmation modal for destructive actions | **Keep** | Standard enterprise pattern. Non-negotiable for revoke operations. |
+| Select-all checkbox for bulk operations | **Keep** | Standard table pattern. No issues. |
+
+### Questionable — needs refinement
+
+| Idea | Verdict | Issue | Better Alternative |
+|------|---------|-------|--------------------|
+| "Removal Result" / "Result" column | **Rethink** | A column that's permanently empty until an action occurs wastes horizontal space and confuses users ("why is this column blank?"). | Use inline status transition on the existing Status column (Active → Revoked with animation), plus a transient row highlight that fades. Failures can surface in a toast with per-row breakdown. |
+| Per-record iterative API response shown in UI | **Rethink** | This leaks a backend implementation detail (sequential API calls) into the UX. A row-by-row ticker creates anxiety ("why is row 3 taking longer?"). | Batch the visual update. Show a single success/partial-failure summary. Enumerate individual failures in a toast or detail panel only if some rows failed. |
+| Grant access from "Missing Access" tab | **Keep concept, fix data model** | The submitter conflates Parties/CaseAssignments (eSeries case data) with Portal access (separate system). The "missing" list requires a cross-system lookup, not a simple `status !== 'Active'` filter. Revoked users are not the same as users who never had access. | The data model needs a proper `hasPortalAccess` boolean or a separate `CaseParty` type, not reuse of `PortalAccessRecord` with inverted status. |
+
+### Bogus — should be dropped
+
+| Idea | Verdict | Rationale |
+|------|---------|-----------|
+| Separate "Email Search" and "Case Search" as two full production pages | **Drop for production** | The JIRA has these as entirely separate screens with separate navigation. The Omnisearch pattern makes them redundant — one input, context-switching columns. A1 and A2 are useful as prototype comparisons but should not ship as separate nav entries. |
+| "Case Number search field is hidden" when inside a case | **Drop** | The submitter describes the same screen with the search bar removed — that's a hack, not a design. The tabbed layout (A3) is already the correct inside-case UX. This adds nothing. |
+| Density toggle in a hamburger menu | **Drop** | The PRD already flags this as a prototype artifact. Burying view settings in a hamburger for an enterprise power-user tool is bad discoverability. The inline filter-row placement (current implementation) or a toolbar icon toggle is correct. |
+
+### Summary
+
+| JIRA Idea | Ship? | Notes |
+|-----------|-------|-------|
+| Email search page | Prototype only (A1) | Production uses Omnisearch |
+| Case search page | Prototype only (A2) | Production uses Omnisearch |
+| Inside-case tabs | **Yes** (A3) | Already built correctly |
+| Removal Result column | No — use status transition | Inline animation + transient highlight |
+| Per-row iterative feedback | No — use batch summary | Toast with failure enumeration |
+| Grant from Missing tab | Yes, with data model fix | Needs cross-system lookup, not status filter |
+| Separate nav entries | Prototype only | Single entry point in production |
+| Hamburger density toggle | No | Inline placement is better |
+
+---
+
 ## Approved UX Patterns for Prototype
 
 Based on the exploration of these notes, the following patterns have been agreed upon for Prototype implementation (see `docs/working/PRD-portal-management-ux.md` for full breakdown):

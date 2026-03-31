@@ -44,6 +44,7 @@ const NAVIGATION_DATA: NavNode[] = [
             { type: 'link', id: 'portal-email-search', label: 'A1. Email Search' },
             { type: 'link', id: 'portal-case-search', label: 'A2. Case Search' },
             { type: 'link', id: 'portal-case-example', label: 'A3. Case Example' },
+            { type: 'link', id: 'portal-omnisearch', label: 'A5. Omnisearch' },
             { type: 'link', id: 'portal-access-ledger', label: 'B1. Access Ledger' },
         ]
     },
