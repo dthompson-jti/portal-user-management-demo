@@ -15,10 +15,14 @@ export const PortalManagementView: React.FC = () => {
                 return <PortalOmnisearch key="email" mode="email" />;
             case 'portal-case-search':
                 return <PortalOmnisearch key="case" mode="case" />;
+            case 'portal-email-search-partial':
+                return <PortalOmnisearch key="email-partial" mode="email" matchMode="partial" resultLayout="email-first" />;
+            case 'portal-case-search-partial':
+                return <PortalOmnisearch key="case-partial" mode="case" matchMode="partial" resultLayout="case-email" />;
             case 'portal-omnisearch':
                 return <PortalOmnisearch key="omni" />;
             case 'portal-case-example':
-                return <PortalCaseAccessManager caseNum="CIV-24-0000013" />;
+                return <PortalCaseAccessManager caseNum="CIV-24-0000016" />;
             case 'portal-access-ledger':
                 return <AccessLedger />;
             default:

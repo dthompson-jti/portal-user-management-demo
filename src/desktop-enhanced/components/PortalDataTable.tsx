@@ -22,6 +22,7 @@ interface PortalDataTableProps<T> {
     groupBy?: string; // e.g. 'status', 'role'
     actionLabel?: string;
     actionIcon?: string;
+    hideHeaderControlsWhenEmpty?: boolean;
 }
 
 export function PortalDataTable<T extends { id: string }>({
@@ -36,11 +37,13 @@ export function PortalDataTable<T extends { id: string }>({
     densityMode = 'compact',
     groupBy = 'none',
     actionLabel = 'Revoke',
-    actionIcon = 'no_accounts'
+    actionIcon = 'no_accounts',
+    hideHeaderControlsWhenEmpty = false,
 }: PortalDataTableProps<T>) {
     const lastClickedRowRef = React.useRef<string | null>(null);
 
     const handleRowAction = onRowAction || onRevokeRow;
+    const shouldShowHeaderControls = data.length > 0 || !hideHeaderControlsWhenEmpty;
 
     const handleRowClick = React.useCallback((row: T, event: React.MouseEvent, visualIds: string[]) => {
         if (!onRowSelectionChange) return;
@@ -84,7 +87,7 @@ export function PortalDataTable<T extends { id: string }>({
     const isQuickActions = densityMode === 'quick-actions';
 
     const augmentedColumns: ColumnDef<T, unknown>[] = [
-        ...(isQuickActions ? [] : [{
+        ...(!isQuickActions && shouldShowHeaderControls ? [{
             id: 'select',
             header: ({ table }: HeaderContext<T, unknown>) => (
                 <div className={styles.checkboxCell}>
@@ -111,16 +114,16 @@ export function PortalDataTable<T extends { id: string }>({
                 </div>
             ),
             ...COLUMN_WIDTHS.CHECKBOX,
-        }]),
+        }] : []),
         ...columns,
-        {
+        ...(shouldShowHeaderControls ? [{
             id: 'actions',
             header: () => null,
             size: isQuickActions ? 120 : 48,
             minSize: isQuickActions ? 120 : 48,
             maxSize: isQuickActions ? 120 : 48,
             enableSorting: false,
-            cell: ({ row }) => {
+            cell: ({ row }: CellContext<T, unknown>) => {
                 return (
                     <div className={styles.actionsCellWrapper}>
                         {isQuickActions ? (
@@ -154,7 +157,7 @@ export function PortalDataTable<T extends { id: string }>({
                     </div>
                 );
             }
-        }
+        }] : [])
     ];
 
     // Option B Implementation: Partitioned Data Grouping (Prototype only)

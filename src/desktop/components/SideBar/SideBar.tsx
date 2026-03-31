@@ -31,7 +31,6 @@ const NAVIGATION_DATA: NavNode[] = [
             { type: 'link', id: 'action-items', label: 'Action Items' },
             { type: 'link', id: '22stcp00011', label: '22STCP00011' },
             { type: 'link', id: '22stcp00013', label: '22STCP00013' },
-            { type: 'link', id: 'safeguard', label: 'Safeguard checks' },
             { type: 'link', id: 'open-till', label: 'Open Till' },
             { type: 'link', id: 'close-till', label: 'Close Till' },
         ]
@@ -45,7 +44,9 @@ const NAVIGATION_DATA: NavNode[] = [
             { type: 'link', id: 'portal-case-search', label: 'A2. Case Search' },
             { type: 'link', id: 'portal-case-example', label: 'A3. Case Example' },
             { type: 'link', id: 'portal-omnisearch', label: 'A5. Omnisearch' },
-            { type: 'link', id: 'portal-access-ledger', label: 'B1. Access Ledger' },
+            { type: 'link', id: 'portal-email-search-partial', label: 'B1. Email Search (Partial)' },
+            { type: 'link', id: 'portal-case-search-partial', label: 'B2. Case Search (Partial)' },
+            { type: 'link', id: 'portal-access-ledger', label: 'B3. Access Ledger' },
         ]
     },
     {
@@ -175,12 +176,9 @@ export function SideBar() {
                 );
             case 'link': {
                 const isSettings = node.id === 'settings';
-                const isSafeguard = node.id === 'safeguard';
                 const isSelected = isSettings
                     ? activePage === 'settings'
-                    : isSafeguard
-                        ? activePage === 'checks'
-                        : activePage === node.id;
+                    : activePage === node.id;
                 return (
                     <LeftNavigationLinkItem
                         key={node.id}
@@ -192,7 +190,6 @@ export function SideBar() {
                             e.preventDefault();
                             if (node.id === 'settings') setActivePage('settings');
                             else if (node.id === 'settings-tabs') setActivePage('settings-tabs');
-                            else if (isSafeguard) setActivePage('checks');
                             else if (node.id.startsWith('portal-')) setActivePage(node.id as ActivePage);
                         }}
                         level={depth}

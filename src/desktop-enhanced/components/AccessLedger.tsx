@@ -38,6 +38,8 @@ const STATUS_BADGE_CONFIG = {
     Expired: { label: 'Expired', icon: 'schedule' },
 } as const;
 
+const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
+
 export const AccessLedger: React.FC = () => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
@@ -213,6 +215,7 @@ export const AccessLedger: React.FC = () => {
             header: 'Email',
             size: 220,
             minSize: 160,
+            cell: ({ row }) => renderEmailValue(row.original.email),
         },
         {
             accessorKey: 'status',

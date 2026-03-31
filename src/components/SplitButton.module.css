@@ -1,0 +1,28 @@
+/* src/components/SplitButton.module.css */
+
+.splitButtonGroup {
+    display: inline-flex;
+    align-items: stretch;
+}
+
+.labelButton {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.chevronButton {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    margin-left: -1px;
+    padding-left: var(--spacing-1) !important;
+    padding-right: var(--spacing-1) !important;
+}
+
+.chevronIcon {
+    font-size: var(--icon-size-sm) !important;
+    transition: transform 0.2s ease;
+}
+
+.chevronIconOpen {
+    transform: rotate(180deg);
+}

@@ -32,11 +32,19 @@ const DENSITY_OPTIONS = [
     { value: 'quick-actions', label: 'Quick Actions Mode' },
 ];
 
+const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
+
 interface PortalOmnisearchProps {
     mode?: 'email' | 'case';
+    matchMode?: 'exact' | 'partial';
+    resultLayout?: 'default' | 'email-first' | 'case-email';
 }
 
-export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({ mode }) => {
+export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
+    mode,
+    matchMode = 'exact',
+    resultLayout = 'default',
+}) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
@@ -62,18 +70,31 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({ mode }) => {
         setSearchTrigger(val);
         setQuickFilter(''); 
         setStatusFilter('all');
-        const q = val.toLowerCase();
+        const q = val.trim().toLowerCase();
 
         // If mode is locked, use it; otherwise auto-detect from query
         let context:'email' | 'case' = mode ?? (q.includes('@') ? 'email' : 'case');
         setQueryContext(context);
         
-        // Very basic mock matching logic
-        const matches = results.filter(r => 
-            r.email.toLowerCase().includes(q) || 
-            r.caseNumber.toLowerCase().includes(q) ||
-            r.caseName.toLowerCase().includes(q)
-        );
+        const matches = results.filter(r => {
+            if (mode === 'email') {
+                return matchMode === 'partial'
+                    ? r.email.toLowerCase().includes(q)
+                    : r.email.toLowerCase() === q;
+            }
+
+            if (mode === 'case') {
+                return matchMode === 'partial'
+                    ? r.caseNumber.toLowerCase().includes(q)
+                    : r.caseNumber.toLowerCase() === q;
+            }
+
+            return (
+                r.email.toLowerCase().includes(q) ||
+                r.caseNumber.toLowerCase().includes(q) ||
+                r.caseName.toLowerCase().includes(q)
+            );
+        });
         setVisibleResults(matches);
     }, [results]);
 
@@ -125,7 +146,13 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({ mode }) => {
     };
 
     const caseColumns: ColumnDef<PortalAccessRecord, unknown>[] = [
-        { accessorKey: 'email', header: 'Email Address', size: 250, minSize: 200 },
+        {
+            accessorKey: 'email',
+            header: 'Email Address',
+            size: 250,
+            minSize: 200,
+            cell: ({ row }) => renderEmailValue(row.original.email),
+        },
         { accessorKey: 'participantRole', header: 'Participant Role', size: 250, minSize: 200 },
         { accessorKey: 'accessType', header: 'Portal Role(s)', size: 150, minSize: 120 },
         { 
@@ -155,9 +182,67 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({ mode }) => {
         },
     ];
 
-    const activeColumns = queryContext === 'case' ? caseColumns : emailColumns;
+    const emailFirstColumns: ColumnDef<PortalAccessRecord, unknown>[] = [
+        {
+            accessorKey: 'email',
+            header: 'Email Address',
+            size: 250,
+            minSize: 220,
+            cell: ({ row }) => renderEmailValue(row.original.email),
+        },
+        { accessorKey: 'caseNumber', header: 'Case Number', size: 150, minSize: 120 },
+        { accessorKey: 'caseName', header: 'Case Name', size: 250, minSize: 200 },
+        { accessorKey: 'participantRole', header: 'Case Participant Role', size: 250, minSize: 200 },
+        { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
+        {
+            accessorKey: 'status',
+            header: 'Status',
+            size: 120,
+            cell: ({ getValue }) => {
+                const val = getValue() as string;
+                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+            }
+        },
+    ];
+
+    const caseEmailColumns: ColumnDef<PortalAccessRecord, unknown>[] = [
+        { accessorKey: 'caseNumber', header: 'Case Number', size: 150, minSize: 120 },
+        {
+            accessorKey: 'email',
+            header: 'Email Address',
+            size: 250,
+            minSize: 220,
+            cell: ({ row }) => renderEmailValue(row.original.email),
+        },
+        { accessorKey: 'caseName', header: 'Case Name', size: 250, minSize: 200 },
+        { accessorKey: 'participantRole', header: 'Case Participant Role', size: 250, minSize: 200 },
+        { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
+        {
+            accessorKey: 'status',
+            header: 'Status',
+            size: 120,
+            cell: ({ getValue }) => {
+                const val = getValue() as string;
+                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+            }
+        },
+    ];
+
+    const activeColumns = (() => {
+        if (mode === 'email' && resultLayout === 'email-first') {
+            return emailFirstColumns;
+        }
+
+        if (mode === 'case' && resultLayout === 'case-email') {
+            return caseEmailColumns;
+        }
+
+        return queryContext === 'case' ? caseColumns : emailColumns;
+    })();
+    const minSearchLength = matchMode === 'partial' ? 1 : 3;
     const selectedCount = Object.keys(selectedIds).filter(k => selectedIds[k]).length;
     const pendingCount = pendingRevokeIds.length;
+    const showResultControls = visibleResults.length > 0;
 
     return (
         <div className={styles.view}>
@@ -169,51 +254,54 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({ mode }) => {
                             onChange={setLocalQuery}
                             onSearch={(q) => void handleSearch(q)}
                             placeholder={mode === 'email' ? 'Search by email' : mode === 'case' ? 'Search by case ID' : 'Search by email or case ID'}
+                            minSearchLength={minSearchLength}
                         />
                 </div>
             </div>
 
             {/* Row 2: Settings & Filters */}
-            <div className={styles.quickFilterRow} style={{ marginTop: '16px', opacity: searchTrigger ? 1 : 0.5, pointerEvents: searchTrigger ? 'auto' : 'none' }}>
-                <div className={styles.quickFilterLeft}>
-                    <div className={styles.quickFilterWrapper}>
-                        <InstantSearch
-                            value={quickFilter}
-                            onChange={setQuickFilter}
-                            placeholder="Find within results..."
-                            size="sm"
-                        />
+            {showResultControls && (
+                <div className={styles.quickFilterRow}>
+                    <div className={styles.quickFilterLeft}>
+                        <div className={styles.quickFilterWrapper}>
+                            <InstantSearch
+                                value={quickFilter}
+                                onChange={setQuickFilter}
+                                placeholder="Find within results..."
+                                size="sm"
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.quickFilterRight}>
+                        <div className={styles.filterGroup}>
+                            <FilterSelect
+                                value={densityMode}
+                                onValueChange={(val) => setDensityMode(val as 'compact' | 'quick-actions')}
+                                placeholder="Density Mode"
+                                options={DENSITY_OPTIONS}
+                                onClear={() => setDensityMode('compact')}
+                                isCustomized={densityMode !== 'compact'}
+                            />
+                            <FilterSelect
+                                value={groupBy}
+                                onValueChange={setGroupBy}
+                                placeholder="Grouping"
+                                options={GROUP_OPTIONS}
+                                onClear={() => setGroupBy('none')}
+                                isCustomized={groupBy !== 'none'}
+                            />
+                            <FilterSelect
+                                value={statusFilter}
+                                onValueChange={setStatusFilter}
+                                placeholder="All Statuses"
+                                options={STATUS_OPTIONS}
+                                onClear={() => setStatusFilter('all')}
+                                isCustomized={statusFilter !== 'all'}
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className={styles.quickFilterRight}>
-                    <div className={styles.filterGroup}>
-                        <FilterSelect
-                            value={densityMode}
-                            onValueChange={(val) => setDensityMode(val as 'compact' | 'quick-actions')}
-                            placeholder="Density Mode"
-                            options={DENSITY_OPTIONS}
-                            onClear={() => setDensityMode('compact')}
-                            isCustomized={densityMode !== 'compact'}
-                        />
-                        <FilterSelect
-                            value={groupBy}
-                            onValueChange={setGroupBy}
-                            placeholder="Grouping"
-                            options={GROUP_OPTIONS}
-                            onClear={() => setGroupBy('none')}
-                            isCustomized={groupBy !== 'none'}
-                        />
-                        <FilterSelect
-                            value={statusFilter}
-                            onValueChange={setStatusFilter}
-                            placeholder="All Statuses"
-                            options={STATUS_OPTIONS}
-                            onClear={() => setStatusFilter('all')}
-                            isCustomized={statusFilter !== 'all'}
-                        />
-                    </div>
-                </div>
-            </div>
+            )}
 
             <div className={styles.tableWrapper}>
                 {!searchTrigger ? (
@@ -234,6 +322,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({ mode }) => {
                         densityMode={densityMode}
                         groupBy={groupBy}
                         isLoading={isExecuting && finalResults.length === 0}
+                        hideHeaderControlsWhenEmpty={mode === 'email' || mode === 'case'}
                         emptyState={<div className={styles.empty}>No matching access records found.</div>}
                     />
                 )}

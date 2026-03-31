@@ -151,6 +151,8 @@ export default function DesktopEnhancedApp() {
                                     <h2 className={styles.pageTitle}>
                                         {isNoResults ? 'No search results' :
                                          activePage === 'portal-access-ledger' ? 'Access Ledger' :
+                                         activePage === 'portal-case-search-partial' ? 'Case Search (Partial)' :
+                                         activePage === 'portal-email-search-partial' ? 'Email Search (Partial)' :
                                          activePage === 'portal-case-example' ? 'Case Example' :
                                          activePage === 'portal-omnisearch' ? 'Omnisearch' :
                                          activePage === 'portal-case-search' ? 'Case Search' :

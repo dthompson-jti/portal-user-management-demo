@@ -83,7 +83,7 @@
 }
 
 .input::placeholder {
-    color: var(--surface-fg-tertiary);
+    color: var(--control-fg-placeholder);
     opacity: 1;
 }
 

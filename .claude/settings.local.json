@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r A3 /c/Users/dthompson/Documents/CODE/portal-management/src --include=*.tsx --include=*.ts -l)",
+      "Bash(ls -la /c/Users/dthompson/Documents/CODE/portal-management/src/desktop-enhanced/components/*.module.css)",
+      "Bash(ls /c/Users/dthompson/Documents/CODE/portal-management/src/components/*.tsx)",
+      "Bash(xargs -I {} basename {})",
+      "Bash(xargs wc:*)",
+      "Bash(grep -i \"blue.*50\\\\|blue.*100\\\\|blue.*200\\\\|background.*blue\\\\|rgb.*100.*180\\\\|#.*[aAbBcCdDeEfF]{0,2}[0-9a-fA-F]{2}[0-9a-fA-F]{2}\" ./src/styles/generated/figma-primitives-core.css)"
+    ]
+  }
+}

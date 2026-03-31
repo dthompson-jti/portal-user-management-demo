@@ -10,13 +10,16 @@ import { addToastAtom } from '../../data/toastAtoms';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
 import { AnimatedTabs, Tab } from '../../components/AnimatedTabs';
+import { CaseHeader } from './CaseHeader';
 import styles from './PortalEmailSearch.module.css';
 
 interface PortalCaseAccessManagerProps {
     caseNum?: string;
 }
 
-export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000013' }) => {
+const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
+
+export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000016' }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
@@ -62,7 +65,13 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
     };
 
     const columns: ColumnDef<PortalAccessRecord, unknown>[] = [
-        { accessorKey: 'email', header: 'Email Address', size: 250, minSize: 200 },
+        {
+            accessorKey: 'email',
+            header: 'Email Address',
+            size: 250,
+            minSize: 200,
+            cell: ({ row }) => renderEmailValue(row.original.email),
+        },
         { accessorKey: 'participantRole', header: 'Case Participant Role', size: 250, minSize: 200 },
         { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
         {
@@ -82,9 +91,12 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
 
     return (
         <div className={styles.view}>
-            <div className={styles.insideHeader} style={{ marginBottom: '16px' }}>
-                <h3>Folder: {caseNum}</h3>
-            </div>
+            <CaseHeader
+                caseNumber="CIV-24-0000016"
+                courtLocation="Magistrates Court"
+                caseTitle="Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others"
+                caseType="Claim - Debt"
+            />
 
             <div style={{ marginLeft: 'var(--spacing-6)', marginBottom: '16px', borderBottom: '1px solid var(--surface-border-primary)' }}>
                 <AnimatedTabs

@@ -57,6 +57,16 @@ textarea {
 }
 
 
+/* --- Autofill Override --- */
+/* Prevent browser autofill from applying its own light-blue background. */
+:is(input[type="text"], input[type="password"], input[type="email"], input[type="search"], input[type="url"], input[type="tel"], input[type="number"]):autofill,
+:is(input[type="text"], input[type="password"], input[type="email"], input[type="search"], input[type="url"], input[type="tel"], input[type="number"]):-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--control-bg-primary) inset !important;
+  -webkit-text-fill-color: var(--surface-fg-primary) !important;
+  caret-color: var(--surface-fg-primary);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 /* --- Custom Checkbox Component --- */
 input[type="checkbox"] {
   appearance: none;
