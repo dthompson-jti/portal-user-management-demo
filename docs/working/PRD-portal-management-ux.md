@@ -1,5 +1,7 @@
 # Portal Management: Approved UX Patterns
 
+Related knowledge-base reference: `docs/knowledge-base/SPEC-PORTAL-PROTOTYPE-PATTERNS.md`
+
 This document outlines the formalized UI patterns for the Portal Management prototype, synthesizing the exploration of UX scalability and specific interaction paradigms.
 
 ## 1. Omnisearch Logic (vs. Access Ledger)

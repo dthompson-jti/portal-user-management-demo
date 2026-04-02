@@ -1,29 +1,41 @@
-# Token Audit Report: safeguard-desktop
+# Token Audit Report: portal-management
 
-Generated: 2026-03-17T05:05:50.788Z
+Generated: 2026-04-02T19:54:17.211Z
 Strict mode: off
 
 ## Summary
-- canonical sync issues: 0
+- canonical sync issues: 5
 - missing canonical tokens: 0
-- unresolved token usages: 0
+- unresolved token usages: 6
 - self-referential token definitions: 0
-- raw geometry literal findings: 15
+- raw geometry literal findings: 18
 
 ## Canonical Sync Issues
-- none
+- figma-primitives-core.css: missing canonical or local file
+- figma-semantics-core.css: missing canonical or local file
+- figma-typography-core.css: missing canonical or local file
+- geometry-foundation.css: missing canonical or local file
+- token-bridges.css: missing canonical or local file
 
 ## Missing Canonical Tokens
 - none
 
 ## Unresolved Token Usages
-- none
+- `--radius-input` (usage count: 6)
+- `--letter-spacing-tight` (usage count: 2)
+- `--primitives-neutral-translucent-860-translucent` (usage count: 2)
+- `--control-fg-alert-pressed` (usage count: 1)
+- `--status-success-fg` (usage count: 1)
+- `--surface-bg-theme-subtle` (usage count: 1)
 
 ## Self-Referential Token Definitions
 - none
 
 ## Raw Geometry Literal Inventory
 - src/desktop/components/DesktopHeader.module.css:7 -> `height: 44px !important;`
+- src/desktop/components/DesktopToolbar.module.css:246 -> `width: 240px !important;`
+- src/desktop/components/DesktopToolbar.module.css:247 -> `min-width: 240px !important;`
+- src/desktop/components/DesktopToolbar.module.css:248 -> `max-width: 240px !important;`
 - src/desktop/components/DetailPanel.module.css:24 -> `width: 2px !important;`
 - src/desktop/components/DetailPanel.module.css:54 -> `width: 2px !important;`
 - src/desktop/components/DetailPanel.module.css:76 -> `height: 44px !important;`
