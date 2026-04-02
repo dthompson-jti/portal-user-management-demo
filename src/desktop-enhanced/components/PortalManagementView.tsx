@@ -4,6 +4,7 @@ import { activePageAtom } from '../../data/activePageAtom';
 import { PortalOmnisearch } from './PortalOmnisearch';
 import { PortalCaseAccessManager } from './PortalCaseAccessManager';
 import { AccessLedger } from './AccessLedger';
+import { PortalAccess } from './PortalAccess';
 import styles from './PortalManagementView.module.css';
 
 export const PortalManagementView: React.FC = () => {
@@ -25,6 +26,8 @@ export const PortalManagementView: React.FC = () => {
                 return <PortalCaseAccessManager caseNum="CIV-24-0000016" />;
             case 'portal-access-ledger':
                 return <AccessLedger />;
+            case 'portal-access':
+                return <PortalAccess />;
             default:
                 return <PortalOmnisearch />;
         }

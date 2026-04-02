@@ -174,15 +174,10 @@ export function PortalDataTable<T extends { id: string }>({
         return (
             <div className={styles.wrapper}>
                 {Object.entries(groupedData).map(([groupName, groupItems]) => (
-                    <div key={groupName} className={styles.groupContainer} style={{ marginBottom: '24px' }}>
-                        <div className={styles.groupHeader} style={{
-                            padding: '12px 16px',
-                            background: 'var(--surface-bg-tertiary)',
-                            borderBottom: '1px solid var(--surface-border-primary)',
-                            fontWeight: 600,
-                            borderRadius: '8px 8px 0 0'
-                        }}>
-                            {groupName} <span style={{ color: 'var(--text-secondary)', fontWeight: 400, marginLeft: '8px' }}>({groupItems.length})</span>
+                    <div key={groupName} className={styles.groupContainer}>
+                        <div className={styles.groupHeader}>
+                            <span>{groupName}</span>
+                            <span className={styles.groupCount}>({groupItems.length})</span>
                         </div>
                         <DataTable
                             data={groupItems}

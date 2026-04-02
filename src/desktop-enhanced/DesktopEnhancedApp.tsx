@@ -69,7 +69,7 @@ export default function DesktopEnhancedApp() {
     const totalSelected = selectedLive.size + selectedHistory.size;
 
     // Portal (Access Ledger) detail panel state
-    const isLedger = activePage === 'portal-access-ledger';
+    const isLedger = activePage === 'portal-access-ledger' || activePage === 'portal-access';
 
     // Track mount state to prevent resetting persisted filters on reload
     const isMountedRef = useRef(false);
@@ -150,6 +150,7 @@ export default function DesktopEnhancedApp() {
                                 <div className={styles.navRow2}>
                                     <h2 className={styles.pageTitle}>
                                         {isNoResults ? 'No search results' :
+                                         activePage === 'portal-access' ? 'B4 Index pattern' :
                                          activePage === 'portal-access-ledger' ? 'Access Ledger' :
                                          activePage === 'portal-case-search-partial' ? 'Case Search (Partial)' :
                                          activePage === 'portal-email-search-partial' ? 'Email Search (Partial)' :

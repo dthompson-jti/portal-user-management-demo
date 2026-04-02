@@ -1,0 +1,60 @@
+/* src/components/OverviewBadge.module.css */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 12px;
+    padding: var(--spacing-3);
+    border-radius: 12px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.row1 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.icon {
+    font-size: 24px !important;
+    font-variation-settings: 'opsz' 24, 'wght' 500;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.row2 {
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 36px;
+}
+
+/* ── Semantic variants ── */
+
+.card[data-variant="success"] {
+    background: var(--surface-bg-success-primary);
+    color: var(--surface-fg-success-primary);
+    border-color: var(--surface-border-success-subtle);
+}
+
+.card[data-variant="alert"] {
+    background: var(--surface-bg-alert-primary);
+    color: var(--surface-fg-alert-primary);
+    border-color: var(--surface-border-alert-subtle);
+}
+
+.card[data-variant="warning"] {
+    background: var(--surface-bg-warning-primary);
+    color: var(--surface-fg-warning-primary);
+    border-color: var(--surface-border-warning-subtle);
+}
+
+.card[data-variant="info"] {
+    background: var(--surface-bg-info-primary);
+    color: var(--surface-fg-info-primary);
+    border-color: var(--surface-border-info-subtle);
+}

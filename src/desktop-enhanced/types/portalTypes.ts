@@ -14,6 +14,7 @@ export interface PortalAccessRecord {
     author: string;
     sharedWith: string;
     purpose: string;
+    accessGroup?: 'With portal access' | 'Parties without access' | 'Case assignments without access';
 }
 
 export interface PortalUserRecord {

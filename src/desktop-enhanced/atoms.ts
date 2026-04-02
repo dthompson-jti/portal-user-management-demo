@@ -33,6 +33,9 @@ export const missedCountModeAtom = atom<MissedCountMode>('rooms');
 // Chrome trim style: 'default' = tertiary bg, 'elevated' = lighter in dark mode
 export type ChromeStyle = 'default' | 'elevated';
 export const chromeStyleAtom = atom<ChromeStyle>('default');
+
+export type PortalDensityMode = 'compact' | 'quick-actions';
+export const portalDensityModeAtom = atom<PortalDensityMode>('compact');
 // Portal Management State
 export type PortalActionResult = {
     id: string;
@@ -61,6 +64,7 @@ export const filteredPortalResultsAtom = atom((get) => {
 
 export const isPortalActionExecutingAtom = atom<boolean>(false);
 export const portalActionResultsAtom = atom<Record<string, PortalActionResult>>({});
+export const isPortalAdvancedSearchOpenAtom = atom<boolean>(false);
 
 // Access Ledger detail panel state
 export const portalInspectedRecordAtom = atom<PortalAccessRecord | null>(null);

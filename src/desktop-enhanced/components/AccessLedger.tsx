@@ -33,9 +33,9 @@ const ACCESS_TYPE_OPTIONS = [
 ];
 
 const STATUS_BADGE_CONFIG = {
-    Active: { label: 'Active', icon: 'check_circle' },
-    Revoked: { label: 'Revoked', icon: 'block' },
-    Expired: { label: 'Expired', icon: 'schedule' },
+    Active: { label: 'Portal access', icon: 'check_circle' },
+    Revoked: { label: 'No Portal access', icon: 'block' },
+    Expired: { label: 'No Portal access', icon: 'schedule' },
 } as const;
 
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';

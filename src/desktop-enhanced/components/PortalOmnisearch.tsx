@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
-import { portalResultsAtom, isPortalActionExecutingAtom } from '../atoms';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { portalResultsAtom, isPortalActionExecutingAtom, portalDensityModeAtom } from '../atoms';
 import { PortalAccessRecord } from '../types/portalTypes';
 import { PortalDataTable } from './PortalDataTable';
 import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
@@ -27,12 +27,8 @@ const GROUP_OPTIONS = [
     { value: 'participantRole', label: 'Group by Role' },
 ];
 
-const DENSITY_OPTIONS = [
-    { value: 'compact', label: 'Compact Mode' },
-    { value: 'quick-actions', label: 'Quick Actions Mode' },
-];
-
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
+const getPortalAccessBadgeLabel = (status: string) => status === 'Active' ? 'Portal access' : 'No Portal access';
 
 interface PortalOmnisearchProps {
     mode?: 'email' | 'case';
@@ -47,6 +43,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
 }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
+    const densityMode = useAtomValue(portalDensityModeAtom);
     const addToast = useSetAtom(addToastAtom);
     
     // Search & Context State
@@ -58,7 +55,6 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
     const [quickFilter, setQuickFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [groupBy, setGroupBy] = useState('none');
-    const [densityMode, setDensityMode] = useState<'compact' | 'quick-actions'>('compact');
 
     // Selection & Actions
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
@@ -161,7 +157,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
             size: 120,
             cell: ({ getValue }) => {
                 const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
             }
         },
     ];
@@ -177,7 +173,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
             size: 120,
             cell: ({ getValue }) => {
                 const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
             }
         },
     ];
@@ -200,7 +196,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
             size: 120,
             cell: ({ getValue }) => {
                 const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
             }
         },
     ];
@@ -223,7 +219,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
             size: 120,
             cell: ({ getValue }) => {
                 const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
             }
         },
     ];
@@ -274,14 +270,6 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                     </div>
                     <div className={styles.quickFilterRight}>
                         <div className={styles.filterGroup}>
-                            <FilterSelect
-                                value={densityMode}
-                                onValueChange={(val) => setDensityMode(val as 'compact' | 'quick-actions')}
-                                placeholder="Density Mode"
-                                options={DENSITY_OPTIONS}
-                                onClear={() => setDensityMode('compact')}
-                                isCustomized={densityMode !== 'compact'}
-                            />
                             <FilterSelect
                                 value={groupBy}
                                 onValueChange={setGroupBy}

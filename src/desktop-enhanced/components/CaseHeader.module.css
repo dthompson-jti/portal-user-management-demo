@@ -7,6 +7,18 @@
 
 /* --- Info Block --- */
 
+.infoRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.overviewBadges {
+    display: flex;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+
 .topRow {
     display: flex;
     align-items: baseline;

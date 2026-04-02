@@ -9,22 +9,63 @@ import { StatusBadge, StatusBadgeType } from '../../desktop/components/StatusBad
 import { addToastAtom } from '../../data/toastAtoms';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
-import { AnimatedTabs, Tab } from '../../components/AnimatedTabs';
 import { CaseHeader } from './CaseHeader';
-import styles from './PortalEmailSearch.module.css';
+import { OverviewBadge } from '../../components/OverviewBadge';
+import styles from './PortalCaseAccessManager.module.css';
 
 interface PortalCaseAccessManagerProps {
     caseNum?: string;
 }
 
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
+const getPortalAccessLabel = (status: PortalAccessRecord['status']) => status === 'Active' ? 'Portal access' : 'No Portal access';
+
+interface CollapsibleSectionProps {
+    title: string;
+    count: number;
+    badgeStatus: StatusBadgeType;
+    badgeLabel: string;
+    defaultExpanded?: boolean;
+    children: React.ReactNode;
+}
+
+const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
+    title,
+    count,
+    badgeStatus,
+    badgeLabel,
+    defaultExpanded = true,
+    children,
+}) => {
+    const [expanded, setExpanded] = useState(defaultExpanded);
+
+    return (
+        <div className={styles.sectionShell} data-expanded={expanded}>
+            <button
+                type="button"
+                onClick={() => setExpanded(!expanded)}
+                className={styles.sectionHeaderButton}
+            >
+                <div className={styles.sectionHeaderMain}>
+                    <span
+                        className={`material-symbols-rounded ${styles.sectionChevron}`}
+                    >
+                        expand_more
+                    </span>
+                    <span className={styles.sectionTitle}>{title}</span>
+                </div>
+                <StatusBadge status={badgeStatus} label={`${count} ${badgeLabel}`} showIcon={false} />
+            </button>
+            {expanded && <div className={styles.sectionBody}>{children}</div>}
+        </div>
+    );
+};
 
 export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000016' }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
-    
-    const [activeTab, setActiveTab] = useState<'active' | 'missing'>('active');
+
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [pendingIds, setPendingIds] = useState<string[]>([]);
@@ -33,11 +74,21 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
         return results.filter(r => r.caseNumber.includes(caseNum));
     }, [results, caseNum]);
 
-    // Split mock data into active vs missing for prototype
-    const activeUsers = useMemo(() => caseResults.filter(r => r.status === 'Active'), [caseResults]);
-    const missingParties = useMemo(() => caseResults.filter(r => r.status !== 'Active'), [caseResults]);
+    // Split into three groups matching the mockup
+    const withAccess = useMemo(() =>
+        caseResults.filter(r => r.accessGroup === 'With portal access'),
+    [caseResults]);
 
-    const displayedData = activeTab === 'active' ? activeUsers : missingParties;
+    const partiesWithout = useMemo(() =>
+        caseResults.filter(r => r.accessGroup === 'Parties without access'),
+    [caseResults]);
+
+    const assignmentsWithout = useMemo(() =>
+        caseResults.filter(r => r.accessGroup === 'Case assignments without access'),
+    [caseResults]);
+
+    const withAccessCount = withAccess.length;
+    const withoutAccessCount = partiesWithout.length + assignmentsWithout.length;
 
     const handleBulkAction = async () => {
         const ids = pendingIds;
@@ -46,7 +97,9 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
         setIsExecuting(true);
         await new Promise(r => setTimeout(r, 1200));
 
-        const actionStatus: 'Revoked' | 'Active' = activeTab === 'active' ? 'Revoked' : 'Active';
+        const selected = caseResults.filter(r => ids.includes(r.id));
+        const isRevoke = selected.some(r => r.status === 'Active');
+        const actionStatus: 'Revoked' | 'Active' = isRevoke ? 'Revoked' : 'Active';
 
         setResults(prev => prev.map(r =>
             ids.includes(r.id) ? { ...r, status: actionStatus } : r
@@ -54,9 +107,9 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
 
         setIsExecuting(false);
         addToast({
-            title: activeTab === 'active' ? 'Access Revoked' : 'Access Granted',
+            title: isRevoke ? 'Access Revoked' : 'Access Granted',
             message: `Successfully updated portal access for ${ids.length} record${ids.length > 1 ? 's' : ''}.`,
-            icon: activeTab === 'active' ? 'no_accounts' : 'person_add',
+            icon: isRevoke ? 'no_accounts' : 'person_add',
             variant: 'success'
         });
         setPendingIds([]);
@@ -64,30 +117,41 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
         setIsConfirmOpen(false);
     };
 
+    // Columns matching mockup: Email address | Case Participant Role | Portal Access
     const columns: ColumnDef<PortalAccessRecord, unknown>[] = [
         {
             accessorKey: 'email',
-            header: 'Email Address',
-            size: 250,
+            header: 'Email address',
+            size: 300,
             minSize: 200,
             cell: ({ row }) => renderEmailValue(row.original.email),
         },
-        { accessorKey: 'participantRole', header: 'Case Participant Role', size: 250, minSize: 200 },
-        { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
+        {
+            accessorKey: 'participantRole',
+            header: 'Case Participant Role',
+            size: 300,
+            minSize: 200,
+        },
         {
             accessorKey: 'status',
-            header: 'Status',
-            size: 120,
-            minSize: 100,
-            cell: ({ getValue }) => {
-                const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} /> : null;
+            header: 'Portal Access',
+            size: 160,
+            minSize: 120,
+            cell: ({ row }) => {
+                return (
+                    <StatusBadge
+                        status={row.original.status as StatusBadgeType}
+                        label={getPortalAccessLabel(row.original.status)}
+                        showIcon={false}
+                    />
+                );
             }
         },
     ];
 
     const selectedCount = Object.keys(selectedIds).filter(k => selectedIds[k]).length;
-    const isRevokeMode = activeTab === 'active';
+    const selectedRecords = caseResults.filter(r => selectedIds[r.id]);
+    const isRevokeMode = selectedRecords.some(r => r.status === 'Active');
 
     return (
         <div className={styles.view}>
@@ -98,34 +162,92 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 caseType="Claim - Debt"
             />
 
-            <div style={{ marginLeft: 'var(--spacing-6)', marginBottom: '16px', borderBottom: '1px solid var(--surface-border-primary)' }}>
-                <AnimatedTabs
-                    value={activeTab}
-                    onValueChange={(val: string) => {
-                        setActiveTab(val as 'active' | 'missing');
-                        setSelectedIds({});
-                    }}
-                >
-                    <Tab value="active">Active Portal Users <span className="tab-pill">{activeUsers.length}</span></Tab>
-                    <Tab value="missing">Missing Access <span className="tab-pill">{missingParties.length}</span></Tab>
-                </AnimatedTabs>
+            <div className={styles.sectionIntro}>
+                <h3 className={styles.sectionHeading}>Manage Portal Access</h3>
+                <div className={styles.summaryRow}>
+                    <OverviewBadge
+                        icon="group"
+                        label="Portal access"
+                        value={withAccessCount.toString()}
+                        variant="success"
+                        className={styles.summaryBadge}
+                    />
+                    <OverviewBadge
+                        icon="person_off"
+                        label="No Portal access"
+                        value={withoutAccessCount.toString()}
+                        variant="warning"
+                        className={styles.summaryBadge}
+                    />
+                </div>
             </div>
 
-            <div className={styles.tableWrapper}>
-                <PortalDataTable 
-                    data={displayedData} 
-                    columns={columns} 
-                    rowSelection={selectedIds}
-                    onRowSelectionChange={setSelectedIds}
-                    onRevokeRow={(row) => {
-                        setPendingIds([row.id]);
-                        setIsConfirmOpen(true);
-                    }}
-                    actionLabel={isRevokeMode ? 'Revoke' : 'Grant'}
-                    actionIcon={isRevokeMode ? 'no_accounts' : 'person_add'}
-                    isLoading={isExecuting && displayedData.length === 0}
-                    emptyState={<div className={styles.empty}>No records to display.</div>}
-                />
+            <div className={styles.sections}>
+                <CollapsibleSection
+                    title="Portal access"
+                    count={withAccess.length}
+                    badgeStatus="Active"
+                    badgeLabel="Portal access"
+                >
+                    <PortalDataTable
+                        data={withAccess}
+                        columns={columns}
+                        rowSelection={selectedIds}
+                        onRowSelectionChange={setSelectedIds}
+                        onRevokeRow={(row) => {
+                            setPendingIds([row.id]);
+                            setIsConfirmOpen(true);
+                        }}
+                        actionLabel="Revoke"
+                        actionIcon="no_accounts"
+                        isLoading={isExecuting && withAccess.length === 0}
+                        emptyState={<div className={styles.empty}>No records to display.</div>}
+                    />
+                </CollapsibleSection>
+
+                <CollapsibleSection
+                    title="No Portal access: Parties"
+                    count={partiesWithout.length}
+                    badgeStatus="Expired"
+                    badgeLabel="No Portal access"
+                >
+                    <PortalDataTable
+                        data={partiesWithout}
+                        columns={columns}
+                        rowSelection={selectedIds}
+                        onRowSelectionChange={setSelectedIds}
+                        onRevokeRow={(row) => {
+                            setPendingIds([row.id]);
+                            setIsConfirmOpen(true);
+                        }}
+                        actionLabel="Grant"
+                        actionIcon="person_add"
+                        isLoading={isExecuting && partiesWithout.length === 0}
+                        emptyState={<div className={styles.empty}>No records to display.</div>}
+                    />
+                </CollapsibleSection>
+
+                <CollapsibleSection
+                    title="No Portal access: Case assignments"
+                    count={assignmentsWithout.length}
+                    badgeStatus="Expired"
+                    badgeLabel="No Portal access"
+                >
+                    <PortalDataTable
+                        data={assignmentsWithout}
+                        columns={columns}
+                        rowSelection={selectedIds}
+                        onRowSelectionChange={setSelectedIds}
+                        onRevokeRow={(row) => {
+                            setPendingIds([row.id]);
+                            setIsConfirmOpen(true);
+                        }}
+                        actionLabel="Grant"
+                        actionIcon="person_add"
+                        isLoading={isExecuting && assignmentsWithout.length === 0}
+                        emptyState={<div className={styles.empty}>No records to display.</div>}
+                    />
+                </CollapsibleSection>
             </div>
 
             {selectedCount > 0 && (
@@ -150,10 +272,10 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
             >
                 <Modal.Header>
                     <div className={styles.modalTitle}>{isRevokeMode ? 'Revoke access' : 'Grant access'}</div>
-                    <Button 
-                        variant="tertiary" 
-                        size="s" 
-                        iconOnly 
+                    <Button
+                        variant="tertiary"
+                        size="s"
+                        iconOnly
                         onClick={() => setIsConfirmOpen(false)}
                         disabled={isExecuting}
                     >
@@ -189,9 +311,9 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                         >
                             {isRevokeMode ? 'Revoke access' : 'Grant access'}
                         </Button>
-                        <Button 
-                            variant="secondary" 
-                            size="m" 
+                        <Button
+                            variant="secondary"
+                            size="m"
                             onClick={() => setIsConfirmOpen(false)}
                             disabled={isExecuting}
                         >

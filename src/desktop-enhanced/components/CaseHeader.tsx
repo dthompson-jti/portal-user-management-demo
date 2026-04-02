@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { SplitButton, SplitButtonMenuItem } from '../../components/SplitButton';
 import { Button } from '../../components/Button';
+import { OverviewBadge } from '../../components/OverviewBadge';
 import styles from './CaseHeader.module.css';
+
+interface OverviewStat {
+    icon: string;
+    label: string;
+    value: string;
+    variant: 'success' | 'alert' | 'warning' | 'info';
+}
 
 interface CaseHeaderProps {
     caseNumber: string;
     courtLocation: string;
     caseTitle: string;
     caseType: string;
+    overviewBadges?: OverviewStat[];
 }
 
 type SectionKey = 'summary' | 'parties' | 'documents' | 'hearings' | 'judgments' | 'financials' | 'timeline';
@@ -24,6 +33,7 @@ export const CaseHeader: React.FC<CaseHeaderProps> = ({
     courtLocation,
     caseTitle,
     caseType,
+    overviewBadges,
 }) => {
     const [activeSection, setActiveSection] = useState<SectionKey>('parties');
 
@@ -88,12 +98,29 @@ export const CaseHeader: React.FC<CaseHeaderProps> = ({
     return (
         <div className={styles.caseHeader}>
             {/* Info Block */}
-            <div className={styles.topRow}>
-                <h2 className={styles.caseNumber}>{caseNumber}</h2>
-                <span className={styles.courtLocation}>{courtLocation}</span>
+            <div className={styles.infoRow}>
+                <div>
+                    <div className={styles.topRow}>
+                        <h2 className={styles.caseNumber}>{caseNumber}</h2>
+                        <span className={styles.courtLocation}>{courtLocation}</span>
+                    </div>
+                    <p className={styles.caseTitle}>{caseTitle}</p>
+                    <p className={styles.caseType}>{caseType}</p>
+                </div>
+                {overviewBadges && overviewBadges.length > 0 && (
+                    <div className={styles.overviewBadges}>
+                        {overviewBadges.map((badge) => (
+                            <OverviewBadge
+                                key={badge.label}
+                                icon={badge.icon}
+                                label={badge.label}
+                                value={badge.value}
+                                variant={badge.variant}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
-            <p className={styles.caseTitle}>{caseTitle}</p>
-            <p className={styles.caseType}>{caseType}</p>
 
             {/* Toolbar */}
             <div className={styles.toolbar}>

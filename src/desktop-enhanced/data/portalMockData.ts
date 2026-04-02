@@ -1,97 +1,136 @@
 import { PortalAccessRecord } from '../types/portalTypes';
 
 export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
+    // ── Case CIV-24-0000016 ── Matches A3 mockup data ──
     {
         id: 'portal-001',
         caseNumber: 'CIV-24-0000016',
         caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
         caseType: 'Civil',
-        participantRole: 'Plaintiff 1 Agnes Schlauderheide',
+        participantRole: 'Kent, Clark',
         accessType: 'Direct access',
-        status: 'Expired',
-        email: 'agnes.schlauderheide@outlook.com',
+        status: 'Active',
+        email: 'clark.kent@dailyplanet.com',
         dateGranted: '2024-04-03',
-        dateRevoked: '2024-08-19',
         author: 'Portal Case Access Search',
         sharedWith: 'Case participant account',
-        purpose: 'Portal invitation for self-represented plaintiff'
+        purpose: 'Portal access for case participant',
+        accessGroup: 'With portal access'
     },
     {
         id: 'portal-002',
         caseNumber: 'CIV-24-0000016',
         caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
         caseType: 'Civil',
-        participantRole: 'Defendant 1 Kirsty Ware',
+        participantRole: 'Banner, Bruce',
         accessType: 'Direct access',
-        status: 'Revoked',
-        email: '',
-        dateGranted: '2024-04-03',
-        dateRevoked: '2024-04-03',
+        status: 'Active',
+        email: 'bruce.banner@scientist.com',
+        dateGranted: '2024-04-05',
         author: 'Registry officer',
-        sharedWith: 'Unclaimed invitation',
-        purpose: 'Portal invitation could not be completed because no email address was provided'
+        sharedWith: 'Case participant account',
+        purpose: 'Portal access for case participant',
+        accessGroup: 'With portal access'
     },
     {
         id: 'portal-003',
         caseNumber: 'CIV-24-0000016',
         caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
         caseType: 'Civil',
-        participantRole: "Defendant 2 FLARB'S FLARBENARIUM",
+        participantRole: 'Plaintiff 1 Agnes Schnalendeheide',
         accessType: 'Direct access',
         status: 'Expired',
-        email: 'm.osophagus@gmail.com',
-        dateGranted: '2024-04-05',
-        dateRevoked: '2024-07-01',
-        author: 'Registry officer',
+        email: 'agnes.schaudlende@outlook.com',
+        dateGranted: '2024-04-03',
+        dateRevoked: '2024-08-19',
+        author: 'Portal Case Access Search',
         sharedWith: 'Case participant account',
-        purpose: 'Portal invitation for named defendant'
+        purpose: 'Portal invitation for self-represented plaintiff',
+        accessGroup: 'Parties without access'
     },
     {
         id: 'portal-004',
         caseNumber: 'CIV-24-0000016',
         caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
         caseType: 'Civil',
-        participantRole: 'Defendant 3 James McMahon',
-        accessType: 'Direct access',
+        participantRole: 'Ehmantrout, Mike',
+        accessType: 'Delegated access',
         status: 'Expired',
-        email: 'mr.matt.fitzpatrick@outlook.com',
-        dateGranted: '2024-04-05',
-        dateRevoked: '2024-07-16',
+        email: 'mike.erhmentrout@outlook.com.au',
+        dateGranted: '2024-04-10',
+        dateRevoked: '2024-08-01',
         author: 'Registry officer',
-        sharedWith: 'Case participant account',
-        purpose: 'Portal invitation for named defendant'
+        sharedWith: 'Professional representative',
+        purpose: 'Assignment-based access for solicitor of record',
+        accessGroup: 'Parties without access'
     },
     {
         id: 'portal-005',
         caseNumber: 'CIV-24-0000016',
         caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
         caseType: 'Civil',
-        participantRole: 'Ehmantrout, Mike [SOL]',
-        accessType: 'Delegated access',
+        participantRole: 'Jones, Lisa',
+        accessType: 'Direct access',
         status: 'Expired',
-        email: 'mike.ehmantrout@outlook.com.au',
-        dateGranted: '2024-04-10',
-        dateRevoked: '2024-08-01',
+        email: 'lisa.jones@example.com',
+        dateGranted: '2024-04-05',
+        dateRevoked: '2024-07-01',
         author: 'Registry officer',
-        sharedWith: 'Professional representative',
-        purpose: 'Assignment-based access for solicitor of record'
+        sharedWith: 'Case participant account',
+        purpose: 'Portal invitation for named party',
+        accessGroup: 'Parties without access'
     },
     {
         id: 'portal-006',
         caseNumber: 'CIV-24-0000016',
         caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
         caseType: 'Civil',
-        participantRole: 'Unknown (Name on Portal: Francesca Liddy)',
-        accessType: 'Organisation Administrator',
-        status: 'Active',
-        email: 'saul.goodman.lawfirm@outlook.com.au',
-        dateGranted: '2024-08-22',
-        author: 'Mike Ehmantrout',
-        sharedWith: 'Organisation workspace',
-        purpose: 'Firm-managed portal access for represented party'
+        participantRole: 'Parker, Peter',
+        accessType: 'Delegated access',
+        status: 'Expired',
+        email: 'peter.parker@webmail.com',
+        dateGranted: '2024-04-05',
+        dateRevoked: '2024-07-16',
+        author: 'Registry officer',
+        sharedWith: 'Professional representative',
+        purpose: 'Assignment-based access for solicitor',
+        accessGroup: 'Case assignments without access'
     },
     {
         id: 'portal-007',
+        caseNumber: 'CIV-24-0000016',
+        caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
+        caseType: 'Civil',
+        participantRole: 'Wayne, Bruce',
+        accessType: 'Delegated access',
+        status: 'Expired',
+        email: 'bruce.wayne@batmail.com',
+        dateGranted: '2024-08-22',
+        dateRevoked: '2024-09-15',
+        author: 'Registry officer',
+        sharedWith: 'Professional representative',
+        purpose: 'Assignment-based access for case representative',
+        accessGroup: 'Case assignments without access'
+    },
+    {
+        id: 'portal-008',
+        caseNumber: 'CIV-24-0000016',
+        caseName: "Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others",
+        caseType: 'Civil',
+        participantRole: 'Stark, Tony',
+        accessType: 'Delegated access',
+        status: 'Expired',
+        email: 'tony.stark@starkindustries.com',
+        dateGranted: '2024-05-15',
+        dateRevoked: '2024-08-01',
+        author: 'Registry officer',
+        sharedWith: 'Professional representative',
+        purpose: 'Assignment-based access for solicitor',
+        accessGroup: 'Case assignments without access'
+    },
+    // ── Case CIV-24-0000017 ──
+    {
+        id: 'portal-009',
         caseNumber: 'CIV-24-0000017',
         caseName: 'Kirsty Ware v North Harbour Storage Ltd',
         caseType: 'Civil',
@@ -105,7 +144,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         purpose: 'Portal access for plaintiff filing materials'
     },
     {
-        id: 'portal-008',
+        id: 'portal-010',
         caseNumber: 'CIV-24-0000017',
         caseName: 'Kirsty Ware v North Harbour Storage Ltd',
         caseType: 'Civil',
@@ -119,7 +158,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         purpose: 'Delegated access for plaintiff solicitor'
     },
     {
-        id: 'portal-009',
+        id: 'portal-011',
         caseNumber: 'CIV-24-0000017',
         caseName: 'Kirsty Ware v North Harbour Storage Ltd',
         caseType: 'Civil',
@@ -133,8 +172,9 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         sharedWith: 'Organisation mailbox',
         purpose: 'Service and response access for corporate defendant'
     },
+    // ── Case CIV-24-0000018 ──
     {
-        id: 'portal-010',
+        id: 'portal-012',
         caseNumber: 'CIV-24-0000018',
         caseName: 'James McMahon v Metro Claims Recovery Pty Ltd',
         caseType: 'Civil',
@@ -148,7 +188,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         purpose: 'Portal access for plaintiff correspondence and filings'
     },
     {
-        id: 'portal-011',
+        id: 'portal-013',
         caseNumber: 'CIV-24-0000018',
         caseName: 'James McMahon v Metro Claims Recovery Pty Ltd',
         caseType: 'Civil',
@@ -162,7 +202,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         purpose: 'Corporate respondent access for claim management team'
     },
     {
-        id: 'portal-012',
+        id: 'portal-014',
         caseNumber: 'CIV-24-0000018',
         caseName: 'James McMahon v Metro Claims Recovery Pty Ltd',
         caseType: 'Civil',
@@ -176,8 +216,9 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         sharedWith: 'Professional representative',
         purpose: 'Representative access withdrawn after counsel change'
     },
+    // ── Case CIV-24-0000019 ──
     {
-        id: 'portal-013',
+        id: 'portal-015',
         caseNumber: 'CIV-24-0000019',
         caseName: 'Francesca Liddy v Goodwin Property Services',
         caseType: 'Civil',
@@ -191,7 +232,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         purpose: 'Portal access for plaintiff submissions and notices'
     },
     {
-        id: 'portal-014',
+        id: 'portal-016',
         caseNumber: 'CIV-24-0000019',
         caseName: 'Francesca Liddy v Goodwin Property Services',
         caseType: 'Civil',
@@ -205,7 +246,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         purpose: 'Delegated access for plaintiff solicitor'
     },
     {
-        id: 'portal-015',
+        id: 'portal-017',
         caseNumber: 'CIV-24-0000019',
         caseName: 'Francesca Liddy v Goodwin Property Services',
         caseType: 'Civil',
@@ -219,8 +260,9 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         sharedWith: 'Organisation mailbox',
         purpose: 'Organisation-level service access expired before first response'
     },
+    // ── Case CIV-24-0000020 ──
     {
-        id: 'portal-016',
+        id: 'portal-018',
         caseNumber: 'CIV-24-0000020',
         caseName: 'Dave C Thompson v Harbour Fitness Club Pty Ltd',
         caseType: 'Civil',
@@ -233,8 +275,9 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         sharedWith: 'Case participant account',
         purpose: 'Portal access for plaintiff notices and filing activity'
     },
+    // ── Case CIV-24-0000021 ──
     {
-        id: 'portal-017',
+        id: 'portal-019',
         caseNumber: 'CIV-24-0000021',
         caseName: 'Meridian Finance Ltd v Dave C Thompson',
         caseType: 'Civil',
@@ -247,8 +290,9 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         sharedWith: 'Case participant account',
         purpose: 'Portal access for defendant response and case correspondence'
     },
+    // ── Case CIV-24-0000022 ──
     {
-        id: 'portal-018',
+        id: 'portal-020',
         caseNumber: 'CIV-24-0000022',
         caseName: 'Dave C Thompson v Southbank Storage Group',
         caseType: 'Civil',

@@ -10,7 +10,8 @@ export type ActivePage =
   | 'portal-omnisearch'
   | 'portal-email-search-partial'
   | 'portal-case-search-partial'
-  | 'portal-access-ledger';
+  | 'portal-access-ledger'
+  | 'portal-access';
 
 /** Top-level page routing — NOT the same as desktopViewAtom (live/historical) */
 export const activePageAtom = atom<ActivePage>('portal-email-search');
