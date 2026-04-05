@@ -5,9 +5,9 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JTI-Product-Design/portal-management.git"
+    "url": "https://github.com/dthompson-jti/portal-management-public.git"
   },
-  "homepage": "https://probable-adventure-3qvnpzy.pages.github.io",
+  "homepage": "https://dthompson-jti.github.io/portal-management-public/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
