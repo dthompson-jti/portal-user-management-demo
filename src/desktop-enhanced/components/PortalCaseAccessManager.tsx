@@ -9,6 +9,7 @@ import { StatusBadge, StatusBadgeType } from '../../desktop/components/StatusBad
 import { addToastAtom } from '../../data/toastAtoms';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
+import { Accordion } from '../../components/Accordion';
 import { CaseHeader } from './CaseHeader';
 import { OverviewBadge } from '../../components/OverviewBadge';
 import styles from './PortalCaseAccessManager.module.css';
@@ -20,46 +21,6 @@ interface PortalCaseAccessManagerProps {
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
 const getPortalAccessLabel = (status: PortalAccessRecord['status']) => status === 'Active' ? 'Portal access' : 'No Portal access';
 
-interface CollapsibleSectionProps {
-    title: string;
-    count: number;
-    badgeStatus: StatusBadgeType;
-    badgeLabel: string;
-    defaultExpanded?: boolean;
-    children: React.ReactNode;
-}
-
-const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
-    title,
-    count,
-    badgeStatus,
-    badgeLabel,
-    defaultExpanded = true,
-    children,
-}) => {
-    const [expanded, setExpanded] = useState(defaultExpanded);
-
-    return (
-        <div className={styles.sectionShell} data-expanded={expanded}>
-            <button
-                type="button"
-                onClick={() => setExpanded(!expanded)}
-                className={styles.sectionHeaderButton}
-            >
-                <div className={styles.sectionHeaderMain}>
-                    <span
-                        className={`material-symbols-rounded ${styles.sectionChevron}`}
-                    >
-                        expand_more
-                    </span>
-                    <span className={styles.sectionTitle}>{title}</span>
-                </div>
-                <StatusBadge status={badgeStatus} label={`${count} ${badgeLabel}`} showIcon={false} />
-            </button>
-            {expanded && <div className={styles.sectionBody}>{children}</div>}
-        </div>
-    );
-};
 
 export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000016' }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
@@ -183,71 +144,101 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
             </div>
 
             <div className={styles.sections}>
-                <CollapsibleSection
-                    title="Portal access"
-                    count={withAccess.length}
-                    badgeStatus="Active"
-                    badgeLabel="Portal access"
+                <Accordion
+                    className={styles.sectionShell}
+                    defaultValue={['with-access']}
                 >
-                    <PortalDataTable
-                        data={withAccess}
-                        columns={columns}
-                        rowSelection={selectedIds}
-                        onRowSelectionChange={setSelectedIds}
-                        onRevokeRow={(row) => {
-                            setPendingIds([row.id]);
-                            setIsConfirmOpen(true);
-                        }}
-                        actionLabel="Revoke"
-                        actionIcon="no_accounts"
-                        isLoading={isExecuting && withAccess.length === 0}
-                        emptyState={<div className={styles.empty}>No records to display.</div>}
-                    />
-                </CollapsibleSection>
+                    <Accordion.Item
+                        value="with-access"
+                        title="Portal access"
+                        rightSlot={
+                            <StatusBadge
+                                status="Active"
+                                label={`${withAccess.length} Portal access`}
+                                showIcon={false}
+                            />
+                        }
+                    >
+                        <PortalDataTable
+                            data={withAccess}
+                            columns={columns}
+                            rowSelection={selectedIds}
+                            onRowSelectionChange={setSelectedIds}
+                            onRevokeRow={(row) => {
+                                setPendingIds([row.id]);
+                                setIsConfirmOpen(true);
+                            }}
+                            actionLabel="Revoke"
+                            actionIcon="no_accounts"
+                            isLoading={isExecuting && withAccess.length === 0}
+                            emptyState={<div className={styles.empty}>No records to display.</div>}
+                        />
+                    </Accordion.Item>
+                </Accordion>
 
-                <CollapsibleSection
-                    title="No Portal access: Parties"
-                    count={partiesWithout.length}
-                    badgeStatus="Expired"
-                    badgeLabel="No Portal access"
+                <Accordion
+                    className={styles.sectionShell}
+                    defaultValue={['parties-without']}
                 >
-                    <PortalDataTable
-                        data={partiesWithout}
-                        columns={columns}
-                        rowSelection={selectedIds}
-                        onRowSelectionChange={setSelectedIds}
-                        onRevokeRow={(row) => {
-                            setPendingIds([row.id]);
-                            setIsConfirmOpen(true);
-                        }}
-                        actionLabel="Grant"
-                        actionIcon="person_add"
-                        isLoading={isExecuting && partiesWithout.length === 0}
-                        emptyState={<div className={styles.empty}>No records to display.</div>}
-                    />
-                </CollapsibleSection>
+                    <Accordion.Item
+                        value="parties-without"
+                        title="No Portal access: Parties"
+                        rightSlot={
+                            <StatusBadge
+                                status="Expired"
+                                label={`${partiesWithout.length} No Portal access`}
+                                showIcon={false}
+                            />
+                        }
+                    >
+                        <PortalDataTable
+                            data={partiesWithout}
+                            columns={columns}
+                            rowSelection={selectedIds}
+                            onRowSelectionChange={setSelectedIds}
+                            onRevokeRow={(row) => {
+                                setPendingIds([row.id]);
+                                setIsConfirmOpen(true);
+                            }}
+                            actionLabel="Grant"
+                            actionIcon="person_add"
+                            isLoading={isExecuting && partiesWithout.length === 0}
+                            emptyState={<div className={styles.empty}>No records to display.</div>}
+                        />
+                    </Accordion.Item>
+                </Accordion>
 
-                <CollapsibleSection
-                    title="No Portal access: Case assignments"
-                    count={assignmentsWithout.length}
-                    badgeStatus="Expired"
-                    badgeLabel="No Portal access"
+                <Accordion
+                    className={styles.sectionShell}
+                    defaultValue={['assignments-without']}
                 >
-                    <PortalDataTable
-                        data={assignmentsWithout}
-                        columns={columns}
-                        rowSelection={selectedIds}
-                        onRowSelectionChange={setSelectedIds}
-                        onRevokeRow={(row) => {
-                            setPendingIds([row.id]);
-                            setIsConfirmOpen(true);
-                        }}
-                        actionLabel="Grant"
-                        actionIcon="person_add"
-                        isLoading={isExecuting && assignmentsWithout.length === 0}
-                        emptyState={<div className={styles.empty}>No records to display.</div>}
-                    />
-                </CollapsibleSection>
+                    <Accordion.Item
+                        value="assignments-without"
+                        title="No Portal access: Case assignments"
+                        rightSlot={
+                            <StatusBadge
+                                status="Expired"
+                                label={`${assignmentsWithout.length} No Portal access`}
+                                showIcon={false}
+                            />
+                        }
+                    >
+                        <PortalDataTable
+                            data={assignmentsWithout}
+                            columns={columns}
+                            rowSelection={selectedIds}
+                            onRowSelectionChange={setSelectedIds}
+                            onRevokeRow={(row) => {
+                                setPendingIds([row.id]);
+                                setIsConfirmOpen(true);
+                            }}
+                            actionLabel="Grant"
+                            actionIcon="person_add"
+                            isLoading={isExecuting && assignmentsWithout.length === 0}
+                            emptyState={<div className={styles.empty}>No records to display.</div>}
+                        />
+                    </Accordion.Item>
+                </Accordion>
             </div>
 
             {selectedCount > 0 && (

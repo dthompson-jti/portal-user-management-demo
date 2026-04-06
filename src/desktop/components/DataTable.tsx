@@ -35,6 +35,7 @@ interface DataTableProps<T> {
     onRowDoubleClick?: (row: T, event: React.MouseEvent, visualIds: string[]) => void;
     initialSorting?: SortingState;
     emptyState?: React.ReactNode;
+    hideFooter?: boolean;
 }
 
 export function DataTable<T>({
@@ -54,6 +55,7 @@ export function DataTable<T>({
     onRowDoubleClick,
     initialSorting = [],
     emptyState,
+    hideFooter = false,
 }: DataTableProps<T>) {
     // When showSkeleton is not explicitly controlled, fall back to the old heuristic.
     const shouldShowSkeleton = showSkeleton ?? (isLoading && data.length === 0);
@@ -452,23 +454,25 @@ export function DataTable<T>({
                 )}
 
                 {/* Table Footer - Moved inside scrollArea for better sticky behavior */}
-                <div className={styles.tableFooter}>
-                    <div className={styles.footerLeft}>
-                        {/* Stays in loading state for the full skeleton duration (min 1s on view change) */}
-                        {(isLoading || shouldShowSkeleton) ? (
-                            <div className={styles.loadingIndicator}>
-                                <span className={`material-symbols-rounded ${styles.loadingSpinner}`}>
-                                    progress_activity
-                                </span>
-                                <span>Loading records...</span>
-                            </div>
-                        ) : (
-                            <div className={styles.footerCount}>
-                                Showing {data.length.toLocaleString()} of {(totalCount ?? data.length).toLocaleString()} results
-                            </div>
-                        )}
+                {!hideFooter && (
+                    <div className={styles.tableFooter}>
+                        <div className={styles.footerLeft}>
+                            {/* Stays in loading state for the full skeleton duration (min 1s on view change) */}
+                            {(isLoading || shouldShowSkeleton) ? (
+                                <div className={styles.loadingIndicator}>
+                                    <span className={`material-symbols-rounded ${styles.loadingSpinner}`}>
+                                        progress_activity
+                                    </span>
+                                    <span>Loading records...</span>
+                                </div>
+                            ) : (
+                                <div className={styles.footerCount}>
+                                    Showing {data.length.toLocaleString()} of {(totalCount ?? data.length).toLocaleString()} results
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

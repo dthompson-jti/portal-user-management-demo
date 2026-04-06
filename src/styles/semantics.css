@@ -14,6 +14,7 @@
   --surface-bg-secondary-strong: var(--primitives-neutral-30);
   --surface-bg-secondary-hover: var(--primitives-neutral-50);
   --surface-bg-tertiary: var(--primitives-neutral-40);
+  --surface-bg-tertiary-hover: var(--primitives-neutral-70);
   --surface-bg-trim: var(--surface-bg-tertiary);
   --surface-bg-quaternary: var(--primitives-neutral-60);
   --surface-bg-primary-solid: var(--primitives-neutral-900);
@@ -353,7 +354,8 @@
   --surface-bg-secondary-subtle: var(--primitives-neutral-920);
   --surface-bg-secondary-strong: var(--primitives-neutral-935);
   --surface-bg-secondary-hover: var(--primitives-neutral-905);
-  --surface-bg-tertiary: var(--primitives-neutral-935);
+  --surface-bg-tertiary: var(--primitives-neutral-930);
+  --surface-bg-tertiary-hover: var(--primitives-neutral-900);
   --surface-bg-trim: var(--surface-bg-tertiary);
   --surface-bg-quaternary: var(--primitives-neutral-945);
   /* Selection/Active High-Fidelity highlight */

@@ -25,6 +25,11 @@
   box-shadow: none;
 }
 
+.btn:focus-visible {
+  outline: 2px solid var(--control-focus-ring-standard);
+  outline-offset: 2px;
+}
+
 .btn .material-symbols-rounded {
   transition: color 0.2s;
 }

@@ -3,7 +3,7 @@
     flex-direction: column;
     height: 100%;
     background: var(--surface-bg-primary);
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .sectionIntro {
@@ -33,8 +33,6 @@
 }
 
 .sections {
-    flex: 1;
-    overflow: auto;
     padding: var(--spacing-5) var(--spacing-6) var(--spacing-6);
     display: flex;
     flex-direction: column;
@@ -46,52 +44,7 @@
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--surface-bg-primary);
-}
-
-.sectionHeaderButton {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: var(--spacing-3) var(--spacing-4);
-    background: var(--surface-bg-tertiary);
-    border: none;
-    border-bottom: 1px solid var(--surface-border-primary);
-    cursor: pointer;
-    text-align: left;
-}
-
-.sectionShell[data-expanded='false'] .sectionHeaderButton {
-    border-bottom-color: transparent;
-}
-
-.sectionHeaderMain {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2);
-    min-width: 0;
-}
-
-.sectionChevron {
-    font-size: var(--icon-size-md);
-    color: var(--surface-fg-secondary);
-    transition: transform 150ms ease;
     flex-shrink: 0;
-}
-
-.sectionShell[data-expanded='false'] .sectionChevron {
-    transform: rotate(-90deg);
-}
-
-.sectionTitle {
-    color: var(--surface-fg-primary);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    line-height: 1.4;
-}
-
-.sectionBody {
-    background: var(--surface-bg-primary);
 }
 
 .empty {

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { ColumnDef, RowSelectionState, OnChangeFn, HeaderContext, CellContext } from '@tanstack/react-table';
 import { DataTable } from '../../desktop/components/DataTable';
 import { RowContextMenu } from '../../desktop/components/RowContextMenu';
 import { COLUMN_WIDTHS } from '../../desktop/components/tableConstants';
 import { Button } from '../../components/Button';
+import { TablePagination } from '../../components/TablePagination';
 import styles from './PortalDataTable.module.css';
 
 interface PortalDataTableProps<T> {
@@ -15,14 +16,15 @@ interface PortalDataTableProps<T> {
     onRowSelectionChange?: OnChangeFn<RowSelectionState>;
     onRowAction?: (row: T) => void;
     // Backwards compat for old onRevokeRow calls
-    onRevokeRow?: (row: T) => void; 
-    
+    onRevokeRow?: (row: T) => void;
+
     // New Feature Props
     densityMode?: 'compact' | 'quick-actions';
     groupBy?: string; // e.g. 'status', 'role'
     actionLabel?: string;
     actionIcon?: string;
     hideHeaderControlsWhenEmpty?: boolean;
+    pageSize?: number;
 }
 
 export function PortalDataTable<T extends { id: string }>({
@@ -39,8 +41,25 @@ export function PortalDataTable<T extends { id: string }>({
     actionLabel = 'Revoke',
     actionIcon = 'no_accounts',
     hideHeaderControlsWhenEmpty = false,
+    pageSize: initialPageSize = 10,
 }: PortalDataTableProps<T>) {
     const lastClickedRowRef = React.useRef<string | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(initialPageSize);
+
+    const totalItems = data.length;
+
+    // Reset to page 1 when data changes (e.g. after grant/revoke)
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [totalItems]);
+
+    const paginatedData = useMemo(() => {
+        const start = (currentPage - 1) * pageSize;
+        return data.slice(start, start + pageSize);
+    }, [data, currentPage, pageSize]);
+
+    const showPagination = totalItems > pageSize;
 
     const handleRowAction = onRowAction || onRevokeRow;
     const shouldShowHeaderControls = data.length > 0 || !hideHeaderControlsWhenEmpty;
@@ -200,7 +219,7 @@ export function PortalDataTable<T extends { id: string }>({
     return (
         <div className={styles.wrapper}>
             <DataTable
-                data={data}
+                data={paginatedData}
                 columns={augmentedColumns}
                 isLoading={isLoading}
                 emptyState={emptyState}
@@ -209,7 +228,20 @@ export function PortalDataTable<T extends { id: string }>({
                 onRowSelectionChange={onRowSelectionChange}
                 getRowId={(row: T) => row.id}
                 onRowClick={handleRowClick}
+                hideFooter={showPagination}
             />
+            {showPagination && (
+                <TablePagination
+                    currentPage={currentPage}
+                    totalItems={totalItems}
+                    pageSize={pageSize}
+                    onPageChange={setCurrentPage}
+                    onPageSizeChange={(size) => {
+                        setPageSize(size);
+                        setCurrentPage(1);
+                    }}
+                />
+            )}
         </div>
     );
 }

@@ -1,0 +1,133 @@
+/* Accordion.module.css */
+
+.root {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── Item ──────────────────────────────────────────────────────────────────── */
+
+.item {
+    overflow: hidden;
+    border-bottom: 1px solid var(--surface-border-secondary);
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────────── */
+
+/* Radix renders Header as <h3>. Reset its margin/font so the inner flex div owns layout. */
+.headerRoot {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 1;
+}
+
+/* The visual header row — NOT a button. Only the chevron trigger is interactive. */
+.header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);                             /* 8px gap between all flex items */
+    padding: var(--spacing-1) var(--spacing-3) var(--spacing-1) var(--spacing-2);
+    /*        4px top/bot      12px right               4px top/bot  8px left  */
+    background: var(--surface-bg-tertiary);
+    cursor: pointer;
+    transition: background 120ms ease;
+}
+
+@media (hover: hover) {
+    .header:hover {
+        background: var(--surface-bg-tertiary-hover);
+    }
+}
+
+/* ─── Chevron trigger ───────────────────────────────────────────────────────── */
+
+/* Sizing, hover, focus ring, and active state are all handled by the Button component. */
+.trigger {
+    flex-shrink: 0;
+}
+
+.chevron {
+    font-size: var(--icon-size-md);     /* 20px — matches Button size="m" icon sizing */
+    transition: transform 250ms cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+/* Radix sets data-state="open" on the Trigger element (our Button) when the panel is open. */
+.trigger[data-state='open'] .chevron {
+    transform: rotate(180deg);
+}
+
+/* ─── Optional leading icon ─────────────────────────────────────────────────── */
+
+.leadingIcon {
+    font-size: var(--icon-size-md);
+    color: var(--surface-fg-secondary);
+    flex-shrink: 0;
+}
+
+/* ─── Title ─────────────────────────────────────────────────────────────────── */
+
+.title {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--font-size-sm);             /* 14px */
+    font-weight: var(--font-weight-semibold);   /* 600 */
+    color: var(--surface-fg-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ─── Right slot ────────────────────────────────────────────────────────────── */
+
+.rightSlot {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+/* Separator between header and open panel — applies whenever item is expanded */
+.item[data-state='open'] .headerRoot {
+    border-bottom: 1px solid var(--surface-border-secondary);
+}
+
+/* ─── Animated panel ────────────────────────────────────────────────────────── */
+
+/*
+ * Radix.Content provides:
+ *   - data-state="open|closed" for animation hooks
+ *   - --radix-accordion-content-height CSS variable (the natural content height)
+ *   - Stays mounted during the exit animation, then is hidden
+ */
+.panel {
+    overflow: hidden;
+}
+
+.panel[data-state='open'] {
+    animation: slideDown 250ms cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.panel[data-state='closed'] {
+    animation: slideUp 250ms cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+@keyframes slideDown {
+    from { height: 0; }
+    to   { height: var(--radix-accordion-content-height); }
+}
+
+@keyframes slideUp {
+    from { height: var(--radix-accordion-content-height); }
+    to   { height: 0; }
+}
+
+/* 2px inset padding for child focus-ring clearance */
+.panelContent {
+    padding: var(--spacing-0p5);
+}
