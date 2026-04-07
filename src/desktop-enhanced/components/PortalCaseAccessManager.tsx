@@ -12,6 +12,7 @@ import { Button } from '../../components/Button';
 import { Accordion } from '../../components/Accordion';
 import { CaseHeader } from './CaseHeader';
 import { OverviewBadge } from '../../components/OverviewBadge';
+import { useTerminology } from '../hooks/useTerminology';
 import styles from './PortalCaseAccessManager.module.css';
 
 interface PortalCaseAccessManagerProps {
@@ -21,17 +22,19 @@ interface PortalCaseAccessManagerProps {
 }
 
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
-const getPortalAccessLabel = (status: PortalAccessRecord['status']) => status === 'Active' ? 'Portal access' : 'No Portal access';
+type AccessAction = 'grant' | 'revoke';
 
 
 export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000016', compact = false }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
+    const terminology = useTerminology();
 
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [pendingIds, setPendingIds] = useState<string[]>([]);
+    const [pendingAction, setPendingAction] = useState<AccessAction>('revoke');
 
     const caseResults = useMemo(() => {
         return results.filter(r => r.caseNumber.includes(caseNum));
@@ -60,9 +63,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
         setIsExecuting(true);
         await new Promise(r => setTimeout(r, 1200));
 
-        const selected = caseResults.filter(r => ids.includes(r.id));
-        const isRevoke = selected.some(r => r.status === 'Active');
-        const actionStatus: 'Inactive' | 'Active' = isRevoke ? 'Inactive' : 'Active';
+        const actionStatus: 'Inactive' | 'Active' = pendingAction === 'revoke' ? 'Inactive' : 'Active';
 
         setResults(prev => prev.map(r =>
             ids.includes(r.id) ? { ...r, status: actionStatus } : r
@@ -70,14 +71,22 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
 
         setIsExecuting(false);
         addToast({
-            title: isRevoke ? 'Access removed' : 'Access Granted',
+            title: pendingAction === 'revoke' ? 'Access removed' : 'Access granted',
             message: `Successfully updated portal access for ${ids.length} record${ids.length > 1 ? 's' : ''}.`,
-            icon: isRevoke ? 'no_accounts' : 'person_add',
+            icon: pendingAction === 'revoke' ? 'no_accounts' : 'person_add',
             variant: 'success'
         });
         setPendingIds([]);
         setSelectedIds({});
         setIsConfirmOpen(false);
+    };
+
+    const openActionConfirm = (records: PortalAccessRecord[]) => {
+        const ids = records.map(record => record.id);
+        if (ids.length === 0) return;
+        setPendingIds(ids);
+        setPendingAction(records[0]?.status === 'Active' ? 'revoke' : 'grant');
+        setIsConfirmOpen(true);
     };
 
     // Columns matching mockup: Email address | Case Participant Role | Portal Access
@@ -97,14 +106,14 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
         },
         {
             accessorKey: 'status',
-            header: 'Portal Access',
+            header: terminology.columnHeader,
             size: 160,
             minSize: 120,
             cell: ({ row }) => {
                 return (
                     <StatusBadge
                         status={row.original.status as StatusBadgeType}
-                        label={getPortalAccessLabel(row.original.status)}
+                        label={terminology.getStatusLabel(row.original.status)}
                         showIcon={false}
                     />
                 );
@@ -114,13 +123,17 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
 
     const selectedCount = Object.keys(selectedIds).filter(k => selectedIds[k]).length;
     const selectedRecords = caseResults.filter(r => selectedIds[r.id]);
-    const isRevokeMode = selectedRecords.some(r => r.status === 'Active');
+    const selectedAction: AccessAction = selectedRecords[0]?.status === 'Active' ? 'revoke' : 'grant';
 
     const isMixedSelection = useMemo(() => {
         if (selectedCount < 2) return false;
         const statuses = new Set(selectedRecords.map(r => r.status));
         return statuses.size > 1;
     }, [selectedCount, selectedRecords]);
+    const selectedActionLabel = selectedAction === 'revoke' ? 'Revoke Access' : 'Grant Access';
+    const selectedActionIcon = selectedAction === 'revoke' ? 'no_accounts' : 'person_add';
+    const pendingActionLabel = pendingAction === 'revoke' ? 'Revoke access' : 'Grant access';
+    const pendingActionVerb = pendingAction === 'revoke' ? 'revoke' : 'grant';
 
     return (
         <div className={styles.view}>
@@ -138,14 +151,14 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 <div className={styles.summaryRow}>
                     <OverviewBadge
                         icon="group"
-                        label="Portal access"
+                        label={terminology.activeLabel}
                         value={withAccessCount.toString()}
                         variant="success"
                         className={styles.summaryBadge}
                     />
                     <OverviewBadge
                         icon="person_off"
-                        label="No Portal access"
+                        label={terminology.inactiveLabel}
                         value={withoutAccessCount.toString()}
                         variant="warning"
                         className={styles.summaryBadge}
@@ -160,11 +173,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 >
                     <Accordion.Item
                         value="with-access"
-                        title="Portal access"
+                        title={terminology.activeLabel}
                         rightSlot={
                             <StatusBadge
                                 status="Active"
-                                label={`${withAccess.length} Portal access`}
+                                label={`${withAccess.length} ${terminology.activeLabel}`}
                                 showIcon={false}
                             />
                         }
@@ -174,12 +187,16 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                             columns={columns}
                             rowSelection={selectedIds}
                             onRowSelectionChange={setSelectedIds}
-                            onRevokeRow={(row) => {
-                                setPendingIds([row.id]);
-                                setIsConfirmOpen(true);
-                            }}
+                            onRevokeRow={(row) => openActionConfirm([row])}
                             actionLabel="Revoke"
                             actionIcon="no_accounts"
+                            getRowAction={(row) => ({
+                                label: row.status === 'Active' ? 'Revoke' : 'Grant',
+                                icon: row.status === 'Active' ? 'no_accounts' : 'person_add',
+                                destructive: row.status === 'Active',
+                                variant: row.status === 'Active' ? 'secondary' : 'primary',
+                                onClick: () => openActionConfirm([row]),
+                            })}
                             isLoading={isExecuting && withAccess.length === 0}
                             emptyState={<div className={styles.empty}>No records to display.</div>}
                         />
@@ -192,11 +209,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 >
                     <Accordion.Item
                         value="parties-without"
-                        title="No Portal access: Parties"
+                        title={`${terminology.inactiveLabel}: Parties`}
                         rightSlot={
                             <StatusBadge
                                 status="Inactive"
-                                label={`${partiesWithout.length} No Portal access`}
+                                label={`${partiesWithout.length} ${terminology.inactiveLabel}`}
                                 showIcon={false}
                             />
                         }
@@ -206,12 +223,16 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                             columns={columns}
                             rowSelection={selectedIds}
                             onRowSelectionChange={setSelectedIds}
-                            onRevokeRow={(row) => {
-                                setPendingIds([row.id]);
-                                setIsConfirmOpen(true);
-                            }}
+                            onRevokeRow={(row) => openActionConfirm([row])}
                             actionLabel="Grant"
                             actionIcon="person_add"
+                            getRowAction={(row) => ({
+                                label: row.status === 'Active' ? 'Revoke' : 'Grant',
+                                icon: row.status === 'Active' ? 'no_accounts' : 'person_add',
+                                destructive: row.status === 'Active',
+                                variant: row.status === 'Active' ? 'secondary' : 'primary',
+                                onClick: () => openActionConfirm([row]),
+                            })}
                             isLoading={isExecuting && partiesWithout.length === 0}
                             emptyState={<div className={styles.empty}>No records to display.</div>}
                         />
@@ -224,11 +245,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 >
                     <Accordion.Item
                         value="assignments-without"
-                        title="No Portal access: Case assignments"
+                        title={`${terminology.inactiveLabel}: Case assignments`}
                         rightSlot={
                             <StatusBadge
                                 status="Inactive"
-                                label={`${assignmentsWithout.length} No Portal access`}
+                                label={`${assignmentsWithout.length} ${terminology.inactiveLabel}`}
                                 showIcon={false}
                             />
                         }
@@ -238,12 +259,16 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                             columns={columns}
                             rowSelection={selectedIds}
                             onRowSelectionChange={setSelectedIds}
-                            onRevokeRow={(row) => {
-                                setPendingIds([row.id]);
-                                setIsConfirmOpen(true);
-                            }}
+                            onRevokeRow={(row) => openActionConfirm([row])}
                             actionLabel="Grant"
                             actionIcon="person_add"
+                            getRowAction={(row) => ({
+                                label: row.status === 'Active' ? 'Revoke' : 'Grant',
+                                icon: row.status === 'Active' ? 'no_accounts' : 'person_add',
+                                destructive: row.status === 'Active',
+                                variant: row.status === 'Active' ? 'secondary' : 'primary',
+                                onClick: () => openActionConfirm([row]),
+                            })}
                             isLoading={isExecuting && assignmentsWithout.length === 0}
                             emptyState={<div className={styles.empty}>No records to display.</div>}
                         />
@@ -255,13 +280,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 <BulkActionFooter
                     selectedCount={selectedCount}
                     onAction={() => {
-                        const ids = Object.keys(selectedIds).filter(id => selectedIds[id]);
-                        setPendingIds(ids);
-                        setIsConfirmOpen(true);
+                        openActionConfirm(selectedRecords);
                     }}
                     onClear={() => setSelectedIds({})}
-                    actionLabel={isRevokeMode ? 'Revoke Access' : 'Grant Access'}
-                    actionIcon={isRevokeMode ? 'no_accounts' : 'person_add'}
+                    actionLabel={selectedActionLabel}
+                    actionIcon={selectedActionIcon}
                     disabledMessage={isMixedSelection ? 'No valid actions' : undefined}
                 />
             )}
@@ -269,11 +292,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
             <Modal
                 isOpen={isConfirmOpen}
                 onClose={() => setIsConfirmOpen(false)}
-                title={isRevokeMode ? 'Revoke access' : 'Grant access'}
+                title={pendingActionLabel}
                 width="360px"
             >
                 <Modal.Header>
-                    <div className={styles.modalTitle}>{isRevokeMode ? 'Revoke access' : 'Grant access'}</div>
+                    <div className={styles.modalTitle}>{pendingActionLabel}</div>
                     <Button
                         variant="tertiary"
                         size="s"
@@ -286,7 +309,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 </Modal.Header>
                 <Modal.Content>
                     <div className={styles.confirmBody}>
-                        {isRevokeMode ? (
+                        {pendingAction === 'revoke' ? (
                             <>
                                 <div className={styles.warningBannerYellow}>
                                     <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
@@ -298,7 +321,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                             </>
                         ) : (
                             <p className={styles.confirmText}>
-                                Are you sure you want to grant portal access for <strong>{pendingIds.length} record{pendingIds.length > 1 ? 's' : ''}</strong>?
+                                Are you sure you want to {pendingActionVerb} portal access for <strong>{pendingIds.length} record{pendingIds.length > 1 ? 's' : ''}</strong>?
                             </p>
                         )}
                     </div>
@@ -311,7 +334,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                             onClick={() => { void handleBulkAction(); }}
                             loading={isExecuting}
                         >
-                            {isRevokeMode ? 'Revoke access' : 'Grant access'}
+                            {pendingActionLabel}
                         </Button>
                         <Button
                             variant="secondary"

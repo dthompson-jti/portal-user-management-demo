@@ -233,7 +233,9 @@
 .td[data-column-id="select"],
 .th[data-column-id="select"],
 .td[data-column-id="actions"],
-.th[data-column-id="actions"] {
+.th[data-column-id="actions"],
+.td:last-child,
+.th:last-child {
     padding: 0 !important;
 }
 

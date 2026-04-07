@@ -10,13 +10,9 @@ import { FilterSelect } from '../../desktop/components/FilterSelect';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { addToastAtom } from '../../data/toastAtoms';
+import { useTerminology } from '../hooks/useTerminology';
 import styles from './AccessLedger.module.css';
-
-const STATUS_OPTIONS = [
-    { value: 'all', label: 'All statuses' },
-    { value: 'Active', label: 'Active' },
-    { value: 'Inactive', label: 'Inactive' },
-];
+type AccessAction = 'grant' | 'revoke';
 
 const CASE_TYPE_OPTIONS = [
     { value: 'all', label: 'All types' },
@@ -31,17 +27,13 @@ const ACCESS_TYPE_OPTIONS = [
     { value: 'Delegated access', label: 'Delegated access' },
 ];
 
-const STATUS_BADGE_CONFIG = {
-    Active: { label: 'Portal access', icon: 'check_circle' },
-    Inactive: { label: 'No Portal access', icon: 'block' },
-} as const;
-
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
 
 export const AccessLedger: React.FC = () => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
+    const terminology = useTerminology();
 
     // Detail panel atoms — shared with app shell
     const setInspectedRecord = useSetAtom(portalInspectedRecordAtom);
@@ -58,21 +50,15 @@ export const AccessLedger: React.FC = () => {
 
     // Selection & modal state
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
-    const [isRevokeConfirmOpen, setIsRevokeConfirmOpen] = useState(false);
-    const [pendingRevokeIds, setPendingRevokeIds] = useState<string[]>([]);
+    const [isActionConfirmOpen, setIsActionConfirmOpen] = useState(false);
+    const [pendingActionIds, setPendingActionIds] = useState<string[]>([]);
+    const [pendingAction, setPendingAction] = useState<AccessAction>('revoke');
 
     // Sticky search results
     const [visibleResults, setVisibleResults] = useState<PortalAccessRecord[]>([]);
 
     // ── Sync selected count to atom for the app shell ──
     const selectedCount = Object.keys(selectedIds).filter(k => selectedIds[k]).length;
-
-    const isMixedSelection = useMemo(() => {
-        if (selectedCount < 2) return false;
-        const selectedRecords = finalResults.filter(r => selectedIds[r.id]);
-        const statuses = new Set(selectedRecords.map(r => r.status));
-        return statuses.size > 1;
-    }, [selectedCount, selectedIds, finalResults]);
 
     useEffect(() => {
         setPortalSelectedCount(selectedCount);
@@ -100,8 +86,7 @@ export const AccessLedger: React.FC = () => {
             r.email.toLowerCase().includes(q) ||
             r.caseNumber.toLowerCase().includes(q) ||
             r.caseName.toLowerCase().includes(q) ||
-            r.participantRole.toLowerCase().includes(q) ||
-            r.author.toLowerCase().includes(q)
+            r.participantRole.toLowerCase().includes(q)
         );
         setVisibleResults(matches);
     }, [results, setInspectedRecord]);
@@ -138,24 +123,25 @@ export const AccessLedger: React.FC = () => {
     };
 
     // ── Revoke flow ──
-    const handleRemoveAccess = async () => {
-        const ids = pendingRevokeIds;
+    const handleAccessChange = async () => {
+        const ids = pendingActionIds;
         if (ids.length === 0) return;
 
         setIsExecuting(true);
         const count = ids.length;
+        const nextStatus = pendingAction === 'revoke' ? 'Inactive' : 'Active';
 
         await new Promise(r => setTimeout(r, 1200));
 
         setResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
+            ids.includes(r.id) ? { ...r, status: nextStatus } : r
         ));
         setVisibleResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
+            ids.includes(r.id) ? { ...r, status: nextStatus } : r
         ));
 
         setIsExecuting(false);
-        setPendingRevokeIds([]);
+        setPendingActionIds([]);
         setSelectedIds(prev => {
             const next = { ...prev };
             ids.forEach(id => delete next[id]);
@@ -163,23 +149,28 @@ export const AccessLedger: React.FC = () => {
         });
 
         addToast({
-            title: 'Access revoked',
-            message: `Removed portal access for ${count} record${count > 1 ? 's' : ''}.`,
-            icon: 'no_accounts',
+            title: pendingAction === 'revoke' ? 'Access revoked' : 'Access granted',
+            message: `${pendingAction === 'revoke' ? 'Removed' : 'Granted'} portal access for ${count} record${count > 1 ? 's' : ''}.`,
+            icon: pendingAction === 'revoke' ? 'no_accounts' : 'person_add',
             variant: 'success'
         });
     };
 
-    const openBulkRevokeConfirm = () => {
-        const ids = Object.keys(selectedIds).filter(id => selectedIds[id]);
+    const openActionConfirm = (records: PortalAccessRecord[]) => {
+        const ids = records.map(record => record.id);
         if (ids.length === 0) return;
-        setPendingRevokeIds(ids);
-        setIsRevokeConfirmOpen(true);
+        setPendingActionIds(ids);
+        setPendingAction(records[0]?.status === 'Active' ? 'revoke' : 'grant');
+        setIsActionConfirmOpen(true);
     };
 
-    const openSingleRevokeConfirm = (record: PortalAccessRecord) => {
-        setPendingRevokeIds([record.id]);
-        setIsRevokeConfirmOpen(true);
+    const openBulkActionConfirm = () => {
+        const records = finalResults.filter(record => selectedIds[record.id]);
+        openActionConfirm(records);
+    };
+
+    const openSingleActionConfirm = (record: PortalAccessRecord) => {
+        openActionConfirm([record]);
     };
 
     // ── Row selection change → update inspected record for detail panel ──
@@ -223,18 +214,18 @@ export const AccessLedger: React.FC = () => {
         },
         {
             accessorKey: 'status',
-            header: 'Status',
+            header: terminology.columnHeader,
             size: 154,
             minSize: 154,
             cell: ({ getValue }) => {
-                const val = getValue() as string;
+                const val = getValue() as 'Active' | 'Inactive';
                 if (!val) return null;
-                const config = STATUS_BADGE_CONFIG[val as keyof typeof STATUS_BADGE_CONFIG];
-                if (!config) return val;
                 return (
                     <div className={styles.badge} data-status={val}>
-                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{config.icon}</span>
-                        <span className={styles.badgeLabel}>{config.label}</span>
+                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>
+                            {val === 'Active' ? terminology.activeIcon : terminology.inactiveIcon}
+                        </span>
+                        <span className={styles.badgeLabel}>{terminology.getStatusLabel(val)}</span>
                     </div>
                 );
             }
@@ -257,9 +248,24 @@ export const AccessLedger: React.FC = () => {
             size: 130,
             minSize: 100,
         },
-    ], []);
+    ], [terminology]);
 
-    const pendingCount = pendingRevokeIds.length;
+    const selectedRecords = useMemo(
+        () => finalResults.filter(record => selectedIds[record.id]),
+        [finalResults, selectedIds]
+    );
+    const isMixedSelection = useMemo(() => {
+        if (selectedCount < 2) return false;
+        const statuses = new Set(selectedRecords.map(record => record.status));
+        return statuses.size > 1;
+    }, [selectedCount, selectedRecords]);
+    const selectedAction: AccessAction = selectedRecords[0]?.status === 'Active' ? 'revoke' : 'grant';
+    const selectedActionLabel = selectedAction === 'revoke' ? 'Revoke access' : 'Grant access';
+    const selectedActionIcon = selectedAction === 'revoke' ? 'no_accounts' : 'person_add';
+    const pendingCount = pendingActionIds.length;
+    const pendingActionLabel = pendingAction === 'revoke' ? 'Revoke access' : 'Grant access';
+    const pendingActionVerb = pendingAction === 'revoke' ? 'revoke' : 'grant';
+    const pendingActionIcon = pendingAction === 'revoke' ? 'no_accounts' : 'person_add';
 
     return (
         <div className={styles.view}>
@@ -289,7 +295,7 @@ export const AccessLedger: React.FC = () => {
                         value={statusFilter}
                         onValueChange={setStatusFilter}
                         placeholder="All statuses"
-                        options={STATUS_OPTIONS}
+                        options={terminology.statusOptions}
                         onClear={() => setStatusFilter('all')}
                         isCustomized={statusFilter !== 'all'}
                         disabled={!searchTrigger}
@@ -319,12 +325,12 @@ export const AccessLedger: React.FC = () => {
             {searchTrigger && (
                 <div className={styles.statsBar}>
                     <div className={styles.badge} data-status="Active">
-                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>check_circle</span>
-                        <span className={styles.badgeLabel}>{stats.active} active</span>
+                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{terminology.activeIcon}</span>
+                        <span className={styles.badgeLabel}>{stats.active} {terminology.activeLabel.toLowerCase()}</span>
                     </div>
                     <div className={styles.badge} data-status="Inactive">
-                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>block</span>
-                        <span className={styles.badgeLabel}>{stats.inactive} inactive</span>
+                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{terminology.inactiveIcon}</span>
+                        <span className={styles.badgeLabel}>{stats.inactive} {terminology.inactiveLabel.toLowerCase()}</span>
                     </div>
                     <div className={styles.statSpacer} />
                     <span className={styles.resultCount}>
@@ -352,7 +358,21 @@ export const AccessLedger: React.FC = () => {
                         columns={columns}
                         rowSelection={selectedIds}
                         onRowSelectionChange={handleSelectionChange}
-                        onRevokeRow={openSingleRevokeConfirm}
+                        onRevokeRow={openSingleActionConfirm}
+                        getRowAction={(row) => row.status === 'Active'
+                            ? {
+                                label: 'Revoke access',
+                                icon: 'no_accounts',
+                                destructive: true,
+                                variant: 'secondary',
+                                onClick: () => openSingleActionConfirm(row),
+                            }
+                            : {
+                                label: 'Grant access',
+                                icon: 'person_add',
+                                variant: 'primary',
+                                onClick: () => openSingleActionConfirm(row),
+                            }}
                         isLoading={isExecuting && finalResults.length === 0}
                         emptyState={
                             <div className={styles.empty}>
@@ -368,31 +388,31 @@ export const AccessLedger: React.FC = () => {
             {selectedCount > 0 && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
-                    onAction={openBulkRevokeConfirm}
+                    onAction={openBulkActionConfirm}
                     onClear={() => {
                         setSelectedIds({});
                         setInspectedRecord(null);
                     }}
-                    actionLabel="Revoke access"
-                    actionIcon="no_accounts"
+                    actionLabel={selectedActionLabel}
+                    actionIcon={selectedActionIcon}
                     disabledMessage={isMixedSelection ? 'No valid actions' : undefined}
                 />
             )}
 
             {/* ── Revoke confirmation modal ── */}
             <Modal
-                isOpen={isRevokeConfirmOpen}
-                onClose={() => setIsRevokeConfirmOpen(false)}
-                title="Revoke access"
+                isOpen={isActionConfirmOpen}
+                onClose={() => setIsActionConfirmOpen(false)}
+                title={pendingActionLabel}
                 width="360px"
             >
                 <Modal.Header>
-                    <div className={styles.modalTitle}>Revoke access</div>
+                    <div className={styles.modalTitle}>{pendingActionLabel}</div>
                     <Button
                         variant="tertiary"
                         size="s"
                         iconOnly
-                        onClick={() => setIsRevokeConfirmOpen(false)}
+                        onClick={() => setIsActionConfirmOpen(false)}
                         disabled={isExecuting}
                     >
                         <span className="material-symbols-rounded">close</span>
@@ -400,12 +420,14 @@ export const AccessLedger: React.FC = () => {
                 </Modal.Header>
                 <Modal.Content>
                     <div className={styles.confirmBody}>
-                        <div className={styles.warningBannerYellow}>
-                            <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
-                            <span>Access will be removed from the selected records. You can add access again later if needed.</span>
-                        </div>
+                        {pendingAction === 'revoke' && (
+                            <div className={styles.warningBannerYellow}>
+                                <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
+                                <span>Access will be removed from the selected records. You can add access again later if needed.</span>
+                            </div>
+                        )}
                         <p className={styles.confirmText}>
-                            Are you sure you want to revoke portal access for <strong>{pendingCount} record{pendingCount > 1 ? 's' : ''}</strong>?
+                            Are you sure you want to {pendingActionVerb} portal access for <strong>{pendingCount} record{pendingCount > 1 ? 's' : ''}</strong>?
                         </p>
                     </div>
                 </Modal.Content>
@@ -415,17 +437,18 @@ export const AccessLedger: React.FC = () => {
                             variant="primary"
                             size="m"
                             onClick={() => {
-                                setIsRevokeConfirmOpen(false);
-                                void handleRemoveAccess();
+                                setIsActionConfirmOpen(false);
+                                void handleAccessChange();
                             }}
                             loading={isExecuting}
                         >
-                            Revoke access
+                            <span className="material-symbols-rounded">{pendingActionIcon}</span>
+                            {pendingActionLabel}
                         </Button>
                         <Button
                             variant="secondary"
                             size="m"
-                            onClick={() => setIsRevokeConfirmOpen(false)}
+                            onClick={() => setIsActionConfirmOpen(false)}
                             disabled={isExecuting}
                         >
                             Cancel

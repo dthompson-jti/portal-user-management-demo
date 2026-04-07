@@ -75,3 +75,38 @@ export type SplitPaneSearchMode = 'email' | 'case';
 export const splitPaneSearchModeAtom = atom<SplitPaneSearchMode>('email');
 export const splitPaneSelectedItemAtom = atom<string | null>(null);
 export const splitPaneWidthAtom = atom<number>(300);
+
+// ── Terminology settings ──
+export type StatusTerminology =
+    | 'portal-access'   // Portal access / No portal access
+    | 'active-inactive' // Active / Inactive
+    | 'granted'         // Granted / Not granted
+    | 'has-access';     // Has access / No access
+
+export type ColumnHeaderTerminology =
+    | 'status'          // Status
+    | 'access-status'   // Access Status
+    | 'portal-access';  // Portal Access
+
+export interface TerminologyConfig {
+    statusLabels: StatusTerminology;
+    columnHeader: ColumnHeaderTerminology;
+}
+
+export const STATUS_LABEL_OPTIONS: { value: StatusTerminology; activeLabel: string; inactiveLabel: string }[] = [
+    { value: 'portal-access',   activeLabel: 'Portal access',  inactiveLabel: 'No portal access' },
+    { value: 'active-inactive', activeLabel: 'Active',         inactiveLabel: 'Inactive' },
+    { value: 'granted',         activeLabel: 'Granted',        inactiveLabel: 'Not granted' },
+    { value: 'has-access',      activeLabel: 'Has access',     inactiveLabel: 'No access' },
+];
+
+export const COLUMN_HEADER_OPTIONS: { value: ColumnHeaderTerminology; label: string }[] = [
+    { value: 'status',         label: 'Status' },
+    { value: 'access-status',  label: 'Access Status' },
+    { value: 'portal-access',  label: 'Portal Access' },
+];
+
+export const terminologyAtom = atom<TerminologyConfig>({
+    statusLabels: 'portal-access',
+    columnHeader: 'portal-access',
+});

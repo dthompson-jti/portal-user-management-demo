@@ -7,6 +7,14 @@ import { Button } from '../../components/Button';
 import { TablePagination } from '../../components/TablePagination';
 import styles from './PortalDataTable.module.css';
 
+export interface PortalRowActionConfig {
+    label: string;
+    icon: string;
+    destructive?: boolean;
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'quaternary' | 'on-solid' | 'destructive';
+    onClick?: () => void;
+}
+
 interface PortalDataTableProps<T> {
     data: T[];
     columns: ColumnDef<T, unknown>[];
@@ -23,6 +31,7 @@ interface PortalDataTableProps<T> {
     groupBy?: string; // e.g. 'status', 'role'
     actionLabel?: string;
     actionIcon?: string;
+    getRowAction?: (row: T) => PortalRowActionConfig;
     hideHeaderControlsWhenEmpty?: boolean;
     pageSize?: number;
 }
@@ -40,6 +49,7 @@ export function PortalDataTable<T extends { id: string }>({
     groupBy = 'none',
     actionLabel = 'Revoke',
     actionIcon = 'no_accounts',
+    getRowAction,
     hideHeaderControlsWhenEmpty = false,
     pageSize: initialPageSize = 10,
 }: PortalDataTableProps<T>) {
@@ -142,19 +152,29 @@ export function PortalDataTable<T extends { id: string }>({
             minSize: isQuickActions ? 120 : 48,
             maxSize: isQuickActions ? 120 : 48,
             enableSorting: false,
+            enableResizing: false,
             cell: ({ row }: CellContext<T, unknown>) => {
+                const defaultAction: PortalRowActionConfig = {
+                    label: actionLabel,
+                    icon: actionIcon,
+                    onClick: () => handleRowAction?.(row.original),
+                    destructive: actionLabel.includes('Revoke'),
+                    variant: actionLabel.includes('Revoke') ? 'secondary' : 'primary',
+                };
+                const resolvedAction = getRowAction?.(row.original) ?? defaultAction;
+
                 return (
                     <div className={styles.actionsCellWrapper}>
                         {isQuickActions ? (
                             <Button 
-                                variant={actionLabel === 'Revoke' ? 'secondary' : 'primary'}
+                                variant={resolvedAction.variant ?? (resolvedAction.destructive ? 'secondary' : 'primary')}
                                 size="s"
-                                onClick={() => handleRowAction?.(row.original)}
+                                onClick={resolvedAction.onClick}
                             >
                                 <span className={`material-symbols-rounded`} style={{ fontSize: '18px', marginRight: '4px' }}>
-                                    {actionIcon}
+                                    {resolvedAction.icon}
                                 </span>
-                                {actionLabel}
+                                {resolvedAction.label}
                             </Button>
                         ) : (
                             <RowContextMenu
@@ -165,10 +185,10 @@ export function PortalDataTable<T extends { id: string }>({
                                         onClick: () => { /* View details */ },
                                     },
                                     {
-                                        label: actionLabel,
-                                        icon: actionIcon,
-                                        onClick: () => handleRowAction?.(row.original),
-                                        destructive: actionLabel.includes('Revoke'),
+                                        label: resolvedAction.label,
+                                        icon: resolvedAction.icon,
+                                        onClick: resolvedAction.onClick ?? (() => handleRowAction?.(row.original)),
+                                        destructive: resolvedAction.destructive,
                                     }
                                 ]}
                             />

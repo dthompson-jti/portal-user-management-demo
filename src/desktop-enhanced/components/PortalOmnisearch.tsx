@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { portalResultsAtom, isPortalActionExecutingAtom, portalDensityModeAtom } from '../atoms';
+import { useTerminology } from '../hooks/useTerminology';
 import { PortalAccessRecord } from '../types/portalTypes';
 import { PortalDataTable } from './PortalDataTable';
 import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
@@ -14,11 +15,7 @@ import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
 import styles from './PortalEmailSearch.module.css'; // Reusing CSS
 
-const STATUS_OPTIONS = [
-    { value: 'all', label: 'All Statuses' },
-    { value: 'Active', label: 'Active' },
-    { value: 'Inactive', label: 'Inactive' },
-];
+type AccessAction = 'grant' | 'revoke';
 
 const GROUP_OPTIONS = [
     { value: 'none', label: 'No grouping' },
@@ -27,7 +24,6 @@ const GROUP_OPTIONS = [
 ];
 
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
-const getPortalAccessBadgeLabel = (status: string) => status === 'Active' ? 'Portal access' : 'No Portal access';
 
 interface PortalOmnisearchProps {
     mode?: 'email' | 'case';
@@ -44,6 +40,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const densityMode = useAtomValue(portalDensityModeAtom);
     const addToast = useSetAtom(addToastAtom);
+    const terminology = useTerminology();
     
     // Search & Context State
     const [localQuery, setLocalQuery] = useState('');
@@ -57,8 +54,9 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
 
     // Selection & Actions
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
-    const [isRevokeConfirmOpen, setIsRevokeConfirmOpen] = useState(false);
-    const [pendingRevokeIds, setPendingRevokeIds] = useState<string[]>([]);
+    const [isActionConfirmOpen, setIsActionConfirmOpen] = useState(false);
+    const [pendingActionIds, setPendingActionIds] = useState<string[]>([]);
+    const [pendingAction, setPendingAction] = useState<AccessAction>('revoke');
     const [visibleResults, setVisibleResults] = useState<PortalAccessRecord[]>([]);
 
     const handleSearch = useCallback((val: string) => {
@@ -113,32 +111,41 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         return current;
     }, [visibleResults, quickFilter, statusFilter]);
 
-    const handleRemoveAccess = async () => {
-        const ids = pendingRevokeIds;
+    const handleAccessChange = async () => {
+        const ids = pendingActionIds;
         if (ids.length === 0) return;
 
         setIsExecuting(true);
+        const nextStatus = pendingAction === 'revoke' ? 'Inactive' : 'Active';
         await new Promise(r => setTimeout(r, 1200));
 
         setResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
+            ids.includes(r.id) ? { ...r, status: nextStatus } : r
         ));
 
         setVisibleResults(prev => prev.map(r => 
-            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
+            ids.includes(r.id) ? { ...r, status: nextStatus } : r
         ));
 
         setIsExecuting(false);
-        setPendingRevokeIds([]);
+        setPendingActionIds([]);
         setSelectedIds({});
         
         addToast({
-            title: 'Access removed',
-            message: `Successfully removed portal access for ${ids.length} record${ids.length > 1 ? 's' : ''}.`,
-            icon: 'no_accounts',
+            title: pendingAction === 'revoke' ? 'Access removed' : 'Access granted',
+            message: `Successfully ${pendingAction === 'revoke' ? 'removed' : 'granted'} portal access for ${ids.length} record${ids.length > 1 ? 's' : ''}.`,
+            icon: pendingAction === 'revoke' ? 'no_accounts' : 'person_add',
             variant: 'success'
         });
     };
+
+    const openActionConfirm = useCallback((records: PortalAccessRecord[]) => {
+        const ids = records.map(record => record.id);
+        if (ids.length === 0) return;
+        setPendingActionIds(ids);
+        setPendingAction(records[0]?.status === 'Active' ? 'revoke' : 'grant');
+        setIsActionConfirmOpen(true);
+    }, []);
 
     const caseColumns: ColumnDef<PortalAccessRecord, unknown>[] = [
         {
@@ -152,11 +159,11 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         { accessorKey: 'accessType', header: 'Portal Role(s)', size: 150, minSize: 120 },
         { 
             accessorKey: 'status', 
-            header: 'Status', 
+            header: terminology.columnHeader,
             size: 120,
             cell: ({ getValue }) => {
-                const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
+                const val = getValue() as 'Active' | 'Inactive';
+                return val ? <StatusBadge status={val as StatusBadgeType} label={terminology.getStatusLabel(val)} /> : null;
             }
         },
     ];
@@ -168,11 +175,11 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
         { 
             accessorKey: 'status', 
-            header: 'Status', 
+            header: terminology.columnHeader,
             size: 120,
             cell: ({ getValue }) => {
-                const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
+                const val = getValue() as 'Active' | 'Inactive';
+                return val ? <StatusBadge status={val as StatusBadgeType} label={terminology.getStatusLabel(val)} /> : null;
             }
         },
     ];
@@ -191,11 +198,11 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
         {
             accessorKey: 'status',
-            header: 'Status',
+            header: terminology.columnHeader,
             size: 120,
             cell: ({ getValue }) => {
-                const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
+                const val = getValue() as 'Active' | 'Inactive';
+                return val ? <StatusBadge status={val as StatusBadgeType} label={terminology.getStatusLabel(val)} /> : null;
             }
         },
     ];
@@ -214,11 +221,11 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         { accessorKey: 'accessType', header: 'Access Type', size: 150, minSize: 120 },
         {
             accessorKey: 'status',
-            header: 'Status',
+            header: terminology.columnHeader,
             size: 120,
             cell: ({ getValue }) => {
-                const val = getValue() as string;
-                return val ? <StatusBadge status={val as StatusBadgeType} label={getPortalAccessBadgeLabel(val)} /> : null;
+                const val = getValue() as 'Active' | 'Inactive';
+                return val ? <StatusBadge status={val as StatusBadgeType} label={terminology.getStatusLabel(val)} /> : null;
             }
         },
     ];
@@ -236,7 +243,22 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
     })();
     const minSearchLength = matchMode === 'partial' ? 1 : 3;
     const selectedCount = Object.keys(selectedIds).filter(k => selectedIds[k]).length;
-    const pendingCount = pendingRevokeIds.length;
+    const selectedRecords = useMemo(
+        () => finalResults.filter(record => selectedIds[record.id]),
+        [finalResults, selectedIds]
+    );
+    const isMixedSelection = useMemo(() => {
+        if (selectedCount < 2) return false;
+        const statuses = new Set(selectedRecords.map(record => record.status));
+        return statuses.size > 1;
+    }, [selectedCount, selectedRecords]);
+    const selectedAction: AccessAction = selectedRecords[0]?.status === 'Active' ? 'revoke' : 'grant';
+    const selectedActionLabel = selectedAction === 'revoke' ? 'Revoke access' : 'Grant access';
+    const selectedActionIcon = selectedAction === 'revoke' ? 'no_accounts' : 'person_add';
+    const pendingCount = pendingActionIds.length;
+    const pendingActionLabel = pendingAction === 'revoke' ? 'Revoke access' : 'Grant access';
+    const pendingActionVerb = pendingAction === 'revoke' ? 'revoke' : 'grant';
+    const pendingActionIcon = pendingAction === 'revoke' ? 'no_accounts' : 'person_add';
     const showResultControls = visibleResults.length > 0;
 
     return (
@@ -281,7 +303,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                                 value={statusFilter}
                                 onValueChange={setStatusFilter}
                                 placeholder="All Statuses"
-                                options={STATUS_OPTIONS}
+                                options={terminology.statusOptions}
                                 onClear={() => setStatusFilter('all')}
                                 isCustomized={statusFilter !== 'all'}
                             />
@@ -302,10 +324,21 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                         columns={activeColumns} 
                         rowSelection={selectedIds}
                         onRowSelectionChange={setSelectedIds}
-                        onRevokeRow={(row) => {
-                            setPendingRevokeIds([row.id]);
-                            setIsRevokeConfirmOpen(true);
-                        }}
+                        onRevokeRow={(row) => openActionConfirm([row])}
+                        getRowAction={(row) => row.status === 'Active'
+                            ? {
+                                label: 'Revoke access',
+                                icon: 'no_accounts',
+                                destructive: true,
+                                variant: 'secondary',
+                                onClick: () => openActionConfirm([row]),
+                            }
+                            : {
+                                label: 'Grant access',
+                                icon: 'person_add',
+                                variant: 'primary',
+                                onClick: () => openActionConfirm([row]),
+                            }}
                         densityMode={densityMode}
                         groupBy={groupBy}
                         isLoading={isExecuting && finalResults.length === 0}
@@ -318,30 +351,27 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
             {selectedCount > 0 && densityMode !== 'quick-actions' && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
-                    onAction={() => {
-                        const ids = Object.keys(selectedIds).filter(id => selectedIds[id]);
-                        setPendingRevokeIds(ids);
-                        setIsRevokeConfirmOpen(true);
-                    }}
+                    onAction={() => openActionConfirm(selectedRecords)}
                     onClear={() => setSelectedIds({})}
-                    actionLabel="Revoke access"
-                    actionIcon="no_accounts"
+                    actionLabel={selectedActionLabel}
+                    actionIcon={selectedActionIcon}
+                    disabledMessage={isMixedSelection ? 'No valid actions' : undefined}
                 />
             )}
 
             <Modal
-                isOpen={isRevokeConfirmOpen}
-                onClose={() => setIsRevokeConfirmOpen(false)}
-                title="Revoke access"
+                isOpen={isActionConfirmOpen}
+                onClose={() => setIsActionConfirmOpen(false)}
+                title={pendingActionLabel}
                 width="360px"
             >
                 <Modal.Header>
-                    <div className={styles.modalTitle}>Revoke access</div>
+                    <div className={styles.modalTitle}>{pendingActionLabel}</div>
                     <Button 
                         variant="tertiary" 
                         size="s" 
                         iconOnly 
-                        onClick={() => setIsRevokeConfirmOpen(false)}
+                        onClick={() => setIsActionConfirmOpen(false)}
                         disabled={isExecuting}
                     >
                         <span className="material-symbols-rounded">close</span>
@@ -349,12 +379,14 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                 </Modal.Header>
                 <Modal.Content>
                     <div className={styles.confirmBody}>
-                        <div className={styles.warningBannerYellow}>
-                            <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
-                            <span>Access will be removed from the selected records. You can add access again later if needed.</span>
-                        </div>
+                        {pendingAction === 'revoke' && (
+                            <div className={styles.warningBannerYellow}>
+                                <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
+                                <span>Access will be removed from the selected records. You can add access again later if needed.</span>
+                            </div>
+                        )}
                         <p className={styles.confirmText}>
-                            Are you sure you want to revoke portal access for <strong>{pendingCount} record{pendingCount > 1 ? 's' : ''}</strong>?
+                            Are you sure you want to {pendingActionVerb} portal access for <strong>{pendingCount} record{pendingCount > 1 ? 's' : ''}</strong>?
                         </p>
                     </div>
                 </Modal.Content>
@@ -364,17 +396,18 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                             variant="primary"
                             size="m"
                             onClick={() => {
-                                setIsRevokeConfirmOpen(false);
-                                void handleRemoveAccess();
+                                setIsActionConfirmOpen(false);
+                                void handleAccessChange();
                             }}
                             loading={isExecuting}
                         >
-                            Revoke access
+                            <span className="material-symbols-rounded">{pendingActionIcon}</span>
+                            {pendingActionLabel}
                         </Button>
                         <Button 
                             variant="secondary" 
                             size="m" 
-                            onClick={() => setIsRevokeConfirmOpen(false)}
+                            onClick={() => setIsActionConfirmOpen(false)}
                             disabled={isExecuting}
                         >
                             Cancel

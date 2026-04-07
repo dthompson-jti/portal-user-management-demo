@@ -1,13 +1,8 @@
 import React, { useMemo } from 'react';
 import { Button } from '../../components/Button';
 import { Select, SelectItem } from '../../components/Select';
+import { useTerminology } from '../hooks/useTerminology';
 import styles from './PortalAccessAdvancedSearch.module.css';
-
-const STATUS_OPTIONS = [
-    { value: 'all', label: 'All statuses' },
-    { value: 'Active', label: 'Portal access' },
-    { value: 'Inactive', label: 'No Portal access' },
-] as const;
 
 const CASE_TYPE_OPTIONS = [
     { value: 'all', label: 'All case types' },
@@ -28,7 +23,6 @@ export interface PortalAccessFilters {
     caseNumber: string;
     caseName: string;
     participant: string;
-    author: string;
     status: string;
     caseType: string;
     accessType: string;
@@ -48,7 +42,6 @@ export const EMPTY_PORTAL_ACCESS_FILTERS: PortalAccessFilters = {
     caseNumber: '',
     caseName: '',
     participant: '',
-    author: '',
     status: 'all',
     caseType: 'all',
     accessType: 'all',
@@ -61,9 +54,12 @@ export const PortalAccessAdvancedSearch: React.FC<PortalAccessAdvancedSearchProp
     onReset,
     onClose,
 }) => {
+    const terminology = useTerminology();
+    const statusOptions = terminology.statusOptions;
+
     const statusValueLabel = useMemo(
-        () => STATUS_OPTIONS.find(option => option.value === value.status)?.label ?? 'All statuses',
-        [value.status]
+        () => statusOptions.find(option => option.value === value.status)?.label ?? 'All statuses',
+        [statusOptions, value.status]
     );
     const caseTypeValueLabel = useMemo(
         () => CASE_TYPE_OPTIONS.find(option => option.value === value.caseType)?.label ?? 'All case types',
@@ -144,16 +140,6 @@ export const PortalAccessAdvancedSearch: React.FC<PortalAccessAdvancedSearchProp
                 </div>
 
                 <div className={styles.fieldGroup}>
-                    <label className={styles.label}>Granted or shared by</label>
-                    <input
-                        className={styles.input}
-                        value={value.author}
-                        onChange={(event) => onChange('author', event.target.value)}
-                        placeholder="Author or shared-with value"
-                    />
-                </div>
-
-                <div className={styles.fieldGroup}>
                     <label className={styles.label}>Status</label>
                     <Select
                         value={value.status}
@@ -162,7 +148,7 @@ export const PortalAccessAdvancedSearch: React.FC<PortalAccessAdvancedSearchProp
                         triggerClassName={`${styles.selectTrigger} ${styles.fullWidth}`}
                         valueLabel={statusValueLabel}
                     >
-                        {STATUS_OPTIONS.map((option) => (
+                        {statusOptions.map((option) => (
                             <SelectItem key={option.value} value={option.value}>
                                 {option.label}
                             </SelectItem>

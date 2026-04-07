@@ -3,6 +3,7 @@ import { useAtomValue } from 'jotai';
 import { activePageAtom } from '../../data/activePageAtom';
 import { PortalOmnisearch } from './PortalOmnisearch';
 import { PortalCaseAccessManager } from './PortalCaseAccessManager';
+import { PortalCaseSearchII } from './PortalCaseSearchII';
 import { AccessLedger } from './AccessLedger';
 import { PortalAccess } from './PortalAccess';
 import { PortalSplitPane } from './PortalSplitPane';
@@ -25,6 +26,8 @@ export const PortalManagementView: React.FC = () => {
                 return <PortalOmnisearch key="omni" />;
             case 'portal-case-example':
                 return <PortalCaseAccessManager caseNum="CIV-24-0000016" />;
+            case 'portal-case-search-ii':
+                return <PortalCaseSearchII caseNum="CIV-24-0000016" />;
             case 'portal-access-ledger':
                 return <AccessLedger />;
             case 'portal-access':

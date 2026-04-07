@@ -3,6 +3,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { motion } from 'framer-motion';
 import { isDetailPanelOpenAtom, panelWidthAtom } from '../../desktop/atoms';
 import { portalInspectedRecordAtom, portalSelectedCountAtom } from '../atoms';
+import { useTerminology } from '../hooks/useTerminology';
 import { Button } from '../../components/Button';
 import { Tooltip } from '../../components/Tooltip';
 import { LabelValueRow } from '../../components/LabelValueRow';
@@ -20,6 +21,7 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
     const selectedCount = useAtomValue(portalSelectedCountAtom);
     const [panelWidth, setPanelWidth] = useAtom(panelWidthAtom);
     const setPanelOpen = useSetAtom(isDetailPanelOpenAtom);
+    const terminology = useTerminology();
 
     const [isResizing, setIsResizing] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
@@ -85,8 +87,6 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
         ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
         duration: 0.3,
     };
-
-    const placeholder = <span style={{ color: 'var(--control-fg-placeholder)' }}>—</span>;
 
     return (
         <motion.div
@@ -154,10 +154,10 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
                                 <LabelValueRow label="Case name" value={record.caseName} />
                                 <LabelValueRow label="Case type" value={record.caseType} />
                                 <LabelValueRow
-                                    label="Status"
+                                    label={terminology.columnHeader}
                                     value={
                                         <span className={styles.badge} data-status={record.status}>
-                                            {record.status}
+                                            {terminology.getStatusLabel(record.status)}
                                         </span>
                                     }
                                 />
@@ -171,16 +171,6 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
                                 <LabelValueRow label="Email" value={record.email} />
                                 <LabelValueRow label="Role" value={record.participantRole} />
                                 <LabelValueRow label="Access type" value={record.accessType} />
-                            </div>
-                        </div>
-
-                        {/* Section: Audit */}
-                        <div className={panelStyles.section}>
-                            <SidePanelHeading title="Audit" />
-                            <div className={panelStyles.metaStack}>
-                                <LabelValueRow label="Author" value={record.author || placeholder} />
-                                <LabelValueRow label="Shared with" value={record.sharedWith || placeholder} />
-                                <LabelValueRow label="Purpose" value={record.purpose || placeholder} />
                             </div>
                         </div>
 

@@ -131,3 +131,57 @@
     color: var(--control-fg-selected);
     font-weight: 500;
 }
+
+/* Terminology label list */
+.terminologyList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--spacing-1p5);
+}
+
+.terminologyOption {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1p5);
+    width: 100%;
+    padding: var(--spacing-1p5) var(--spacing-2);
+    border: 1px solid var(--surface-border-secondary);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.825rem;
+    transition: all 0.15s ease;
+    text-align: left;
+}
+
+.terminologyOption:hover {
+    background: var(--surface-bg-secondary);
+}
+
+.terminologyOption[data-active="true"] {
+    background: var(--control-bg-selected);
+    border-color: var(--control-border-selected);
+}
+
+.terminologyActive {
+    color: var(--surface-fg-success-primary);
+    font-weight: 500;
+}
+
+.terminologyOption[data-active="true"] .terminologyActive {
+    color: var(--control-fg-selected);
+}
+
+.terminologySep {
+    color: var(--surface-fg-quaternary);
+}
+
+.terminologyInactive {
+    color: var(--surface-fg-tertiary);
+}
+
+.terminologyOption[data-active="true"] .terminologyInactive {
+    color: var(--control-fg-selected);
+    opacity: 0.75;
+}

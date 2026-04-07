@@ -21,20 +21,11 @@ import {
     PortalAccessAdvancedSearch,
     PortalAccessFilters,
 } from './PortalAccessAdvancedSearch';
+import { useTerminology } from '../hooks/useTerminology';
 import styles from './PortalAccess.module.css';
 
-const STATUS_BADGE_CONFIG = {
-    Active: { label: 'Portal access', icon: 'check_circle' },
-    Inactive: { label: 'No Portal access', icon: 'block' },
-} as const;
-
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
-
-const STATUS_OPTIONS = [
-    { value: 'all', label: 'All statuses' },
-    { value: 'Active', label: 'Portal access' },
-    { value: 'Inactive', label: 'No Portal access' },
-];
+type AccessAction = 'grant' | 'revoke';
 
 const CASE_TYPE_OPTIONS = [
     { value: 'all', label: 'All case types' },
@@ -58,7 +49,6 @@ const isDefaultFilterSet = (filters: PortalAccessFilters) =>
     filters.caseNumber === EMPTY_PORTAL_ACCESS_FILTERS.caseNumber &&
     filters.caseName === EMPTY_PORTAL_ACCESS_FILTERS.caseName &&
     filters.participant === EMPTY_PORTAL_ACCESS_FILTERS.participant &&
-    filters.author === EMPTY_PORTAL_ACCESS_FILTERS.author &&
     filters.status === EMPTY_PORTAL_ACCESS_FILTERS.status &&
     filters.caseType === EMPTY_PORTAL_ACCESS_FILTERS.caseType &&
     filters.accessType === EMPTY_PORTAL_ACCESS_FILTERS.accessType;
@@ -71,23 +61,19 @@ export const PortalAccess: React.FC = () => {
 
     const setInspectedRecord = useSetAtom(portalInspectedRecordAtom);
     const setPortalSelectedCount = useSetAtom(portalSelectedCountAtom);
+    const terminology = useTerminology();
+    const statusOptions = terminology.statusOptions;
 
     const [quickQuery, setQuickQuery] = useState('');
     const [draftFilters, setDraftFilters] = useState<PortalAccessFilters>(EMPTY_PORTAL_ACCESS_FILTERS);
     const [appliedFilters, setAppliedFilters] = useState<PortalAccessFilters>(EMPTY_PORTAL_ACCESS_FILTERS);
 
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
-    const [isRevokeConfirmOpen, setIsRevokeConfirmOpen] = useState(false);
-    const [pendingRevokeIds, setPendingRevokeIds] = useState<string[]>([]);
+    const [isActionConfirmOpen, setIsActionConfirmOpen] = useState(false);
+    const [pendingActionIds, setPendingActionIds] = useState<string[]>([]);
+    const [pendingAction, setPendingAction] = useState<AccessAction>('revoke');
 
     const selectedCount = Object.keys(selectedIds).filter(key => selectedIds[key]).length;
-
-    const isMixedSelection = useMemo(() => {
-        if (selectedCount < 2) return false;
-        const selectedRecords = finalResults.filter(r => selectedIds[r.id]);
-        const statuses = new Set(selectedRecords.map(r => r.status));
-        return statuses.size > 1;
-    }, [selectedCount, selectedIds, finalResults]);
 
     useEffect(() => {
         setPortalSelectedCount(selectedCount);
@@ -108,10 +94,7 @@ export const PortalAccess: React.FC = () => {
                     hasTextMatch(record.email, appliedFilters.query) ||
                     hasTextMatch(record.caseNumber, appliedFilters.query) ||
                     hasTextMatch(record.caseName, appliedFilters.query) ||
-                    hasTextMatch(record.participantRole, appliedFilters.query) ||
-                    hasTextMatch(record.author, appliedFilters.query) ||
-                    hasTextMatch(record.sharedWith, appliedFilters.query) ||
-                    hasTextMatch(record.purpose, appliedFilters.query);
+                    hasTextMatch(record.participantRole, appliedFilters.query);
 
                 if (!matchesGeneralQuery) return false;
             }
@@ -120,13 +103,6 @@ export const PortalAccess: React.FC = () => {
             if (appliedFilters.caseNumber && !hasTextMatch(record.caseNumber, appliedFilters.caseNumber)) return false;
             if (appliedFilters.caseName && !hasTextMatch(record.caseName, appliedFilters.caseName)) return false;
             if (appliedFilters.participant && !hasTextMatch(record.participantRole, appliedFilters.participant)) return false;
-
-            if (appliedFilters.author) {
-                const matchesAudit =
-                    hasTextMatch(record.author, appliedFilters.author) ||
-                    hasTextMatch(record.sharedWith, appliedFilters.author);
-                if (!matchesAudit) return false;
-            }
 
             if (appliedFilters.status !== 'all' && record.status !== appliedFilters.status) return false;
             if (appliedFilters.caseType !== 'all' && record.caseType !== appliedFilters.caseType) return false;
@@ -137,6 +113,13 @@ export const PortalAccess: React.FC = () => {
     }, [appliedFilters, results]);
 
     const isFiltered = useMemo(() => !isDefaultFilterSet(appliedFilters), [appliedFilters]);
+
+    const isMixedSelection = useMemo(() => {
+        if (selectedCount < 2) return false;
+        const selectedRecords = finalResults.filter(r => selectedIds[r.id]);
+        const statuses = new Set(selectedRecords.map(r => r.status));
+        return statuses.size > 1;
+    }, [selectedCount, selectedIds, finalResults]);
 
     const applyFilters = useCallback((nextFilters: PortalAccessFilters) => {
         setAppliedFilters(nextFilters);
@@ -175,21 +158,22 @@ export const PortalAccess: React.FC = () => {
         setInspectedRecord(null);
     }, [appliedFilters, setInspectedRecord]);
 
-    const handleRemoveAccess = async () => {
-        const ids = pendingRevokeIds;
+    const handleAccessChange = async () => {
+        const ids = pendingActionIds;
         if (ids.length === 0) return;
 
         setIsExecuting(true);
         const count = ids.length;
+        const nextStatus = pendingAction === 'revoke' ? 'Inactive' : 'Active';
 
         await new Promise(resolve => setTimeout(resolve, 1200));
 
         setResults(prev => prev.map(record =>
-            ids.includes(record.id) ? { ...record, status: 'Inactive' as const } : record
+            ids.includes(record.id) ? { ...record, status: nextStatus } : record
         ));
 
         setIsExecuting(false);
-        setPendingRevokeIds([]);
+        setPendingActionIds([]);
         setSelectedIds(prev => {
             const next = { ...prev };
             ids.forEach(id => delete next[id]);
@@ -197,23 +181,28 @@ export const PortalAccess: React.FC = () => {
         });
 
         addToast({
-            title: 'Access revoked',
-            message: `Removed portal access for ${count} record${count > 1 ? 's' : ''}.`,
-            icon: 'no_accounts',
+            title: pendingAction === 'revoke' ? 'Access revoked' : 'Access granted',
+            message: `${pendingAction === 'revoke' ? 'Removed' : 'Granted'} portal access for ${count} record${count > 1 ? 's' : ''}.`,
+            icon: pendingAction === 'revoke' ? 'no_accounts' : 'person_add',
             variant: 'success',
         });
     };
 
-    const openBulkRevokeConfirm = () => {
-        const ids = Object.keys(selectedIds).filter(id => selectedIds[id]);
+    const openActionConfirm = (records: PortalAccessRecord[]) => {
+        const ids = records.map(record => record.id);
         if (ids.length === 0) return;
-        setPendingRevokeIds(ids);
-        setIsRevokeConfirmOpen(true);
+        setPendingActionIds(ids);
+        setPendingAction(records[0]?.status === 'Active' ? 'revoke' : 'grant');
+        setIsActionConfirmOpen(true);
     };
 
-    const openSingleRevokeConfirm = (record: PortalAccessRecord) => {
-        setPendingRevokeIds([record.id]);
-        setIsRevokeConfirmOpen(true);
+    const openBulkActionConfirm = () => {
+        const records = finalResults.filter(record => selectedIds[record.id]);
+        openActionConfirm(records);
+    };
+
+    const openSingleActionConfirm = (record: PortalAccessRecord) => {
+        openActionConfirm([record]);
     };
 
     const handleSelectionChange: React.Dispatch<React.SetStateAction<RowSelectionState>> = useCallback((updater) => {
@@ -254,18 +243,17 @@ export const PortalAccess: React.FC = () => {
         },
         {
             accessorKey: 'status',
-            header: 'Status',
+            header: terminology.columnHeader,
             size: 170,
             minSize: 154,
             cell: ({ getValue }) => {
-                const value = getValue() as keyof typeof STATUS_BADGE_CONFIG;
-                const config = STATUS_BADGE_CONFIG[value];
-                if (!config) return value;
-
+                const value = getValue() as 'Active' | 'Inactive';
                 return (
                     <div className={styles.badge} data-status={value}>
-                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{config.icon}</span>
-                        <span>{config.label}</span>
+                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>
+                            {value === 'Active' ? terminology.activeIcon : terminology.inactiveIcon}
+                        </span>
+                        <span>{terminology.getStatusLabel(value)}</span>
                     </div>
                 );
             },
@@ -288,7 +276,18 @@ export const PortalAccess: React.FC = () => {
             size: 140,
             minSize: 110,
         },
-    ], []);
+    ], [terminology]);
+
+    const selectedRecords = useMemo(
+        () => finalResults.filter(record => selectedIds[record.id]),
+        [finalResults, selectedIds]
+    );
+    const selectedAction: AccessAction = selectedRecords[0]?.status === 'Active' ? 'revoke' : 'grant';
+    const selectedActionLabel = selectedAction === 'revoke' ? 'Revoke access' : 'Grant access';
+    const selectedActionIcon = selectedAction === 'revoke' ? 'no_accounts' : 'person_add';
+    const pendingActionLabel = pendingAction === 'revoke' ? 'Revoke access' : 'Grant access';
+    const pendingActionVerb = pendingAction === 'revoke' ? 'revoke' : 'grant';
+    const pendingActionIcon = pendingAction === 'revoke' ? 'no_accounts' : 'person_add';
 
     return (
         <div className={styles.view}>
@@ -341,7 +340,7 @@ export const PortalAccess: React.FC = () => {
                             onValueChange={(value) => handleQuickFilterChange('status', value)}
                             onClear={() => handleQuickFilterChange('status', 'all')}
                             placeholder="Status"
-                            options={STATUS_OPTIONS}
+                            options={statusOptions}
                         />
                         <FilterSelect
                             value={appliedFilters.caseType}
@@ -369,7 +368,21 @@ export const PortalAccess: React.FC = () => {
                     columns={columns}
                     rowSelection={selectedIds}
                     onRowSelectionChange={handleSelectionChange}
-                    onRevokeRow={openSingleRevokeConfirm}
+                    onRevokeRow={openSingleActionConfirm}
+                    getRowAction={(row) => row.status === 'Active'
+                        ? {
+                            label: 'Revoke access',
+                            icon: 'no_accounts',
+                            destructive: true,
+                            variant: 'secondary',
+                            onClick: () => openSingleActionConfirm(row),
+                        }
+                        : {
+                            label: 'Grant access',
+                            icon: 'person_add',
+                            variant: 'primary',
+                            onClick: () => openSingleActionConfirm(row),
+                        }}
                     isLoading={isExecuting && finalResults.length === 0}
                     emptyState={
                         <div className={styles.empty}>
@@ -386,30 +399,30 @@ export const PortalAccess: React.FC = () => {
             {selectedCount > 0 && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
-                    onAction={openBulkRevokeConfirm}
+                    onAction={openBulkActionConfirm}
                     onClear={() => {
                         setSelectedIds({});
                         setInspectedRecord(null);
                     }}
-                    actionLabel="Revoke access"
-                    actionIcon="no_accounts"
+                    actionLabel={selectedActionLabel}
+                    actionIcon={selectedActionIcon}
                     disabledMessage={isMixedSelection ? 'No valid actions' : undefined}
                 />
             )}
 
             <Modal
-                isOpen={isRevokeConfirmOpen}
-                onClose={() => setIsRevokeConfirmOpen(false)}
-                title="Revoke access"
+                isOpen={isActionConfirmOpen}
+                onClose={() => setIsActionConfirmOpen(false)}
+                title={pendingActionLabel}
                 width="360px"
             >
                 <Modal.Header>
-                    <div className={styles.modalTitle}>Revoke access</div>
+                    <div className={styles.modalTitle}>{pendingActionLabel}</div>
                     <Button
                         variant="tertiary"
                         size="s"
                         iconOnly
-                        onClick={() => setIsRevokeConfirmOpen(false)}
+                        onClick={() => setIsActionConfirmOpen(false)}
                         disabled={isExecuting}
                     >
                         <span className="material-symbols-rounded">close</span>
@@ -417,12 +430,14 @@ export const PortalAccess: React.FC = () => {
                 </Modal.Header>
                 <Modal.Content>
                     <div className={styles.confirmBody}>
-                        <div className={styles.warningBannerYellow}>
-                            <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
-                            <span>Access will be removed from the selected records. You can add access again later if needed.</span>
-                        </div>
+                        {pendingAction === 'revoke' && (
+                            <div className={styles.warningBannerYellow}>
+                                <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
+                                <span>Access will be removed from the selected records. You can add access again later if needed.</span>
+                            </div>
+                        )}
                         <p className={styles.confirmText}>
-                            Are you sure you want to revoke portal access for <strong>{pendingRevokeIds.length} record{pendingRevokeIds.length > 1 ? 's' : ''}</strong>?
+                            Are you sure you want to {pendingActionVerb} portal access for <strong>{pendingActionIds.length} record{pendingActionIds.length > 1 ? 's' : ''}</strong>?
                         </p>
                     </div>
                 </Modal.Content>
@@ -432,17 +447,18 @@ export const PortalAccess: React.FC = () => {
                             variant="primary"
                             size="m"
                             onClick={() => {
-                                setIsRevokeConfirmOpen(false);
-                                void handleRemoveAccess();
+                                setIsActionConfirmOpen(false);
+                                void handleAccessChange();
                             }}
                             loading={isExecuting}
                         >
-                            Revoke access
+                            <span className="material-symbols-rounded">{pendingActionIcon}</span>
+                            {pendingActionLabel}
                         </Button>
                         <Button
                             variant="secondary"
                             size="m"
-                            onClick={() => setIsRevokeConfirmOpen(false)}
+                            onClick={() => setIsActionConfirmOpen(false)}
                             disabled={isExecuting}
                         >
                             Cancel

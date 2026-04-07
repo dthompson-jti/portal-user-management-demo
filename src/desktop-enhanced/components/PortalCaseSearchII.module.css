@@ -1,0 +1,28 @@
+.tableSection {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.tableToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) var(--spacing-4);
+    background: var(--surface-bg-secondary);
+    border-top: 1px solid var(--surface-border-primary);
+    border-bottom: 1px solid var(--surface-border-primary);
+}
+
+.toolbarSearch {
+    flex: 1;
+    max-width: 320px;
+}
+
+.toolbarFilters {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}

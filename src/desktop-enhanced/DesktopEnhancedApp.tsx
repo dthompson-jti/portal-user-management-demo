@@ -155,6 +155,7 @@ export default function DesktopEnhancedApp() {
                                          activePage === 'portal-case-search-partial' ? 'Case Search (Partial)' :
                                          activePage === 'portal-email-search-partial' ? 'Email Search (Partial)' :
                                          activePage === 'portal-case-example' ? 'Case Example' :
+                                         activePage === 'portal-case-search-ii' ? 'Case Search II' :
                                          activePage === 'portal-omnisearch' ? 'Omnisearch' :
                                          activePage === 'portal-case-search' ? 'Case Search' :
                                          activePage === 'portal-email-search' ? 'Email Search' :
