@@ -89,6 +89,7 @@ That means older Safety Check plans are not necessarily wrong, but many of them 
 - Start with [`README.md`](README.md) for the repo summary.
 - Use [`docs/working/README.md`](docs/working/README.md) to see which working docs are current, partial, exploratory, or legacy.
 - Use [`docs/archive/working-wrapped/README.md`](docs/archive/working-wrapped/README.md) for wrapped and superseded former working docs.
+- Use [`docs/knowledge-base/REFERENCE-PORTAL-VARIANTS-AND-OPTIONS.md`](docs/knowledge-base/REFERENCE-PORTAL-VARIANTS-AND-OPTIONS.md) for the current-state variant matrix, menu options, terminology snapshot, and UX scoring.
 - Use `docs/archive/` for older plans and completed historical work.
 
 ## Current Takeaway

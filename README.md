@@ -50,6 +50,7 @@ Notes:
 - [`walkthrough.md`](walkthrough.md): current walkthrough of the project structure and version set.
 - [`docs/working/README.md`](docs/working/README.md): status board for the working docs, including what is implemented, partial, exploratory, or legacy.
 - [`docs/archive/working-wrapped/README.md`](docs/archive/working-wrapped/README.md): wrapped tickets and superseded planning docs that are no longer active.
+- [`docs/knowledge-base/REFERENCE-PORTAL-VARIANTS-AND-OPTIONS.md`](docs/knowledge-base/REFERENCE-PORTAL-VARIANTS-AND-OPTIONS.md): detailed current-state comparison of portal variants, IA patterns, toggles, and UX scoring.
 - `docs/knowledge-base/`: longer-form reference material and older background specs.
 - `docs/archive/`: historical material that is no longer the best starting point.
 

@@ -42,4 +42,5 @@ That archive includes:
 ## Practical Guidance
 
 - For current product understanding, start with `README.md`, `walkthrough.md`, and the open tickets listed above.
+- For a current-state comparison of portal options, menu toggles, IA patterns, and UX scoring, use `docs/knowledge-base/REFERENCE-PORTAL-VARIANTS-AND-OPTIONS.md`.
 - For historical rationale or superseded planning, check `docs/archive/working-wrapped/README.md`.
