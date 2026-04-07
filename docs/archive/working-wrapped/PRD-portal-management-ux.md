@@ -1,5 +1,7 @@
 # Portal Management: Approved UX Patterns
 
+> Status note (2026-04-06): This document is now a partial reference. Omnisearch and grouping ideas landed, but the current case-manager implementation still uses accordions rather than the strict tabbed model described below. See `docs/working/README.md` for current status.
+
 Related knowledge-base reference: `docs/knowledge-base/SPEC-PORTAL-PROTOTYPE-PATTERNS.md`
 
 This document outlines the formalized UI patterns for the Portal Management prototype, synthesizing the exploration of UX scalability and specific interaction paradigms.

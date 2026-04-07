@@ -104,7 +104,7 @@ The legacy screenshots are provided for **functional reference only** — the ac
 
 ## Vet Notes — Claude Opus 4.6
 
-> The following annotations assess each JIRA idea against architectural soundness, UX best practices, and alignment with the approved UX patterns in `docs/working/PRD-portal-management-ux.md`.
+> The following annotations assess each JIRA idea against architectural soundness, UX best practices, and alignment with the approved UX patterns in `docs/archive/working-wrapped/PRD-portal-management-ux.md`.
 
 ### Solid — keep as-is
 
@@ -148,7 +148,7 @@ The legacy screenshots are provided for **functional reference only** — the ac
 
 ## Approved UX Patterns for Prototype
 
-Based on the exploration of these notes, the following patterns have been agreed upon for Prototype implementation (see `docs/working/PRD-portal-management-ux.md` for full breakdown):
+Based on the exploration of these notes, the following patterns have been agreed upon for Prototype implementation (see `docs/archive/working-wrapped/PRD-portal-management-ux.md` for full breakdown):
 
 1. **Omnisearch Context Switching**: Unlike the Access Ledger's static audit table, searching an email will restructure the table columns to display **Cases** (since the user is known), and searching a Case ID will restructure columns to display **Portal Users**.
 2. **Collapsible Grouping**: Provided via a `[ Group by ▼ ]` dropdown control (e.g. "No grouping", "Group by Status") to condense long lists. For prototype exploration, this option will be housed in a hamburger menu (noted as an artifact of the prototype, not production placement).

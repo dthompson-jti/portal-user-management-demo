@@ -1,5 +1,7 @@
 # UX-008 — Split-Pane: Global Browse + Case Detail
 
+> Status note (2026-04-06): A split-pane prototype now exists as `C1`, but the shipped version is broader than this exact spec. It supports browsing by either case or email and reuses more of the existing portal-management scaffolding than this document originally proposed.
+
 **Type:** UX Exploration / Prototype Build
 **Priority:** Medium
 **Source:** UX-007 Concept 7; addresses UX-001 (global-to-case navigation gap)

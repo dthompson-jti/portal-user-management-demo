@@ -1,85 +1,96 @@
-# Walkthrough - Portal Management Alignment
+# Project Walkthrough
 
-## Overview
-Successfully finalized the Portal Management module, aligning it with eSeries data standards and Safeguard desktop design patterns.
-Desktop has a local semantic radius layer and imports the generated canonical token bundle, but
-the migration is not complete. This document reflects the current code state rather than the
-original completion claim.
+This repository is not a single linear app. It is a prototype workspace that currently combines:
 
-## What Landed
+1. An older Safety Check desktop prototype.
+2. A newer enhanced shell that hosts both Safety Check views and Portal Management experiments.
+3. Two settings-navigation experiments.
 
-### 1. Local Semantic Radius Adapter
-- `src/styles/semantics.css` defines desktop-local semantic names such as:
-  - `--radius-toolbar`
-  - `--radius-container`
-  - `--radius-modal`
-  - `--radius-card`
-  - `--radius-input`
-  - `--radius-button-xs/sm/md/lg`
-  - `--radius-badge`
-  - `--radius-pill`
-  - `--radius-tooltip`
+The most important thing to know is that the default runtime is the enhanced shell, not the older desktop app.
 
-### Final Polish & UI Alignment
-- [x] Align search results with platform standard schema (eSeries) @[/build]
-    - [x] Update `PortalAccessRecord` with Case Number, Case Name, Role
-    - [x] Implement "Sticky Results" (rows stay visible after status change)
-- [x] Refine Search Input Aesthetics
-    - [x] Place search on `bg-primary` surface
-    - [x] Add border/divider below search row
-    - [x] Standardize Search Button: Size Medium, Square, Inset with 2px gap
-    - [x] Standardize Input Borders: Use `control-border-tertiary` and hover variants
-- [x] Standardize Table Mechanics
-    - [x] Resolve "Column Squeezing": ensure horizontal scroll on overflow
-    - [x] Eliminate "Table Tiny" scrollbars: 100% width on empty state
-    - [x] Align Pinned Column Widths: 44px (select), 48px (actions) with ZERO padding
-- [x] Final Verification & Hand-off
-    - [x] Run `npm run lint && npm run build`
-    - [x] Create `PORTAL-INTERACTION-SPEC.md` for rigor and standards
-- [x] Mock Data Refinement
-    - [x] Inject "dave" as a common search term for testing
+## Runtime Entry
 
-### 2. Canonical Token Import Path
-- Desktop imports generated canonical assets from `src/styles/generated/*`.
-- Desktop also still imports local `primitives.css` and `semantics.css`, so the runtime token
-  graph is a mix of local and generated sources.
+- [`src/main.tsx`](src/main.tsx) mounts `DesktopEnhancedApp` by default.
+- If the URL path contains `alternate`, [`src/main.tsx`](src/main.tsx) mounts the legacy [`src/desktop/App.tsx`](src/desktop/App.tsx) instead.
+- `activePageAtom` in [`src/data/activePageAtom.ts`](src/data/activePageAtom.ts) controls which prototype surface is shown inside the enhanced shell.
 
-## What Is Not Complete
+## Primary Shells
 
-### 1. Radius Migration
-- Components still use primitive radius tokens directly in multiple places.
-- Some components still use spacing tokens as radius values.
-- Some components still use legacy bridge aliases.
+### 1. Legacy Desktop
 
-### 2. Spacing / Geometry Migration
-- Desktop still contains raw geometry literals in several component styles.
-- Navigation and tree views still include local geometry decisions that have not been fully
-  expressed through the canonical layout semantics.
+[`src/desktop/App.tsx`](src/desktop/App.tsx)
 
-### 3. Canonical Naming Convergence
-- Desktop local semantic radius names do not yet match the canonical should-be naming family
-  (`--radius-control-*`, `--radius-surface-*`).
+This is the original Safety Check supervisor workflow: header, toolbar, live/historical tables, modals, and a right-side detail panel. It still matters because some shared controls, table patterns, and review docs were written against this version.
 
-## Current Position
-- Better than primitive-only styling.
-- Not yet at canonical end state.
+### 2. Desktop Enhanced
 
----
+[`src/desktop-enhanced/DesktopEnhancedApp.tsx`](src/desktop-enhanced/DesktopEnhancedApp.tsx)
 
-## [Unreleased] (2026-03-27) - Portal UI & Interaction Refinement
+This is the active shell used by the repo today. It adds:
 
-### Enhanced Visual Hierarchy
-- **Filter Row Background**: Updated the "Find within results" filter row (`.quickFilterRow`) in Case and Email search views to use `surface-bg-secondary`. This provides a clear visual distinction between the primary search bar and secondary result filtering.
-- **Proof**: 
-    - ![Filter Row Background](file:///C:/Users/dthompson/.gemini/antigravity/brain/b5892972-7f17-4607-b658-911120b64143/case_search_filter_row_1774638565995.png)
+- top navigation
+- left sidebar navigation
+- optional secondary left panel
+- portal-management variants
+- settings variants
+- enhanced Safety Check views
 
-### Access Ledger Side Panel Restricted to Manual Toggle
-- **Behavior Update**: Removed the automatic opening of the side panel when a single record is selected.
-- **Manual Control**: The panel now ONLY opens and closes via the "Open/Close side panel" toggle in the header.
-- **Content Sync**: The panel still correctly updates its content to reflect the current selection whenever it is visible.
-- **Proof**: 
-    - ![Access Ledger Manual Control](file:///C:/Users/dthompson/.gemini/antigravity/brain/b5892972-7f17-4607-b658-911120b64143/access_ledger_panel_verify_1774639481532.png)
-    - [Interactive Verification Recording](file:///C:/Users/dthompson/.gemini/antigravity/brain/b5892972-7f17-4607-b658-911120b64143/verify_manual_panel_control_1774639317088.webp)
+The enhanced shell is now the main host for nearly all current experimentation.
 
-### Design Standards Enforcement
-- **Rules Codification**: Updated `.agent/rules/design-layout-panels.md` to define "Visibility & Auto-Behavior" invariants, ensuring future agents adhere to the manual-control pattern for management views.
+## Portal Management Versions
+
+These are exposed directly in the sidebar in [`src/desktop/components/SideBar/SideBar.tsx`](src/desktop/components/SideBar/SideBar.tsx).
+
+| Variant | Page id | Current shape |
+| --- | --- | --- |
+| A1 | `portal-email-search` | Exact-match email search using the shared omnisearch component locked to email mode. |
+| A2 | `portal-case-search` | Exact-match case search locked to case mode. |
+| A3 | `portal-case-example` | Case-scoped management view for a fixed case number, using the case access manager. |
+| A5 | `portal-omnisearch` | Flexible search-first variant that auto-detects email vs case and changes table columns accordingly. |
+| B1 | `portal-email-search-partial` | Partial-match email search with email-first result layout. |
+| B2 | `portal-case-search-partial` | Partial-match case search with case-first result layout. |
+| B3 | `portal-access-ledger` | Sticky-search audit view with row inspection via a dedicated side panel. |
+| B4 | `portal-access` | Index-pattern style global access list with quick search, advanced filters, and bulk actions. |
+| C1 | `portal-split-pane` | Split-pane browse/detail prototype. The shipped version is broader than the original spec because it supports browsing by either case or email. |
+
+Notes:
+
+- `A4` does not exist in code; the numbering follows earlier concept naming.
+- Most portal variants share the same underlying mock records from `src/desktop-enhanced/data/portalMockData.ts`.
+- The differences are mostly about search strategy, density, navigation, and context framing rather than different backend models.
+
+## Settings Versions
+
+Two settings concepts are currently present:
+
+| Variant | Page id | Current shape |
+| --- | --- | --- |
+| Tree settings | `settings` | Split layout with a left settings tree, breadcrumbs, and a single implemented form (`Safety Check`). |
+| Tab settings | `settings-tabs` | Alternate prototype that flattens the structure into tabs. |
+
+The settings work is real but still partial:
+
+- page-level routing is implemented
+- the tree and tab shells are implemented
+- only the `Safety Check` form is meaningfully filled in
+- most other settings nodes still render placeholders
+
+## Safety Check State
+
+The Safety Check prototype still exists in two layers:
+
+- the legacy desktop app
+- the enhanced shell's `checks` page with tree navigation and enhanced views
+
+That means older Safety Check plans are not necessarily wrong, but many of them describe an earlier project center of gravity. When reading docs, treat Safety Check material as background unless it clearly maps to the enhanced shell or the still-live settings/checks code.
+
+## How To Read The Docs Now
+
+- Start with [`README.md`](README.md) for the repo summary.
+- Use [`docs/working/README.md`](docs/working/README.md) to see which working docs are current, partial, exploratory, or legacy.
+- Use [`docs/archive/working-wrapped/README.md`](docs/archive/working-wrapped/README.md) for wrapped and superseded former working docs.
+- Use `docs/archive/` for older plans and completed historical work.
+
+## Current Takeaway
+
+The repo is best understood as an enhanced prototype shell that now centers on portal access management, while still carrying substantial Safety Check legacy code and documentation. The documentation cleanup work is mainly about making that split explicit so current portal/settings work is easy to find and older planning material is not mistaken for the current source of truth.

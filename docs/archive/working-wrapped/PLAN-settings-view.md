@@ -1,5 +1,7 @@
 # Implementation Plan: Settings View
 
+> Status note (2026-04-06): This plan is only partially reflected in the current codebase. The settings page, routing, tree, tabbed variant, and Safety Check form exist, but several planned sub-sections still render placeholders. See `docs/working/README.md` for the current status board.
+
 ## Overview
 
 Add a **System Properties / Settings** page to the desktop-enhanced app, accessible from a new "Settings" link in the Quick Access navigation. The page uses a left-side category tree and a breadcrumb-topped content area to display and edit system configuration properties.
