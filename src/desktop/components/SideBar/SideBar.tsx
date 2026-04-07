@@ -48,6 +48,7 @@ const NAVIGATION_DATA: NavNode[] = [
             { type: 'link', id: 'portal-case-search-partial', label: 'B2. Case Search (Partial)' },
             { type: 'link', id: 'portal-access-ledger', label: 'B3. Access Ledger' },
             { type: 'link', id: 'portal-access', label: 'B4. Index pattern' },
+            { type: 'link', id: 'portal-split-pane', label: 'C1. Split Pane' },
         ]
     },
     {

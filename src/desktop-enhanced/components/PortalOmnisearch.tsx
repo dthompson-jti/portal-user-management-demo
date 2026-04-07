@@ -17,8 +17,7 @@ import styles from './PortalEmailSearch.module.css'; // Reusing CSS
 const STATUS_OPTIONS = [
     { value: 'all', label: 'All Statuses' },
     { value: 'Active', label: 'Active' },
-    { value: 'Revoked', label: 'Revoked' },
-    { value: 'Expired', label: 'Expired' },
+    { value: 'Inactive', label: 'Inactive' },
 ];
 
 const GROUP_OPTIONS = [
@@ -122,11 +121,11 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         await new Promise(r => setTimeout(r, 1200));
 
         setResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: 'Revoked' as const } : r
+            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
         ));
 
         setVisibleResults(prev => prev.map(r => 
-            ids.includes(r.id) ? { ...r, status: 'Revoked' as const } : r
+            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
         ));
 
         setIsExecuting(false);
@@ -134,7 +133,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         setSelectedIds({});
         
         addToast({
-            title: 'Access Revoked',
+            title: 'Access removed',
             message: `Successfully removed portal access for ${ids.length} record${ids.length > 1 ? 's' : ''}.`,
             icon: 'no_accounts',
             variant: 'success'

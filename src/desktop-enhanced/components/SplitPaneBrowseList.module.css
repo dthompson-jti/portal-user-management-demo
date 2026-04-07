@@ -1,0 +1,212 @@
+.browseList {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Search input */
+.searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 var(--spacing-3) var(--spacing-2) var(--spacing-3);
+}
+
+.searchIcon {
+    position: absolute;
+    left: 10px;
+    font-size: var(--icon-size-md);
+    color: var(--surface-fg-quaternary);
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    height: 34px;
+    padding: 0 32px 0 34px;
+    border: 1px solid var(--surface-border-secondary);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-bg-primary);
+    color: var(--surface-fg-primary);
+    font-size: var(--font-size-sm);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.searchInput::placeholder {
+    color: var(--surface-fg-quaternary);
+}
+
+.searchInput:focus {
+    border-color: var(--control-border-focus);
+}
+
+.clearButton {
+    position: absolute;
+    right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--surface-fg-tertiary);
+    border-radius: var(--radius-sm);
+    padding: 0;
+}
+
+.clearButton span {
+    font-size: var(--icon-size-sm);
+}
+
+.clearButton:hover {
+    color: var(--surface-fg-primary);
+    background-color: var(--surface-bg-primary-hover);
+}
+
+/* List */
+.list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 8px;
+    padding-bottom: var(--spacing-6);
+}
+
+/* Row — adapted from TreeView pattern */
+.row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-1p5) var(--spacing-2);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-bottom: 2px;
+    color: var(--surface-fg-secondary);
+    min-height: 36px;
+    gap: var(--spacing-2);
+}
+
+.row:hover {
+    background-color: var(--surface-bg-primary-hover);
+    color: var(--surface-fg-primary);
+}
+
+.row.selected {
+    background-color: var(--control-bg-selected);
+    color: var(--control-fg-selected);
+}
+
+/* Selection accent bar */
+.row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: transparent;
+    border-radius: 0;
+    transition: background-color 0.15s ease;
+}
+
+.row:hover::before {
+    background-color: var(--control-border-tertiary);
+}
+
+.row.selected::before {
+    background-color: var(--control-fg-selected);
+}
+
+/* Label */
+.label {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.selected .label {
+    font-weight: 500;
+}
+
+/* Case mode: two-line layout */
+.caseInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.caseInfo .label {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.caseName {
+    font-size: var(--font-size-2xs);
+    color: var(--surface-fg-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.selected .caseName {
+    color: var(--control-fg-selected);
+    opacity: 0.8;
+}
+
+/* Badges — fixed-width columns for alignment (TreeView columnar pattern) */
+.badges {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.badgeSlot {
+    width: 32px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.badgePlaceholder {
+    width: 32px;
+    height: 16px;
+}
+
+.badge {
+    padding: 2px 8px;
+    border-radius: var(--radius-surface-pill);
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-bold);
+    min-width: 24px;
+    text-align: center;
+}
+
+.success {
+    background-color: var(--surface-bg-success-primary);
+    color: var(--surface-fg-success-primary);
+    border: 1px solid var(--surface-border-success-subtle);
+}
+
+.warning {
+    background-color: var(--surface-bg-warning-primary);
+    color: var(--surface-fg-warning-primary);
+    border: 1px solid var(--surface-border-warning-subtle);
+}
+
+/* Empty state */
+.empty {
+    padding: var(--spacing-6) var(--spacing-4);
+    text-align: center;
+    color: var(--surface-fg-tertiary);
+    font-size: var(--font-size-sm);
+}

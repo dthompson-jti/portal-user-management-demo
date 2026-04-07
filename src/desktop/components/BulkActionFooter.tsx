@@ -7,6 +7,8 @@ interface BulkActionFooterProps {
     onClear: () => void;
     actionLabel?: string;
     actionIcon?: string;
+    /** When set, replaces the action button with this message (e.g. mixed-status selection) */
+    disabledMessage?: string;
 }
 
 export const BulkActionFooter = ({
@@ -15,6 +17,7 @@ export const BulkActionFooter = ({
     onClear,
     actionLabel = 'Add comment',
     actionIcon = 'add_comment',
+    disabledMessage,
 }: BulkActionFooterProps) => {
 
     return (
@@ -37,15 +40,18 @@ export const BulkActionFooter = ({
 
             <div className={styles.divider} />
 
-            {/* Primary action */}
-            <Button
-                variant="on-solid"
-                size="s"
-                onClick={onAction}
-            >
-                <span className="material-symbols-rounded">{actionIcon}</span>
-                {actionLabel}
-            </Button>
+            {disabledMessage ? (
+                <span className={styles.disabledMessage}>{disabledMessage}</span>
+            ) : (
+                <Button
+                    variant="on-solid"
+                    size="s"
+                    onClick={onAction}
+                >
+                    <span className="material-symbols-rounded">{actionIcon}</span>
+                    {actionLabel}
+                </Button>
+            )}
         </div>
     );
 };

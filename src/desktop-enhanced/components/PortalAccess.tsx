@@ -25,8 +25,7 @@ import styles from './PortalAccess.module.css';
 
 const STATUS_BADGE_CONFIG = {
     Active: { label: 'Portal access', icon: 'check_circle' },
-    Revoked: { label: 'No Portal access', icon: 'block' },
-    Expired: { label: 'No Portal access', icon: 'schedule' },
+    Inactive: { label: 'No Portal access', icon: 'block' },
 } as const;
 
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
@@ -34,8 +33,7 @@ const renderEmailValue = (email: string) => email.trim() || 'Email address not p
 const STATUS_OPTIONS = [
     { value: 'all', label: 'All statuses' },
     { value: 'Active', label: 'Portal access' },
-    { value: 'Revoked', label: 'No Portal access (Revoked)' },
-    { value: 'Expired', label: 'No Portal access (Expired)' },
+    { value: 'Inactive', label: 'No Portal access' },
 ];
 
 const CASE_TYPE_OPTIONS = [
@@ -83,6 +81,13 @@ export const PortalAccess: React.FC = () => {
     const [pendingRevokeIds, setPendingRevokeIds] = useState<string[]>([]);
 
     const selectedCount = Object.keys(selectedIds).filter(key => selectedIds[key]).length;
+
+    const isMixedSelection = useMemo(() => {
+        if (selectedCount < 2) return false;
+        const selectedRecords = finalResults.filter(r => selectedIds[r.id]);
+        const statuses = new Set(selectedRecords.map(r => r.status));
+        return statuses.size > 1;
+    }, [selectedCount, selectedIds, finalResults]);
 
     useEffect(() => {
         setPortalSelectedCount(selectedCount);
@@ -180,7 +185,7 @@ export const PortalAccess: React.FC = () => {
         await new Promise(resolve => setTimeout(resolve, 1200));
 
         setResults(prev => prev.map(record =>
-            ids.includes(record.id) ? { ...record, status: 'Revoked' as const } : record
+            ids.includes(record.id) ? { ...record, status: 'Inactive' as const } : record
         ));
 
         setIsExecuting(false);
@@ -388,6 +393,7 @@ export const PortalAccess: React.FC = () => {
                     }}
                     actionLabel="Revoke access"
                     actionIcon="no_accounts"
+                    disabledMessage={isMixedSelection ? 'No valid actions' : undefined}
                 />
             )}
 

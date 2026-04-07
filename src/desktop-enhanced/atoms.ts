@@ -69,3 +69,9 @@ export const isPortalAdvancedSearchOpenAtom = atom<boolean>(false);
 // Access Ledger detail panel state
 export const portalInspectedRecordAtom = atom<PortalAccessRecord | null>(null);
 export const portalSelectedCountAtom = atom<number>(0);
+
+// Split Pane state
+export type SplitPaneSearchMode = 'email' | 'case';
+export const splitPaneSearchModeAtom = atom<SplitPaneSearchMode>('email');
+export const splitPaneSelectedItemAtom = atom<string | null>(null);
+export const splitPaneWidthAtom = atom<number>(300);

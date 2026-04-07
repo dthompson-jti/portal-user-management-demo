@@ -1,0 +1,173 @@
+/* Split Pane Container */
+.splitPaneContainer {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Left Pane */
+.leftPane {
+    width: var(--split-left-pane-width, 300px);
+    min-width: 280px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface-bg-primary);
+    border-right: 1px solid var(--surface-border-secondary);
+    flex-shrink: 0;
+}
+
+/* Header — matches NavigationPanel pattern */
+.header {
+    flex-shrink: 0;
+    height: 44px;
+    padding: 0 var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--surface-border-secondary);
+    background: var(--surface-bg-trim);
+}
+
+.header h2 {
+    font-family: var(--font-family-sans);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--surface-fg-primary);
+    line-height: 1.2;
+}
+
+/* Resize Handle */
+.resizeHandle {
+    width: 9px;
+    cursor: ew-resize;
+    background: transparent;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.resizeHandle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 4px;
+    width: 1px;
+    background-color: var(--surface-border-secondary);
+    transition: background-color 0.15s ease;
+}
+
+.resizeHandle:hover::after {
+    background-color: var(--control-border-focus);
+    width: 2px;
+    left: 3px;
+}
+
+/* Right Pane */
+.rightPane {
+    flex: 1;
+    min-width: 500px;
+    overflow-y: auto;
+    background-color: var(--surface-bg-primary);
+}
+
+/* Empty State */
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: var(--spacing-3);
+    color: var(--surface-fg-tertiary);
+}
+
+.emptyIcon {
+    font-size: 48px;
+    color: var(--surface-fg-quaternary);
+}
+
+.emptyState p {
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+/* Email Detail View */
+.emailDetail {
+    padding: var(--spacing-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.emailDetailHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 1px solid var(--surface-border-secondary);
+}
+
+.emailIcon {
+    font-size: var(--icon-size-lg);
+    color: var(--surface-fg-tertiary);
+}
+
+.emailTitle {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    margin: 0;
+    color: var(--surface-fg-primary);
+}
+
+.empty {
+    padding: var(--spacing-6) var(--spacing-4);
+    text-align: center;
+    color: var(--surface-fg-tertiary);
+    font-size: var(--font-size-sm);
+}
+
+/* Modal styles */
+.modalTitle {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--surface-fg-primary);
+}
+
+.confirmBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.confirmText {
+    font-size: var(--font-size-sm);
+    color: var(--surface-fg-secondary);
+    margin: 0;
+}
+
+.warningBanner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    background-color: var(--surface-bg-warning-primary);
+    border: 1px solid var(--surface-border-warning-subtle);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--surface-fg-warning-primary);
+}
+
+.warningIcon {
+    font-size: var(--icon-size-md);
+    flex-shrink: 0;
+}
+
+.footerActions {
+    display: flex;
+    gap: var(--spacing-2);
+}

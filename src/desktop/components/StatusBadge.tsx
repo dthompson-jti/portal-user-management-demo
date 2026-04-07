@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './StatusBadge.module.css';
 import { Tooltip } from '../../components/Tooltip';
 
-export type StatusBadgeType = 'missed' | 'missed-not-reviewed' | 'missed-reviewed' | 'due' | 'complete' | 'verified' | 'upcoming' | 'overdue' | 'completed' | 'completed-late' | 'special' | 'Active' | 'Revoked' | 'Expired';
+export type StatusBadgeType = 'missed' | 'missed-not-reviewed' | 'missed-reviewed' | 'due' | 'complete' | 'verified' | 'upcoming' | 'overdue' | 'completed' | 'completed-late' | 'special' | 'Active' | 'Revoked' | 'Expired' | 'Inactive';
 
 interface StatusBadgeProps {
     status: StatusBadgeType;
@@ -38,6 +38,8 @@ const getStatusConfig = (status: StatusBadgeType): { label: string; icon: string
             return { label: 'Revoked', icon: 'block' };
         case 'Expired':
             return { label: 'Expired', icon: 'schedule' };
+        case 'Inactive':
+            return { label: 'Inactive', icon: 'block' };
         case 'completed-late':
             return { label: 'Completed – late', icon: 'check_circle_unread' };
         case 'special':

@@ -1,0 +1,46 @@
+.toggleContainer {
+    display: flex;
+    align-items: stretch;
+    background-color: var(--nav-toggle-bg);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-0p5);
+    margin: var(--spacing-3) var(--spacing-3) var(--spacing-2) var(--spacing-3);
+    height: 38px;
+    box-sizing: border-box;
+    border: 1px solid var(--nav-toggle-border);
+    gap: var(--spacing-0p5);
+}
+
+.toggleButton {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--nav-toggle-fg);
+    background-color: transparent;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggleButton:hover:not(.active) {
+    background-color: var(--control-bg-quaternary-hover);
+    color: var(--surface-fg-primary);
+    border: none;
+}
+
+.toggleButton:active:not(.active) {
+    background-color: var(--control-bg-quaternary-pressed);
+    border-color: var(--control-border-quaternary-pressed);
+}
+
+.toggleButton.active {
+    background-color: var(--nav-toggle-pill-bg);
+    color: var(--nav-toggle-pill-fg);
+    box-shadow: var(--nav-toggle-pill-shadow);
+}

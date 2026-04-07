@@ -5,6 +5,7 @@ import { PortalOmnisearch } from './PortalOmnisearch';
 import { PortalCaseAccessManager } from './PortalCaseAccessManager';
 import { AccessLedger } from './AccessLedger';
 import { PortalAccess } from './PortalAccess';
+import { PortalSplitPane } from './PortalSplitPane';
 import styles from './PortalManagementView.module.css';
 
 export const PortalManagementView: React.FC = () => {
@@ -28,6 +29,8 @@ export const PortalManagementView: React.FC = () => {
                 return <AccessLedger />;
             case 'portal-access':
                 return <PortalAccess />;
+            case 'portal-split-pane':
+                return <PortalSplitPane />;
             default:
                 return <PortalOmnisearch />;
         }

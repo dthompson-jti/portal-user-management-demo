@@ -37,7 +37,8 @@
 .badge[data-status='missed'],
 .badge[data-status='missed-not-reviewed'],
 .badge[data-status='overdue'],
-.badge[data-status='Revoked'] {
+.badge[data-status='Revoked'],
+.badge[data-status='Inactive'] {
     background: var(--surface-bg-alert-primary);
     color: var(--surface-fg-alert-primary);
     border-color: var(--surface-border-alert-subtle);

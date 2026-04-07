@@ -15,8 +15,7 @@ import styles from './AccessLedger.module.css';
 const STATUS_OPTIONS = [
     { value: 'all', label: 'All statuses' },
     { value: 'Active', label: 'Active' },
-    { value: 'Revoked', label: 'Revoked' },
-    { value: 'Expired', label: 'Expired' },
+    { value: 'Inactive', label: 'Inactive' },
 ];
 
 const CASE_TYPE_OPTIONS = [
@@ -34,8 +33,7 @@ const ACCESS_TYPE_OPTIONS = [
 
 const STATUS_BADGE_CONFIG = {
     Active: { label: 'Portal access', icon: 'check_circle' },
-    Revoked: { label: 'No Portal access', icon: 'block' },
-    Expired: { label: 'No Portal access', icon: 'schedule' },
+    Inactive: { label: 'No Portal access', icon: 'block' },
 } as const;
 
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
@@ -68,6 +66,13 @@ export const AccessLedger: React.FC = () => {
 
     // ── Sync selected count to atom for the app shell ──
     const selectedCount = Object.keys(selectedIds).filter(k => selectedIds[k]).length;
+
+    const isMixedSelection = useMemo(() => {
+        if (selectedCount < 2) return false;
+        const selectedRecords = finalResults.filter(r => selectedIds[r.id]);
+        const statuses = new Set(selectedRecords.map(r => r.status));
+        return statuses.size > 1;
+    }, [selectedCount, selectedIds, finalResults]);
 
     useEffect(() => {
         setPortalSelectedCount(selectedCount);
@@ -120,9 +125,8 @@ export const AccessLedger: React.FC = () => {
     // ── Stats: computed from sticky results (pre-filter) ──
     const stats = useMemo(() => {
         const active = visibleResults.filter(r => r.status === 'Active').length;
-        const revoked = visibleResults.filter(r => r.status === 'Revoked').length;
-        const expired = visibleResults.filter(r => r.status === 'Expired').length;
-        return { total: visibleResults.length, active, revoked, expired };
+        const inactive = visibleResults.filter(r => r.status === 'Inactive').length;
+        return { total: visibleResults.length, active, inactive };
     }, [visibleResults]);
 
     const isFiltered = statusFilter !== 'all' || typeFilter !== 'all' || accessFilter !== 'all';
@@ -144,10 +148,10 @@ export const AccessLedger: React.FC = () => {
         await new Promise(r => setTimeout(r, 1200));
 
         setResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: 'Revoked' as const } : r
+            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
         ));
         setVisibleResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: 'Revoked' as const } : r
+            ids.includes(r.id) ? { ...r, status: 'Inactive' as const } : r
         ));
 
         setIsExecuting(false);
@@ -318,13 +322,9 @@ export const AccessLedger: React.FC = () => {
                         <span className={`material-symbols-rounded ${styles.badgeIcon}`}>check_circle</span>
                         <span className={styles.badgeLabel}>{stats.active} active</span>
                     </div>
-                    <div className={styles.badge} data-status="Revoked">
+                    <div className={styles.badge} data-status="Inactive">
                         <span className={`material-symbols-rounded ${styles.badgeIcon}`}>block</span>
-                        <span className={styles.badgeLabel}>{stats.revoked} revoked</span>
-                    </div>
-                    <div className={styles.badge} data-status="Expired">
-                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>schedule</span>
-                        <span className={styles.badgeLabel}>{stats.expired} expired</span>
+                        <span className={styles.badgeLabel}>{stats.inactive} inactive</span>
                     </div>
                     <div className={styles.statSpacer} />
                     <span className={styles.resultCount}>
@@ -375,6 +375,7 @@ export const AccessLedger: React.FC = () => {
                     }}
                     actionLabel="Revoke access"
                     actionIcon="no_accounts"
+                    disabledMessage={isMixedSelection ? 'No valid actions' : undefined}
                 />
             )}
 

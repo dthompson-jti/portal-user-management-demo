@@ -82,6 +82,17 @@
     flex-shrink: 0;
 }
 
+.disabledMessage {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 0 var(--spacing-2);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    transform: translateY(-1px);
+}
+
 /* Menu Styles */
 .menuBackdrop {
     position: fixed;

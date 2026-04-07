@@ -6,8 +6,7 @@ import styles from './PortalAccessAdvancedSearch.module.css';
 const STATUS_OPTIONS = [
     { value: 'all', label: 'All statuses' },
     { value: 'Active', label: 'Portal access' },
-    { value: 'Revoked', label: 'No Portal access (Revoked)' },
-    { value: 'Expired', label: 'No Portal access (Expired)' },
+    { value: 'Inactive', label: 'No Portal access' },
 ] as const;
 
 const CASE_TYPE_OPTIONS = [

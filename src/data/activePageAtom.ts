@@ -11,7 +11,8 @@ export type ActivePage =
   | 'portal-email-search-partial'
   | 'portal-case-search-partial'
   | 'portal-access-ledger'
-  | 'portal-access';
+  | 'portal-access'
+  | 'portal-split-pane';
 
 /** Top-level page routing — NOT the same as desktopViewAtom (live/historical) */
 export const activePageAtom = atom<ActivePage>('portal-email-search');

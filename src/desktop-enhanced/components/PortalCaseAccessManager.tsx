@@ -16,13 +16,15 @@ import styles from './PortalCaseAccessManager.module.css';
 
 interface PortalCaseAccessManagerProps {
     caseNum?: string;
+    /** Compact mode: hides CaseHeader and case tabs, shows case number as heading */
+    compact?: boolean;
 }
 
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
 const getPortalAccessLabel = (status: PortalAccessRecord['status']) => status === 'Active' ? 'Portal access' : 'No Portal access';
 
 
-export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000016' }) => {
+export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000016', compact = false }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
@@ -60,7 +62,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
 
         const selected = caseResults.filter(r => ids.includes(r.id));
         const isRevoke = selected.some(r => r.status === 'Active');
-        const actionStatus: 'Revoked' | 'Active' = isRevoke ? 'Revoked' : 'Active';
+        const actionStatus: 'Inactive' | 'Active' = isRevoke ? 'Inactive' : 'Active';
 
         setResults(prev => prev.map(r =>
             ids.includes(r.id) ? { ...r, status: actionStatus } : r
@@ -68,7 +70,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
 
         setIsExecuting(false);
         addToast({
-            title: isRevoke ? 'Access Revoked' : 'Access Granted',
+            title: isRevoke ? 'Access removed' : 'Access Granted',
             message: `Successfully updated portal access for ${ids.length} record${ids.length > 1 ? 's' : ''}.`,
             icon: isRevoke ? 'no_accounts' : 'person_add',
             variant: 'success'
@@ -114,17 +116,25 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
     const selectedRecords = caseResults.filter(r => selectedIds[r.id]);
     const isRevokeMode = selectedRecords.some(r => r.status === 'Active');
 
+    const isMixedSelection = useMemo(() => {
+        if (selectedCount < 2) return false;
+        const statuses = new Set(selectedRecords.map(r => r.status));
+        return statuses.size > 1;
+    }, [selectedCount, selectedRecords]);
+
     return (
         <div className={styles.view}>
-            <CaseHeader
-                caseNumber="CIV-24-0000016"
-                courtLocation="Magistrates Court"
-                caseTitle="Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others"
-                caseType="Claim - Debt"
-            />
+            {!compact && (
+                <CaseHeader
+                    caseNumber="CIV-24-0000016"
+                    courtLocation="Magistrates Court"
+                    caseTitle="Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others"
+                    caseType="Claim - Debt"
+                />
+            )}
 
             <div className={styles.sectionIntro}>
-                <h3 className={styles.sectionHeading}>Manage Portal Access</h3>
+                <h3 className={styles.sectionHeading}>{compact ? caseNum : 'Manage Portal Access'}</h3>
                 <div className={styles.summaryRow}>
                     <OverviewBadge
                         icon="group"
@@ -185,7 +195,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                         title="No Portal access: Parties"
                         rightSlot={
                             <StatusBadge
-                                status="Expired"
+                                status="Inactive"
                                 label={`${partiesWithout.length} No Portal access`}
                                 showIcon={false}
                             />
@@ -217,7 +227,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                         title="No Portal access: Case assignments"
                         rightSlot={
                             <StatusBadge
-                                status="Expired"
+                                status="Inactive"
                                 label={`${assignmentsWithout.length} No Portal access`}
                                 showIcon={false}
                             />
@@ -252,6 +262,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                     onClear={() => setSelectedIds({})}
                     actionLabel={isRevokeMode ? 'Revoke Access' : 'Grant Access'}
                     actionIcon={isRevokeMode ? 'no_accounts' : 'person_add'}
+                    disabledMessage={isMixedSelection ? 'No valid actions' : undefined}
                 />
             )}
 

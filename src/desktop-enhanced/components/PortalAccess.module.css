@@ -99,7 +99,8 @@
     border-color: var(--surface-border-success-subtle);
 }
 
-.badge[data-status="Revoked"] {
+.badge[data-status="Revoked"],
+.badge[data-status="Inactive"] {
     background: var(--surface-bg-alert-primary);
     color: var(--surface-fg-alert-primary);
     border-color: var(--surface-border-alert-subtle);

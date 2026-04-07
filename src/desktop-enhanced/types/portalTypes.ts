@@ -5,7 +5,7 @@ export interface PortalAccessRecord {
     caseType: 'Civil' | 'Criminal' | 'Juvenile';
     participantRole: string;
     accessType: string;
-    status: 'Active' | 'Revoked' | 'Expired';
+    status: 'Active' | 'Inactive';
     email: string; // Used for the search trigger
     // Access history
     dateGranted: string;
