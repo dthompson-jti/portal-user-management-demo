@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- 
+    FAVICON REQUIREMENTS:
+    Replace vite.svg with your app's shield icon. For best cross-browser support:
+    1. favicon.svg (preferred for modern browsers, supports dark mode via CSS)
+    2. favicon.ico (legacy fallback, 32x32)
+    3. apple-touch-icon.png (already exists, 180x180)
+  -->
+  <link rel="icon" type="image/svg+xml" href="/portal-management-public/favicon-v1.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="SafeGuard Desktop - Specialized dashboard for facility compliance monitoring and historical audit.">
+  <title>SafeGuard Desktop</title>
+
+  <!-- Critical CSS: Inline to prevent FOUC and ensure instant background -->
+  <style>
+    /* Match these values to your CSS tokens for consistency */
+    :root {
+      --splash-bg: #f0f1f3;
+      --splash-fg: #1a1a2e;
+    }
+
+    /* Dark mode detection - matches stored theme OR system preference */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --splash-bg: #16161d;
+        --splash-fg: #e0e0e0;
+      }
+    }
+
+    [data-theme^="dark"] {
+      --splash-bg: #16161d;
+      --splash-fg: #e0e0e0;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: var(--splash-bg);
+      color: var(--splash-fg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    #root {
+      height: 100%;
+    }
+  </style>
+
+  <!-- Async font loading: Low priority, non-blocking -->
+  <link rel="preload" href="/portal-management-public/fonts/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Google Fonts: Atkinson Hyperlegible -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Material Symbols: Load async (low priority) since we use SVGs for critical path -->
+  <link rel="preload" href="/portal-management-public/fonts/MaterialSymbolsRounded.woff2" as="font" type="font/woff2" crossorigin
+    fetchpriority="low">
+
+  <!-- Font state persistence helper: Prevents FOUC by applying selection before paint -->
+  <script>
+    (function () {
+      try {
+        const stored = localStorage.getItem('sc_desktop_v1_font');
+        if (stored) {
+          // Remove any existing font class (optional if we only ever set one)
+          document.documentElement.setAttribute('data-font', JSON.parse(stored));
+        }
+      } catch (e) { }
+    })();
+  </script>
+
+  <!-- Start Single Page Apps for GitHub Pages -->
+  <script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // https://github.com/rafgraph/spa-github-pages
+    // This script checks to see if a redirect is present in the query string
+    // and converts it back into the correct url and adds it to the
+    // browser's history using window.history.replaceState(...),
+    // which won't cause the browser to refresh the page.
+    // Note: this script should be placed before the app's main script.
+    (function (l) {
+      if (l.search) {
+        var q = {};
+        l.search.slice(1).split('&').forEach(function (v) {
+          var a = v.split('=');
+          q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+        });
+        if (q.p !== undefined) {
+          window.history.replaceState(null, null,
+            l.pathname.replace(/\/$/, '') + (q.p || '') +
+            (q.q ? ('?' + q.q) : '') +
+            l.hash
+          );
+        }
+      }
+    }(window.location))
+  </script>
+  <!-- End Single Page Apps for GitHub Pages -->
+
+  <script type="module" crossorigin src="/portal-management-public/assets/main-BcR5Z_Wp.js"></script>
+  <link rel="modulepreload" crossorigin href="/portal-management-public/assets/vendor-react-C6E9nkfQ.js">
+  <link rel="modulepreload" crossorigin href="/portal-management-public/assets/vendor-ui-B6FC1XLd.js">
+  <link rel="stylesheet" crossorigin href="/portal-management-public/assets/main-Cbllmrmv.css">
+</head>
+
+<body>
+  <!-- Theme detection: Apply stored theme before paint to prevent flash -->
+  <script>
+      (function () {
+        try {
+          const stored = localStorage.getItem('app-theme');
+          if (stored === 'dark-a' || stored === 'dark-b' || stored === 'dark-c' || stored === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          }
+        } catch (e) { }
+      })();
+  </script>
+
+  <div id="root" role="main"></div>
+
+</body>
+
+</html>
+
