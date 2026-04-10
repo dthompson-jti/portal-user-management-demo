@@ -96,7 +96,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessGroup: 'With portal access'
     },
     // Adding 20 more generic Stormtroopers to SW-CIV-24-001 to show "More people per case"
-    ...Array.from({ length: 20 }).map((_, i) => ({
+    ...Array.from({ length: 20 }).map((_, i): PortalAccessRecord => ({
         id: `sw-st-${i}`,
         caseNumber: 'SW-CIV-24-001',
         caseName: "The Rebel Alliance v Galactic Empire, Sheev Palpatine and others",
@@ -176,7 +176,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessGroup: 'With portal access'
     },
     // Adding 15 more Death Eaters
-    ...Array.from({ length: 15 }).map((_, i) => ({
+    ...Array.from({ length: 15 }).map((_, i): PortalAccessRecord => ({
         id: `hp-de-${i}`,
         caseNumber: 'HP-CIV-24-002',
         caseName: "Ministry of Magic v Tom Riddle, Death Eaters Ltd and others",
@@ -256,7 +256,7 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         accessGroup: 'With portal access'
     },
     // Adding 10 Belt residents as participants
-    ...Array.from({ length: 10 }).map((_, i) => ({
+    ...Array.from({ length: 10 }).map((_, i): PortalAccessRecord => ({
         id: `ex-belter-${i}`,
         caseNumber: 'EX-CIV-24-003',
         caseName: "Mars Congressional Republic v James Holden, Rocinante Crew and others",
