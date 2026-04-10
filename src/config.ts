@@ -1,3 +1,3 @@
 // src/config.ts
-export const APP_VERSION = 'v4.102';
+export const APP_VERSION = 'v4.103';
 export const STORAGE_PREFIX = 'sc_desktop_v1_';
