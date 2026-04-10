@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
-import { portalResultsAtom, isPortalActionExecutingAtom } from '../atoms';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { portalResultsAtom, isPortalActionExecutingAtom, portalCaseBadgeModeAtom, portalDensityModeAtom } from '../atoms';
 import { PortalAccessRecord } from '../types/portalTypes';
 import { PortalDataTable } from './PortalDataTable';
 import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
@@ -13,6 +13,7 @@ import { Accordion } from '../../components/Accordion';
 import { CaseHeader } from './CaseHeader';
 import { OverviewBadge } from '../../components/OverviewBadge';
 import { useTerminology } from '../hooks/useTerminology';
+import { applyPortalStatusChange, getPortalParticipantType } from '../utils/portalAccess';
 import styles from './PortalCaseAccessManager.module.css';
 
 interface PortalCaseAccessManagerProps {
@@ -28,6 +29,8 @@ type AccessAction = 'grant' | 'revoke';
 export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = ({ caseNum = 'CIV-24-0000016', compact = false }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
+    const badgeMode = useAtomValue(portalCaseBadgeModeAtom);
+    const densityMode = useAtomValue(portalDensityModeAtom);
     const addToast = useSetAtom(addToastAtom);
     const terminology = useTerminology();
 
@@ -37,24 +40,70 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
     const [pendingAction, setPendingAction] = useState<AccessAction>('revoke');
 
     const caseResults = useMemo(() => {
-        return results.filter(r => r.caseNumber.includes(caseNum));
+        return results.filter(r => r.caseNumber === caseNum);
     }, [results, caseNum]);
 
-    // Split into three groups matching the mockup
+    // Derive A3 groupings from live state so rows move immediately after grant/revoke.
     const withAccess = useMemo(() =>
-        caseResults.filter(r => r.accessGroup === 'With portal access'),
+        caseResults.filter(r => r.status === 'Active'),
     [caseResults]);
 
     const partiesWithout = useMemo(() =>
-        caseResults.filter(r => r.accessGroup === 'Parties without access'),
+        caseResults.filter(r => r.status === 'Inactive' && getPortalParticipantType(r) === 'party'),
     [caseResults]);
 
     const assignmentsWithout = useMemo(() =>
-        caseResults.filter(r => r.accessGroup === 'Case assignments without access'),
+        caseResults.filter(r => r.status === 'Inactive' && getPortalParticipantType(r) === 'case-assignment'),
     [caseResults]);
 
     const withAccessCount = withAccess.length;
-    const withoutAccessCount = partiesWithout.length + assignmentsWithout.length;
+    const inactivePartiesCount = partiesWithout.length;
+    const inactiveAssignmentsCount = assignmentsWithout.length;
+    const withoutAccessCount = inactivePartiesCount + inactiveAssignmentsCount;
+
+    const overviewBadges = useMemo(() => {
+        if (badgeMode === 'off') {
+            return [];
+        }
+
+        if (badgeMode === 'detailed') {
+            return [
+                {
+                    icon: 'group',
+                    label: 'Total Active',
+                    value: withAccessCount.toString(),
+                    variant: 'success' as const,
+                },
+                {
+                    icon: 'person_off',
+                    label: 'Inactive: Parties',
+                    value: inactivePartiesCount.toString(),
+                    variant: 'alert' as const,
+                },
+                {
+                    icon: 'badge',
+                    label: 'Inactive: Case Assignments',
+                    value: inactiveAssignmentsCount.toString(),
+                    variant: 'alert' as const,
+                },
+            ];
+        }
+
+        return [
+            {
+                icon: 'group',
+                label: 'Total Active',
+                value: withAccessCount.toString(),
+                variant: 'success' as const,
+            },
+            {
+                icon: 'person_off',
+                label: 'Total Inactive',
+                value: withoutAccessCount.toString(),
+                variant: 'alert' as const,
+            },
+        ];
+    }, [badgeMode, withAccessCount, inactivePartiesCount, inactiveAssignmentsCount, withoutAccessCount]);
 
     const handleBulkAction = async () => {
         const ids = pendingIds;
@@ -66,7 +115,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
         const actionStatus: 'Inactive' | 'Active' = pendingAction === 'revoke' ? 'Inactive' : 'Active';
 
         setResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: actionStatus } : r
+            ids.includes(r.id) ? applyPortalStatusChange(r, actionStatus) : r
         ));
 
         setIsExecuting(false);
@@ -139,7 +188,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
         <div className={styles.view}>
             {!compact && (
                 <CaseHeader
-                    caseNumber="CIV-24-0000016"
+                    caseNumber={caseNum}
                     courtLocation="Magistrates Court"
                     caseTitle="Agnes Schlauderheide v Kirsty Ware, FLARB'S FLARBENARIUM and others"
                     caseType="Claim - Debt"
@@ -147,23 +196,21 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
             )}
 
             <div className={styles.sectionIntro}>
-                <h3 className={styles.sectionHeading}>{compact ? caseNum : 'Manage Portal Access'}</h3>
-                <div className={styles.summaryRow}>
-                    <OverviewBadge
-                        icon="group"
-                        label={terminology.activeLabel}
-                        value={withAccessCount.toString()}
-                        variant="success"
-                        className={styles.summaryBadge}
-                    />
-                    <OverviewBadge
-                        icon="person_off"
-                        label={terminology.inactiveLabel}
-                        value={withoutAccessCount.toString()}
-                        variant="warning"
-                        className={styles.summaryBadge}
-                    />
-                </div>
+                <h3 className={styles.sectionHeading}>{compact ? caseNum : 'Case portal access'}</h3>
+                {overviewBadges.length > 0 && (
+                    <div className={styles.summaryRow}>
+                        {overviewBadges.map((badge) => (
+                            <OverviewBadge
+                                key={badge.label}
+                                icon={badge.icon}
+                                label={badge.label}
+                                value={badge.value}
+                                variant={badge.variant}
+                                className={styles.summaryBadge}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
 
             <div className={styles.sections}>
@@ -173,11 +220,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 >
                     <Accordion.Item
                         value="with-access"
-                        title={terminology.activeLabel}
+                        title="Active Portal Users"
                         rightSlot={
                             <StatusBadge
                                 status="Active"
-                                label={`${withAccess.length} ${terminology.activeLabel}`}
+                                label={`${withAccess.length} active`}
                                 showIcon={false}
                             />
                         }
@@ -185,6 +232,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                         <PortalDataTable
                             data={withAccess}
                             columns={columns}
+                            densityMode={densityMode}
                             rowSelection={selectedIds}
                             onRowSelectionChange={setSelectedIds}
                             onRevokeRow={(row) => openActionConfirm([row])}
@@ -209,11 +257,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 >
                     <Accordion.Item
                         value="parties-without"
-                        title={`${terminology.inactiveLabel}: Parties`}
+                        title="Missing Access: Parties"
                         rightSlot={
                             <StatusBadge
                                 status="Inactive"
-                                label={`${partiesWithout.length} ${terminology.inactiveLabel}`}
+                                label={`${partiesWithout.length} inactive`}
                                 showIcon={false}
                             />
                         }
@@ -221,6 +269,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                         <PortalDataTable
                             data={partiesWithout}
                             columns={columns}
+                            densityMode={densityMode}
                             rowSelection={selectedIds}
                             onRowSelectionChange={setSelectedIds}
                             onRevokeRow={(row) => openActionConfirm([row])}
@@ -245,11 +294,11 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 >
                     <Accordion.Item
                         value="assignments-without"
-                        title={`${terminology.inactiveLabel}: Case assignments`}
+                        title="Missing Access: Case Assignments"
                         rightSlot={
                             <StatusBadge
                                 status="Inactive"
-                                label={`${assignmentsWithout.length} ${terminology.inactiveLabel}`}
+                                label={`${assignmentsWithout.length} inactive`}
                                 showIcon={false}
                             />
                         }
@@ -257,6 +306,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                         <PortalDataTable
                             data={assignmentsWithout}
                             columns={columns}
+                            densityMode={densityMode}
                             rowSelection={selectedIds}
                             onRowSelectionChange={setSelectedIds}
                             onRevokeRow={(row) => openActionConfirm([row])}
@@ -276,7 +326,7 @@ export const PortalCaseAccessManager: React.FC<PortalCaseAccessManagerProps> = (
                 </Accordion>
             </div>
 
-            {selectedCount > 0 && (
+            {selectedCount > 0 && densityMode !== 'quick-actions' && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
                     onAction={() => {

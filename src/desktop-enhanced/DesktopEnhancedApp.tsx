@@ -3,7 +3,6 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Layout } from './Layout';
-import { NavigationPanel } from './components/NavigationPanel';
 import { Breadcrumbs } from './components/Breadcrumbs';
 import {
     desktopFilterAtom,
@@ -30,7 +29,6 @@ import { toastsAtom } from '../data/toastAtoms';
 import { activePageAtom } from '../data/activePageAtom';
 import { SettingsPage } from '../features/settings/components/SettingsPage';
 import { SettingsTabbedPage } from '../features/settings/components/SettingsTabbedPage';
-import { SettingsNavigationPanel } from '../features/settings/components/SettingsNavigationPanel';
 import { Button } from '../components/Button';
 import { Tooltip } from '../components/Tooltip';
 // import { Popover } from '../components/Popover';
@@ -68,8 +66,9 @@ export default function DesktopEnhancedApp() {
     const setActiveRecord = useSetAtom(activeDetailRecordAtom);
     const totalSelected = selectedLive.size + selectedHistory.size;
 
-    // Portal (Access Ledger) detail panel state
-    const isLedger = activePage === 'portal-access-ledger' || activePage === 'portal-access';
+    // Portal detail panel state: only B3 keeps the right-side detail panel.
+    const isPortalPage = activePage.startsWith('portal-');
+    const isLedger = activePage === 'portal-access-ledger';
 
     // Track mount state to prevent resetting persisted filters on reload
     const isMountedRef = useRef(false);
@@ -110,9 +109,10 @@ export default function DesktopEnhancedApp() {
      * The panel is visible if:
      * 1. It is explicitly "Open" (Preview Mode) (isPanelOpen === true)
      * 2. Auto-open is ENABLED AND exactly one record is selected (Transient Mode)
-     * 3. For Access Ledger: panel open OR a single record is selected
+     * 3. For B3 Access Ledger: panel open
+     * Portal A3 and the other portal concepts do not render a right-side detail panel.
      */
-    const showChecksPanel = isPanelOpen || (autoOpenPanel && totalSelected === 1);
+    const showChecksPanel = !isPortalPage && (isPanelOpen || (autoOpenPanel && totalSelected === 1));
     const showLedgerPanel = isLedger && isPanelOpen;
     const showPanel = isLedger ? showLedgerPanel : showChecksPanel;
     const [isResizing, setIsResizing] = useState(false);
@@ -121,13 +121,7 @@ export default function DesktopEnhancedApp() {
     // const mainContainerStyle = ...
 
     return (
-        <Layout
-            leftPanel={
-                activePage === 'checks' ? <NavigationPanel /> :
-                    activePage === 'settings' ? <SettingsNavigationPanel /> :
-                        undefined
-            }
-        >
+        <Layout>
             <ToastPrimitive.Provider swipeDirection="right" swipeThreshold={80}>
                 {activePage === 'settings' ? (
                     <SettingsPage />
@@ -141,30 +135,17 @@ export default function DesktopEnhancedApp() {
                         data-panel-open={showPanel}
                     >
                         <div className={styles.contentWrapper}>
-                            <div className={styles.navContainer}>
-                                {!activePage.startsWith('portal-') && (
+                            {!isPortalPage && (
+                                <div className={styles.navContainer}>
                                     <div className={styles.navRow1}>
                                         <Breadcrumbs />
                                     </div>
-                                )}
-                                <div className={styles.navRow2}>
-                                    <h2 className={styles.pageTitle}>
-                                        {isNoResults ? 'No search results' :
-                                         activePage === 'portal-access' ? 'B4 Index pattern' :
-                                         activePage === 'portal-access-ledger' ? 'Access Ledger' :
-                                         activePage === 'portal-case-search-partial' ? 'Case Search (Partial)' :
-                                         activePage === 'portal-email-search-partial' ? 'Email Search (Partial)' :
-                                         activePage === 'portal-case-example' ? 'Case Example' :
-                                         activePage === 'portal-case-search-ii' ? 'Case Search II' :
-                                         activePage === 'portal-omnisearch' ? 'Omnisearch' :
-                                         activePage === 'portal-case-search' ? 'Case Search' :
-                                         activePage === 'portal-email-search' ? 'Email Search' :
-                                         activePage.startsWith('portal-') ? 'Portal Management' :
-                                         `Safeguard checks – ${view === 'live' ? 'Live view' : 'Historical view'}`}
-                                    </h2>
+                                    <div className={styles.navRow2}>
+                                        <h2 className={styles.pageTitle}>
+                                            {isNoResults ? 'No search results' :
+                                             `Safeguard checks – ${view === 'live' ? 'Live view' : 'Historical view'}`}
+                                        </h2>
 
-                                    {/* Checks header actions */}
-                                    {!activePage.startsWith('portal-') && (
                                         <div className={styles.row2Actions}>
                                             <Tooltip content="Refresh data">
                                                 {refreshButtonStyle === 'icon' ? (
@@ -203,16 +184,6 @@ export default function DesktopEnhancedApp() {
                                                 )}
                                             </Tooltip>
 
-                                            <Tooltip content="Export data">
-                                                <Button
-                                                    variant="secondary"
-                                                    size="s"
-                                                    onClick={() => {}}
-                                                >
-                                                    Export
-                                                </Button>
-                                            </Tooltip>
-
                                             <Tooltip content={showPanel ? "Close side panel" : "Open side panel"}>
                                                 <Button
                                                     variant="secondary"
@@ -237,37 +208,18 @@ export default function DesktopEnhancedApp() {
                                                 </Button>
                                             </Tooltip>
                                         </div>
-                                    )}
-
-                                    {/* Access Ledger header actions */}
-                                    {isLedger && (
-                                        <div className={styles.row2Actions}>
-                                            <Tooltip content={showLedgerPanel ? "Close side panel" : "Open side panel"}>
-                                                <Button
-                                                    variant="secondary"
-                                                    size="s"
-                                                    iconOnly
-                                                    active={isPanelOpen}
-                                                    onClick={() => setIsPanelOpen(!isPanelOpen)}
-                                                >
-                                                    <span className="material-symbols-rounded">
-                                                        {showLedgerPanel ? 'right_panel_close' : 'right_panel_open'}
-                                                    </span>
-                                                </Button>
-                                            </Tooltip>
-                                        </div>
-                                    )}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
-                            {!activePage.startsWith('portal-') && (
+                            {!isPortalPage && (
                                 <div className={styles.toolbarWrapper}>
                                     <DesktopToolbar isEnhanced={true} />
                                 </div>
                             )}
 
                             <div className={styles.viewWrapper}>
-                                {activePage.startsWith('portal-') ? (
+                                {isPortalPage ? (
                                     <PortalManagementView />
                                 ) : view === 'live' ? (
                                     <LiveMonitorView />

@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> & {
   Header: React.FC<React.PropsWithChildren<unknown>>;
   Content: React.FC<React.PropsWithChildren<unknown>>;
   Footer: React.FC<React.PropsWithChildren<unknown>>;
-} = ({ isOpen, onClose, children, width = 'auto', height = 'auto', title, description, nested }) => {
+} = ({ isOpen, onClose, children, width = 'auto', height = 'auto', nested }) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
@@ -27,11 +27,9 @@ const Modal: React.FC<ModalProps> & {
         <Dialog.Content
           className={nested ? 'modal-container modal-container-nested' : 'modal-container'}
           style={{ width, height }}
-          onEscapeKeyDown={onClose}
+          onEscapeKeyDown={(event) => event.preventDefault()}
+          onPointerDownOutside={(event) => event.preventDefault()}
         >
-          {/* FIX: Add non-visual title and description to satisfy Radix a11y requirements. */}
-          <Dialog.Title className="visually-hidden">{title}</Dialog.Title>
-          {description && <Dialog.Description className="visually-hidden">{description}</Dialog.Description>}
           {children}
         </Dialog.Content>
       </Dialog.Portal>

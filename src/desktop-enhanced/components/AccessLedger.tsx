@@ -1,6 +1,15 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
-import { portalResultsAtom, isPortalActionExecutingAtom, portalInspectedRecordAtom, portalSelectedCountAtom } from '../atoms';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import {
+    portalResultsAtom,
+    isPortalActionExecutingAtom,
+    portalInspectedRecordAtom,
+    portalSelectedCountAtom,
+    portalDensityModeAtom,
+    portalLedgerHeaderVisibleAtom,
+    portalLedgerFooterVisibleAtom,
+    portalLedgerSummaryBadgesVisibleAtom,
+} from '../atoms';
 import { PortalAccessRecord } from '../types/portalTypes';
 import { PortalDataTable } from './PortalDataTable';
 import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
@@ -11,6 +20,7 @@ import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { addToastAtom } from '../../data/toastAtoms';
 import { useTerminology } from '../hooks/useTerminology';
+import { applyPortalStatusChange } from '../utils/portalAccess';
 import styles from './AccessLedger.module.css';
 type AccessAction = 'grant' | 'revoke';
 
@@ -21,12 +31,6 @@ const CASE_TYPE_OPTIONS = [
     { value: 'Juvenile', label: 'Juvenile' },
 ];
 
-const ACCESS_TYPE_OPTIONS = [
-    { value: 'all', label: 'All access' },
-    { value: 'Direct access', label: 'Direct access' },
-    { value: 'Delegated access', label: 'Delegated access' },
-];
-
 const renderEmailValue = (email: string) => email.trim() || 'Email address not provided';
 
 export const AccessLedger: React.FC = () => {
@@ -34,6 +38,10 @@ export const AccessLedger: React.FC = () => {
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const addToast = useSetAtom(addToastAtom);
     const terminology = useTerminology();
+    const densityMode = useAtomValue(portalDensityModeAtom);
+    const showResultsHeader = useAtomValue(portalLedgerHeaderVisibleAtom);
+    const showResultsFooter = useAtomValue(portalLedgerFooterVisibleAtom);
+    const showSummaryBadges = useAtomValue(portalLedgerSummaryBadgesVisibleAtom);
 
     // Detail panel atoms — shared with app shell
     const setInspectedRecord = useSetAtom(portalInspectedRecordAtom);
@@ -46,7 +54,6 @@ export const AccessLedger: React.FC = () => {
     // Filter state — always available
     const [statusFilter, setStatusFilter] = useState('all');
     const [typeFilter, setTypeFilter] = useState('all');
-    const [accessFilter, setAccessFilter] = useState('all');
 
     // Selection & modal state
     const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
@@ -77,7 +84,6 @@ export const AccessLedger: React.FC = () => {
         setSearchTrigger(val);
         setStatusFilter('all');
         setTypeFilter('all');
-        setAccessFilter('all');
         setSelectedIds({});
         setInspectedRecord(null);
 
@@ -101,11 +107,8 @@ export const AccessLedger: React.FC = () => {
         if (typeFilter !== 'all') {
             current = current.filter(r => r.caseType === typeFilter);
         }
-        if (accessFilter !== 'all') {
-            current = current.filter(r => r.accessType === accessFilter);
-        }
         return current;
-    }, [visibleResults, statusFilter, typeFilter, accessFilter]);
+    }, [visibleResults, statusFilter, typeFilter]);
 
     // ── Stats: computed from sticky results (pre-filter) ──
     const stats = useMemo(() => {
@@ -114,12 +117,11 @@ export const AccessLedger: React.FC = () => {
         return { total: visibleResults.length, active, inactive };
     }, [visibleResults]);
 
-    const isFiltered = statusFilter !== 'all' || typeFilter !== 'all' || accessFilter !== 'all';
+    const isFiltered = statusFilter !== 'all' || typeFilter !== 'all';
 
     const handleResetFilters = () => {
         setStatusFilter('all');
         setTypeFilter('all');
-        setAccessFilter('all');
     };
 
     // ── Revoke flow ──
@@ -134,10 +136,10 @@ export const AccessLedger: React.FC = () => {
         await new Promise(r => setTimeout(r, 1200));
 
         setResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: nextStatus } : r
+            ids.includes(r.id) ? applyPortalStatusChange(r, nextStatus) : r
         ));
         setVisibleResults(prev => prev.map(r =>
-            ids.includes(r.id) ? { ...r, status: nextStatus } : r
+            ids.includes(r.id) ? applyPortalStatusChange(r, nextStatus) : r
         ));
 
         setIsExecuting(false);
@@ -266,6 +268,41 @@ export const AccessLedger: React.FC = () => {
     const pendingActionLabel = pendingAction === 'revoke' ? 'Revoke access' : 'Grant access';
     const pendingActionVerb = pendingAction === 'revoke' ? 'revoke' : 'grant';
     const pendingActionIcon = pendingAction === 'revoke' ? 'no_accounts' : 'person_add';
+    const resultCountLabel = `Showing ${finalResults.length.toLocaleString()} of ${stats.total.toLocaleString()} results`;
+    const pendingRecords = useMemo(
+        () => pendingActionIds
+            .map((id) => results.find((record) => record.id === id))
+            .filter((record): record is PortalAccessRecord => !!record),
+        [pendingActionIds, results]
+    );
+    const pendingDisplayNames = useMemo(
+        () => pendingRecords.map((record) => record.participantRole.trim() || renderEmailValue(record.email)),
+        [pendingRecords]
+    );
+    const visiblePendingNames = pendingDisplayNames.slice(0, 4);
+    const remainingPendingNames = pendingDisplayNames.length - visiblePendingNames.length;
+
+    const renderResultsChrome = (position: 'header' | 'footer') => (
+        <div
+            className={`${styles.resultsChrome} ${position === 'footer' ? styles.resultsChromeFooter : ''}`}
+        >
+            <div className={styles.resultsChromeMeta}>
+                <span className={styles.resultCount}>{resultCountLabel}</span>
+            </div>
+            {showSummaryBadges && (
+                <div className={styles.resultsChromeSummary}>
+                    <div className={styles.badge} data-status="Active">
+                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{terminology.activeIcon}</span>
+                        <span className={styles.badgeLabel}>{stats.active} {terminology.activeLabel.toLowerCase()}</span>
+                    </div>
+                    <div className={styles.badge} data-status="Inactive">
+                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{terminology.inactiveIcon}</span>
+                        <span className={styles.badgeLabel}>{stats.inactive} {terminology.inactiveLabel.toLowerCase()}</span>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 
     return (
         <div className={styles.view}>
@@ -309,38 +346,10 @@ export const AccessLedger: React.FC = () => {
                         isCustomized={typeFilter !== 'all'}
                         disabled={!searchTrigger}
                     />
-                    <FilterSelect
-                        value={accessFilter}
-                        onValueChange={setAccessFilter}
-                        placeholder="All access"
-                        options={ACCESS_TYPE_OPTIONS}
-                        onClear={() => setAccessFilter('all')}
-                        isCustomized={accessFilter !== 'all'}
-                        disabled={!searchTrigger}
-                    />
                 </div>
             </div>
 
-            {/* ── Row 2: Stats bar — visible after search ── */}
-            {searchTrigger && (
-                <div className={styles.statsBar}>
-                    <div className={styles.badge} data-status="Active">
-                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{terminology.activeIcon}</span>
-                        <span className={styles.badgeLabel}>{stats.active} {terminology.activeLabel.toLowerCase()}</span>
-                    </div>
-                    <div className={styles.badge} data-status="Inactive">
-                        <span className={`material-symbols-rounded ${styles.badgeIcon}`}>{terminology.inactiveIcon}</span>
-                        <span className={styles.badgeLabel}>{stats.inactive} {terminology.inactiveLabel.toLowerCase()}</span>
-                    </div>
-                    <div className={styles.statSpacer} />
-                    <span className={styles.resultCount}>
-                        {isFiltered
-                            ? `${finalResults.length} of ${stats.total} records`
-                            : `${stats.total} records`
-                        }
-                    </span>
-                </div>
-            )}
+            {searchTrigger && showResultsHeader && renderResultsChrome('header')}
 
             {/* ── Main content: table or empty state ── */}
             <div className={styles.tableWrapper}>
@@ -356,6 +365,7 @@ export const AccessLedger: React.FC = () => {
                     <PortalDataTable
                         data={finalResults}
                         columns={columns}
+                        densityMode={densityMode}
                         rowSelection={selectedIds}
                         onRowSelectionChange={handleSelectionChange}
                         onRevokeRow={openSingleActionConfirm}
@@ -384,8 +394,10 @@ export const AccessLedger: React.FC = () => {
                 )}
             </div>
 
+            {searchTrigger && showResultsFooter && renderResultsChrome('footer')}
+
             {/* ── Bulk action footer ── */}
-            {selectedCount > 0 && (
+            {selectedCount > 0 && densityMode !== 'quick-actions' && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
                     onAction={openBulkActionConfirm}
@@ -429,6 +441,21 @@ export const AccessLedger: React.FC = () => {
                         <p className={styles.confirmText}>
                             Are you sure you want to {pendingActionVerb} portal access for <strong>{pendingCount} record{pendingCount > 1 ? 's' : ''}</strong>?
                         </p>
+                        {pendingDisplayNames.length > 0 && (
+                            <div className={styles.affectedRecords}>
+                                <div className={styles.affectedRecordsLabel}>This will update access for:</div>
+                                <div className={styles.affectedRecordsList}>
+                                    {visiblePendingNames.map((name) => (
+                                        <div key={name} className={styles.affectedRecordName}>{name}</div>
+                                    ))}
+                                    {remainingPendingNames > 0 && (
+                                        <div className={styles.affectedRecordMore}>
+                                            +{remainingPendingNames} more
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </Modal.Content>
                 <Modal.Footer>

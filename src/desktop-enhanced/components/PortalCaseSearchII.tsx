@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
-import { portalResultsAtom, isPortalActionExecutingAtom } from '../atoms';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { portalResultsAtom, isPortalActionExecutingAtom, portalDensityModeAtom } from '../atoms';
 import { PortalAccessRecord } from '../types/portalTypes';
 import { PortalDataTable } from './PortalDataTable';
 import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
@@ -31,6 +31,7 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
 }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
+    const densityMode = useAtomValue(portalDensityModeAtom);
     const addToast = useSetAtom(addToastAtom);
     const terminology = useTerminology();
 
@@ -110,6 +111,14 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
 
     const columns: ColumnDef<PortalAccessRecord, unknown>[] = useMemo(() => [
         {
+            id: 'participantType',
+            accessorFn: (row) => (row.accessGroup ?? '').toLowerCase().includes('assignment') ? 'Case assignment' : 'Party',
+            header: 'Participant type',
+            size: 160,
+            minSize: 130,
+            cell: ({ getValue }) => getValue() as string,
+        },
+        {
             accessorKey: 'email',
             header: 'Email address',
             size: 280,
@@ -134,16 +143,6 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
                     showIcon={false}
                 />
             ),
-        },
-        {
-            id: 'participantType',
-            header: 'Participant type',
-            size: 180,
-            minSize: 140,
-            cell: ({ row }) => {
-                const group = row.original.accessGroup ?? '';
-                return group.toLowerCase().includes('assignment') ? 'Case assignment' : 'Party';
-            },
         },
     ], [terminology]);
 
@@ -190,7 +189,7 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
                         icon="person_off"
                         label={terminology.inactiveLabel}
                         value={withoutAccessCount.toString()}
-                        variant="warning"
+                        variant="alert"
                         className={styles.summaryBadge}
                     />
                 </div>
@@ -234,6 +233,8 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
                 <PortalDataTable
                     data={finalResults}
                     columns={columns}
+                    densityMode={densityMode}
+                    lazy
                     rowSelection={selectedIds}
                     onRowSelectionChange={setSelectedIds}
                     onRevokeRow={(row) => openActionConfirm([row])}
@@ -260,7 +261,7 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
                 />
             </div>
 
-            {selectedCount > 0 && (
+            {selectedCount > 0 && densityMode !== 'quick-actions' && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
                     onAction={() => openActionConfirm(selectedRecords)}

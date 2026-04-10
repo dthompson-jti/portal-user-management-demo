@@ -25,14 +25,7 @@ export const TriggeredSearch: React.FC<TriggeredSearchProps> = ({
     size = 'md',
     className = '',
 }) => {
-    const inputId = React.useId();
     const isSearchDisabled = value.trim().length < minSearchLength || disabled;
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' && !isSearchDisabled) {
-            onSearch(value);
-        }
-    };
 
     const handleClear = () => {
         onChange?.('');
@@ -40,18 +33,13 @@ export const TriggeredSearch: React.FC<TriggeredSearchProps> = ({
 
     return (
         <div className={`${styles.wrapper} ${className}`} data-variant={variant} data-size={size}>
-            <label htmlFor={inputId} className={styles.visuallyHidden}>
-                {placeholder}
-            </label>
             <input
-                id={inputId}
                 type="text"
                 className={styles.input}
                 placeholder={placeholder}
                 value={value}
                 disabled={disabled}
                 onChange={(e) => onChange?.(e.target.value)}
-                onKeyDown={handleKeyDown}
             />
             
             <div className={styles.buttonWrapper}>
@@ -63,7 +51,7 @@ export const TriggeredSearch: React.FC<TriggeredSearchProps> = ({
                         onClick={handleClear}
                         disabled={disabled}
                         className={styles.clearButton}
-                        aria-label="Clear search"
+                        tabIndex={-1}
                     >
                         <span className="material-symbols-rounded">close</span>
                     </Button>
@@ -76,7 +64,7 @@ export const TriggeredSearch: React.FC<TriggeredSearchProps> = ({
                     disabled={isSearchDisabled}
                     className={styles.searchButton}
                     iconOnly
-                    aria-label="Execute search"
+                    tabIndex={-1}
                 >
                     <span className="material-symbols-rounded">search</span>
                 </Button>

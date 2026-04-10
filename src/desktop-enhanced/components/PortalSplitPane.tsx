@@ -3,6 +3,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     portalResultsAtom,
     isPortalActionExecutingAtom,
+    portalDensityModeAtom,
     splitPaneSearchModeAtom,
     splitPaneSelectedItemAtom,
     splitPaneWidthAtom,
@@ -28,6 +29,7 @@ type AccessAction = 'grant' | 'revoke';
 const EmailDetailView: React.FC<{ email: string }> = ({ email }) => {
     const [results, setResults] = useAtom(portalResultsAtom);
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
+    const densityMode = useAtomValue(portalDensityModeAtom);
     const addToast = useSetAtom(addToastAtom);
     const terminology = useTerminology();
 
@@ -114,6 +116,7 @@ const EmailDetailView: React.FC<{ email: string }> = ({ email }) => {
             <PortalDataTable
                 data={records}
                 columns={columns}
+                densityMode={densityMode}
                 rowSelection={selectedIds}
                 onRowSelectionChange={setSelectedIds}
                 onRevokeRow={(row) => openActionConfirm([row])}
@@ -134,7 +137,7 @@ const EmailDetailView: React.FC<{ email: string }> = ({ email }) => {
                 emptyState={<div className={styles.empty}>No records found for this email.</div>}
             />
 
-            {selectedCount > 0 && (
+            {selectedCount > 0 && densityMode !== 'quick-actions' && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
                     onAction={() => {

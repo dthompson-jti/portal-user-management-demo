@@ -2,18 +2,31 @@ import { useAtom } from 'jotai';
 import * as Popover from '@radix-ui/react-popover';
 import {
     portalDensityModeAtom,
+    portalCaseBadgeModeAtom,
+    portalLedgerFooterVisibleAtom,
+    portalLedgerHeaderVisibleAtom,
+    portalLedgerSummaryBadgesVisibleAtom,
     terminologyAtom,
     STATUS_LABEL_OPTIONS,
     COLUMN_HEADER_OPTIONS,
 } from '../atoms';
 import { skeletonForcedAtom } from '../../desktop/atoms';
+import { activePageAtom } from '../../data/activePageAtom';
 import { Switch } from '../../components/Switch';
 import styles from './TopNavMenu.module.css';
 
 export const TopNavMenu = () => {
+    const [activePage] = useAtom(activePageAtom);
     const [portalDensityMode, setPortalDensityMode] = useAtom(portalDensityModeAtom);
+    const [portalCaseBadgeMode, setPortalCaseBadgeMode] = useAtom(portalCaseBadgeModeAtom);
+    const [portalLedgerHeaderVisible, setPortalLedgerHeaderVisible] = useAtom(portalLedgerHeaderVisibleAtom);
+    const [portalLedgerFooterVisible, setPortalLedgerFooterVisible] = useAtom(portalLedgerFooterVisibleAtom);
+    const [portalLedgerSummaryBadgesVisible, setPortalLedgerSummaryBadgesVisible] = useAtom(portalLedgerSummaryBadgesVisibleAtom);
     const [skeletonForced, setSkeletonForced] = useAtom(skeletonForcedAtom);
     const [terminology, setTerminology] = useAtom(terminologyAtom);
+
+    const isA3CaseView = activePage === 'portal-case-example';
+    const isB3Ledger = activePage === 'portal-access-ledger';
 
     return (
         <Popover.Root>
@@ -25,6 +38,75 @@ export const TopNavMenu = () => {
 
             <Popover.Portal>
                 <Popover.Content className={styles.popoverContent} align="start" sideOffset={8}>
+                    {isA3CaseView && (
+                        <>
+                            <div className={styles.sectionHeader}>A3 case view</div>
+                            <div className={styles.displayOptionsGrid}>
+                                <button
+                                    className={styles.optionButton}
+                                    data-active={portalCaseBadgeMode === 'off'}
+                                    onClick={() => setPortalCaseBadgeMode('off')}
+                                    type="button"
+                                >
+                                    <span>Badges off</span>
+                                </button>
+                                <button
+                                    className={styles.optionButton}
+                                    data-active={portalCaseBadgeMode === 'summary'}
+                                    onClick={() => setPortalCaseBadgeMode('summary')}
+                                    type="button"
+                                >
+                                    <span>2 badges</span>
+                                </button>
+                                <button
+                                    className={styles.optionButton}
+                                    data-active={portalCaseBadgeMode === 'detailed'}
+                                    onClick={() => setPortalCaseBadgeMode('detailed')}
+                                    type="button"
+                                >
+                                    <span>3 badges</span>
+                                </button>
+                            </div>
+                            <div className={styles.divider} />
+                        </>
+                    )}
+
+                    {isB3Ledger && (
+                        <>
+                            <div className={styles.sectionHeader}>B3 access ledger</div>
+                            <div className={styles.menuRow}>
+                                <div className={styles.menuRowText}>
+                                    <span>Search result header</span>
+                                </div>
+                                <Switch
+                                    checked={portalLedgerHeaderVisible}
+                                    onCheckedChange={setPortalLedgerHeaderVisible}
+                                    id="portal-ledger-header-toggle"
+                                />
+                            </div>
+                            <div className={styles.menuRow}>
+                                <div className={styles.menuRowText}>
+                                    <span>Search result footer</span>
+                                </div>
+                                <Switch
+                                    checked={portalLedgerFooterVisible}
+                                    onCheckedChange={setPortalLedgerFooterVisible}
+                                    id="portal-ledger-footer-toggle"
+                                />
+                            </div>
+                            <div className={styles.menuRow}>
+                                <div className={styles.menuRowText}>
+                                    <span>Summary badges</span>
+                                </div>
+                                <Switch
+                                    checked={portalLedgerSummaryBadgesVisible}
+                                    onCheckedChange={setPortalLedgerSummaryBadgesVisible}
+                                    id="portal-ledger-badges-toggle"
+                                />
+                            </div>
+                            <div className={styles.divider} />
+                        </>
+                    )}
 
                     {/* ── Density ── */}
                     <div className={styles.sectionHeader}>Prototype settings</div>

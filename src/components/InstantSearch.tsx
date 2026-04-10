@@ -22,7 +22,6 @@ export const InstantSearch: React.FC<InstantSearchProps> = ({
     className = '',
 }) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const inputId = React.useId();
 
     useEffect(() => {
         if (autoFocus && inputRef.current) {
@@ -32,15 +31,10 @@ export const InstantSearch: React.FC<InstantSearchProps> = ({
 
     return (
         <div className={`${styles.wrapper} ${className}`} data-size={size}>
-            <label htmlFor={inputId} className={styles.visuallyHidden}>
-                {placeholder}
-            </label>
-
             <span className={`material-symbols-rounded ${styles.searchIcon}`}>search</span>
 
             <input
                 ref={inputRef}
-                id={inputId}
                 type="text"
                 placeholder={placeholder}
                 value={value}
@@ -54,8 +48,8 @@ export const InstantSearch: React.FC<InstantSearchProps> = ({
                     size="xs"
                     iconOnly
                     onClick={() => onChange('')}
-                    aria-label="Clear search"
                     className={styles.clearButton}
+                    tabIndex={-1}
                 >
                     <span className="material-symbols-rounded">close</span>
                 </Button>

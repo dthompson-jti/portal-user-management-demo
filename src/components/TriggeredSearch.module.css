@@ -8,12 +8,13 @@
 }
 
 .wrapper[data-variant="default"] {
-    background: var(--search-input-bg-primary);
-    border: 1px solid var(--control-border-tertiary);
-    color: var(--surface-fg-primary);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(143, 135, 123, 0.18);
+    color: rgba(90, 83, 74, 0.82);
     height: 44px;
     padding-left: var(--spacing-3);
     gap: var(--spacing-2);
+    box-shadow: 0 10px 30px rgba(91, 74, 45, 0.05);
 }
 
 .wrapper[data-variant="top-nav"] {
@@ -34,8 +35,8 @@
 }
 
 .wrapper:focus-within {
-    border-color: var(--control-border-theme);
-    box-shadow: 0 0 0 2px var(--control-focus-ring-standard);
+    border-color: rgba(150, 140, 126, 0.24);
+    box-shadow: 0 0 0 1px rgba(202, 193, 181, 0.45);
 }
 
 .wrapper[data-variant="top-nav"]:focus-within {
@@ -45,7 +46,7 @@
 }
 
 .wrapper[data-variant="default"]:hover {
-    border-color: var(--control-border-tertiary-hover);
+    border-color: rgba(143, 135, 123, 0.24);
 }
 
 .wrapper[data-variant="top-nav"]:hover {
@@ -83,13 +84,13 @@
 }
 
 .input::placeholder {
-    color: var(--control-fg-placeholder);
+    color: rgba(133, 126, 118, 0.7);
     opacity: 1;
 }
 
 .clearButton {
     flex-shrink: 0;
-    color: var(--surface-fg-tertiary) !important;
+    color: rgba(140, 131, 120, 0.82) !important;
     border-radius: var(--radius-sm) !important;
 }
 
@@ -115,6 +116,10 @@
 .searchButton {
     border-radius: var(--radius-sm) !important;
     min-width: unset !important;
+    background: linear-gradient(180deg, #d6cfc3, #c9c0b2) !important;
+    border-color: rgba(159, 148, 133, 0.35) !important;
+    color: rgba(82, 74, 63, 0.88) !important;
+    box-shadow: none !important;
 }
 
 .visuallyHidden {

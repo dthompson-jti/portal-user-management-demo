@@ -1,12 +1,8 @@
 import React from 'react';
 import { useAtomValue } from 'jotai';
 import { activePageAtom } from '../../data/activePageAtom';
+import { PortalLandingPage } from './PortalLandingPage';
 import { PortalOmnisearch } from './PortalOmnisearch';
-import { PortalCaseAccessManager } from './PortalCaseAccessManager';
-import { PortalCaseSearchII } from './PortalCaseSearchII';
-import { AccessLedger } from './AccessLedger';
-import { PortalAccess } from './PortalAccess';
-import { PortalSplitPane } from './PortalSplitPane';
 import styles from './PortalManagementView.module.css';
 
 export const PortalManagementView: React.FC = () => {
@@ -14,28 +10,14 @@ export const PortalManagementView: React.FC = () => {
 
     const renderContent = () => {
         switch (activePage) {
+            case 'portal-home':
+                return <PortalLandingPage />;
             case 'portal-email-search':
                 return <PortalOmnisearch key="email" mode="email" />;
             case 'portal-case-search':
                 return <PortalOmnisearch key="case" mode="case" />;
-            case 'portal-email-search-partial':
-                return <PortalOmnisearch key="email-partial" mode="email" matchMode="partial" resultLayout="email-first" />;
-            case 'portal-case-search-partial':
-                return <PortalOmnisearch key="case-partial" mode="case" matchMode="partial" resultLayout="case-email" />;
-            case 'portal-omnisearch':
-                return <PortalOmnisearch key="omni" />;
-            case 'portal-case-example':
-                return <PortalCaseAccessManager caseNum="CIV-24-0000016" />;
-            case 'portal-case-search-ii':
-                return <PortalCaseSearchII caseNum="CIV-24-0000016" />;
-            case 'portal-access-ledger':
-                return <AccessLedger />;
-            case 'portal-access':
-                return <PortalAccess />;
-            case 'portal-split-pane':
-                return <PortalSplitPane />;
             default:
-                return <PortalOmnisearch />;
+                return <PortalLandingPage />;
         }
     };
 

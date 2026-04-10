@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     isPortalAdvancedSearchOpenAtom,
     isPortalActionExecutingAtom,
+    portalDensityModeAtom,
     portalInspectedRecordAtom,
     portalResultsAtom,
     portalSelectedCountAtom,
@@ -58,6 +59,7 @@ export const PortalAccess: React.FC = () => {
     const [isExecuting, setIsExecuting] = useAtom(isPortalActionExecutingAtom);
     const [isAdvancedOpen, setIsAdvancedOpen] = useAtom(isPortalAdvancedSearchOpenAtom);
     const addToast = useSetAtom(addToastAtom);
+    const densityMode = useAtomValue(portalDensityModeAtom);
 
     const setInspectedRecord = useSetAtom(portalInspectedRecordAtom);
     const setPortalSelectedCount = useSetAtom(portalSelectedCountAtom);
@@ -366,6 +368,7 @@ export const PortalAccess: React.FC = () => {
                 <PortalDataTable
                     data={finalResults}
                     columns={columns}
+                    densityMode={densityMode}
                     rowSelection={selectedIds}
                     onRowSelectionChange={handleSelectionChange}
                     onRevokeRow={openSingleActionConfirm}
@@ -396,7 +399,7 @@ export const PortalAccess: React.FC = () => {
                 />
             </div>
 
-            {selectedCount > 0 && (
+            {selectedCount > 0 && densityMode !== 'quick-actions' && (
                 <BulkActionFooter
                     selectedCount={selectedCount}
                     onAction={openBulkActionConfirm}

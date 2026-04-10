@@ -76,6 +76,14 @@ export const splitPaneSearchModeAtom = atom<SplitPaneSearchMode>('email');
 export const splitPaneSelectedItemAtom = atom<string | null>(null);
 export const splitPaneWidthAtom = atom<number>(300);
 
+// Portal primary view display settings
+export type PortalCaseBadgeMode = 'off' | 'summary' | 'detailed';
+export const portalCaseBadgeModeAtom = atom<PortalCaseBadgeMode>('summary');
+
+export const portalLedgerHeaderVisibleAtom = atom<boolean>(true);
+export const portalLedgerFooterVisibleAtom = atom<boolean>(false);
+export const portalLedgerSummaryBadgesVisibleAtom = atom<boolean>(true);
+
 // ── Terminology settings ──
 export type StatusTerminology =
     | 'portal-access'   // Portal access / No portal access
@@ -107,6 +115,6 @@ export const COLUMN_HEADER_OPTIONS: { value: ColumnHeaderTerminology; label: str
 ];
 
 export const terminologyAtom = atom<TerminologyConfig>({
-    statusLabels: 'portal-access',
+    statusLabels: 'active-inactive',
     columnHeader: 'portal-access',
 });

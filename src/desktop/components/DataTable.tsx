@@ -36,6 +36,9 @@ interface DataTableProps<T> {
     initialSorting?: SortingState;
     emptyState?: React.ReactNode;
     hideFooter?: boolean;
+    pinnedLeftColumnIds?: string[];
+    pinnedRightColumnIds?: string[];
+    columnWidthMode?: 'content' | 'equal';
 }
 
 export function DataTable<T>({
@@ -56,16 +59,19 @@ export function DataTable<T>({
     initialSorting = [],
     emptyState,
     hideFooter = false,
+    pinnedLeftColumnIds = ['select'],
+    pinnedRightColumnIds = ['actions'],
+    columnWidthMode = 'content',
 }: DataTableProps<T>) {
     // When showSkeleton is not explicitly controlled, fall back to the old heuristic.
     const shouldShowSkeleton = showSkeleton ?? (isLoading && data.length === 0);
     const isHeaderSkeleton = !!showHeaderSkeleton && shouldShowSkeleton;
     const [sorting, setSorting] = useState<SortingState>(initialSorting);
     const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({});
-    const [columnPinning] = useState<ColumnPinningState>({
-        left: ['select'],
-        right: ['actions'],
-    });
+    const columnPinning: ColumnPinningState = {
+        left: pinnedLeftColumnIds,
+        right: pinnedRightColumnIds,
+    };
 
     // Column Definitions and Hook Setup handled below
 
@@ -187,13 +193,27 @@ export function DataTable<T>({
 
 
     // Compute column widths and pinned offsets once per render
+    const utilityColumnIds = new Set(['select', 'actions', 'spacer', 'status-edge']);
+    const visibleColumns = table.getVisibleFlatColumns();
+    const equalWidthColumns = visibleColumns.filter(column => !utilityColumnIds.has(column.id));
+    const fixedUtilityWidth = visibleColumns.reduce((sum, column) => {
+        if (utilityColumnIds.has(column.id) && column.id !== 'spacer') {
+            return sum + column.getSize();
+        }
+        return sum;
+    }, 0);
+    const equalColumnWidth = equalWidthColumns.length > 0
+        ? `calc((100% - ${fixedUtilityWidth}px) / ${equalWidthColumns.length})`
+        : 'auto';
     const tableStyles: React.CSSProperties & Record<string, string | number> = {
-        width: table.getTotalSize(),
+        width: columnWidthMode === 'equal' ? '100%' : table.getTotalSize(),
     };
 
-    table.getVisibleFlatColumns().forEach((column, index, allCols) => {
+    visibleColumns.forEach((column, index, allCols) => {
         const safeId = column.id.replace(/[^a-zA-Z0-9-]/g, '-');
-        tableStyles[`--col-${safeId}-width`] = `${column.getSize()}px`;
+        tableStyles[`--col-${safeId}-width`] = columnWidthMode === 'equal' && !utilityColumnIds.has(column.id)
+            ? equalColumnWidth
+            : `${column.getSize()}px`;
 
         if (column.getIsPinned() === 'left') {
             let leftOffset = 0;
@@ -208,7 +228,7 @@ export function DataTable<T>({
 
     return (
         <div className={styles.tableContainer}>
-            <div ref={scrollAreaRef} className={styles.scrollArea}>
+            <div ref={scrollAreaRef} className={styles.scrollArea} data-width-mode={columnWidthMode}>
                 <table
                     className={styles.table}
                     style={tableStyles}

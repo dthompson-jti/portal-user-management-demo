@@ -44,7 +44,7 @@
 }
 
 .ghost .label {
-    text-decoration-color: transparent;
+    text-decoration-color: currentColor;
 }
 
 .link:hover .label {

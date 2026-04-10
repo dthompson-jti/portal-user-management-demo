@@ -32,8 +32,12 @@ interface PortalDataTableProps<T> {
     actionLabel?: string;
     actionIcon?: string;
     getRowAction?: (row: T) => PortalRowActionConfig;
+    onViewDetails?: (row: T) => void;
     hideHeaderControlsWhenEmpty?: boolean;
     pageSize?: number;
+    lazy?: boolean;
+    lazyPageSize?: number;
+    showSelection?: boolean;
 }
 
 export function PortalDataTable<T extends { id: string }>({
@@ -50,26 +54,34 @@ export function PortalDataTable<T extends { id: string }>({
     actionLabel = 'Revoke',
     actionIcon = 'no_accounts',
     getRowAction,
+    onViewDetails,
     hideHeaderControlsWhenEmpty = false,
     pageSize: initialPageSize = 10,
+    lazy = false,
+    lazyPageSize = 20,
+    showSelection = true,
 }: PortalDataTableProps<T>) {
     const lastClickedRowRef = React.useRef<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(initialPageSize);
+    const [lazyCount, setLazyCount] = useState(lazyPageSize);
 
     const totalItems = data.length;
 
-    // Reset to page 1 when data changes (e.g. after grant/revoke)
+    // Reset to page 1 / lazy count when data changes (e.g. after grant/revoke)
     React.useEffect(() => {
         setCurrentPage(1);
-    }, [totalItems]);
+        setLazyCount(lazyPageSize);
+    }, [totalItems, lazyPageSize]);
 
     const paginatedData = useMemo(() => {
+        if (lazy) return data.slice(0, lazyCount);
         const start = (currentPage - 1) * pageSize;
         return data.slice(start, start + pageSize);
-    }, [data, currentPage, pageSize]);
+    }, [data, lazy, lazyCount, currentPage, pageSize]);
 
-    const showPagination = totalItems > pageSize;
+    const showPagination = !lazy && totalItems > pageSize;
+    const lazyHasMore = lazy && lazyCount < totalItems;
 
     const handleRowAction = onRowAction || onRevokeRow;
     const shouldShowHeaderControls = data.length > 0 || !hideHeaderControlsWhenEmpty;
@@ -114,9 +126,12 @@ export function PortalDataTable<T extends { id: string }>({
     }, [onRowSelectionChange]);
 
     const isQuickActions = densityMode === 'quick-actions';
+    const shouldShowSelection = showSelection && !isQuickActions && shouldShowHeaderControls;
+    const pinnedLeftColumnIds = shouldShowSelection ? ['select'] : [];
+    const pinnedRightColumnIds = shouldShowHeaderControls ? ['actions'] : [];
 
     const augmentedColumns: ColumnDef<T, unknown>[] = [
-        ...(!isQuickActions && shouldShowHeaderControls ? [{
+        ...(shouldShowSelection ? [{
             id: 'select',
             header: ({ table }: HeaderContext<T, unknown>) => (
                 <div className={styles.checkboxCell}>
@@ -126,7 +141,7 @@ export function PortalDataTable<T extends { id: string }>({
                         checked={table.getIsAllRowsSelected()}
                         onClick={(event) => event.stopPropagation()}
                         onChange={table.getToggleAllRowsSelectedHandler()}
-                        aria-label="Select all rows"
+                        tabIndex={-1}
                     />
                 </div>
             ),
@@ -138,19 +153,29 @@ export function PortalDataTable<T extends { id: string }>({
                         checked={row.getIsSelected()}
                         onClick={(event) => event.stopPropagation()}
                         onChange={row.getToggleSelectedHandler()}
-                        aria-label={`Select row ${row.id}`}
+                        tabIndex={-1}
                     />
                 </div>
             ),
             ...COLUMN_WIDTHS.CHECKBOX,
         }] : []),
         ...columns,
+        // Spacer absorbs extra horizontal space so fixed-width columns (select, actions) never stretch
+        {
+            id: 'spacer',
+            size: 0,
+            minSize: 0,
+            enableResizing: false,
+            enableSorting: false,
+            header: () => null,
+            cell: () => null,
+        } as ColumnDef<T, unknown>,
         ...(shouldShowHeaderControls ? [{
             id: 'actions',
             header: () => null,
-            size: isQuickActions ? 120 : 48,
-            minSize: isQuickActions ? 120 : 48,
-            maxSize: isQuickActions ? 120 : 48,
+            size: isQuickActions ? 152 : 48,
+            minSize: isQuickActions ? 152 : 48,
+            maxSize: isQuickActions ? 152 : 48,
             enableSorting: false,
             enableResizing: false,
             cell: ({ row }: CellContext<T, unknown>) => {
@@ -164,14 +189,15 @@ export function PortalDataTable<T extends { id: string }>({
                 const resolvedAction = getRowAction?.(row.original) ?? defaultAction;
 
                 return (
-                    <div className={styles.actionsCellWrapper}>
+                    <div className={`${styles.actionsCellWrapper} ${isQuickActions ? styles.quickActionsCellWrapper : ''}`}>
                         {isQuickActions ? (
                             <Button 
-                                variant={resolvedAction.variant ?? (resolvedAction.destructive ? 'secondary' : 'primary')}
+                                variant={resolvedAction.destructive ? 'secondary' : 'primary'}
                                 size="s"
                                 onClick={resolvedAction.onClick}
+                                className={styles.quickActionButton}
                             >
-                                <span className={`material-symbols-rounded`} style={{ fontSize: '18px', marginRight: '4px' }}>
+                                <span className={`material-symbols-rounded ${styles.quickActionIcon}`}>
                                     {resolvedAction.icon}
                                 </span>
                                 {resolvedAction.label}
@@ -179,11 +205,11 @@ export function PortalDataTable<T extends { id: string }>({
                         ) : (
                             <RowContextMenu
                                 actions={[
-                                    {
+                                    ...(onViewDetails ? [{
                                         label: 'View details',
                                         icon: 'info',
-                                        onClick: () => { /* View details */ },
-                                    },
+                                        onClick: () => onViewDetails(row.original),
+                                    }] : []),
                                     {
                                         label: resolvedAction.label,
                                         icon: resolvedAction.icon,
@@ -223,11 +249,14 @@ export function PortalDataTable<T extends { id: string }>({
                             columns={augmentedColumns}
                             isLoading={isLoading}
                             emptyState={emptyState}
-                            enableRowSelection={!isQuickActions}
+                            enableRowSelection={shouldShowSelection}
                             rowSelection={rowSelection}
                             onRowSelectionChange={onRowSelectionChange}
                             getRowId={(row: T) => row.id}
                             onRowClick={handleRowClick}
+                            pinnedLeftColumnIds={pinnedLeftColumnIds}
+                            pinnedRightColumnIds={pinnedRightColumnIds}
+                            columnWidthMode="equal"
                         />
                     </div>
                 ))}
@@ -243,12 +272,17 @@ export function PortalDataTable<T extends { id: string }>({
                 columns={augmentedColumns}
                 isLoading={isLoading}
                 emptyState={emptyState}
-                enableRowSelection={!isQuickActions}
+                enableRowSelection={shouldShowSelection}
                 rowSelection={rowSelection}
                 onRowSelectionChange={onRowSelectionChange}
                 getRowId={(row: T) => row.id}
                 onRowClick={handleRowClick}
-                hideFooter={showPagination}
+                pinnedLeftColumnIds={pinnedLeftColumnIds}
+                pinnedRightColumnIds={pinnedRightColumnIds}
+                columnWidthMode="equal"
+                hideFooter={showPagination || lazy}
+                hasMore={lazyHasMore}
+                onLoadMore={() => setLazyCount(prev => prev + lazyPageSize)}
             />
             {showPagination && (
                 <TablePagination

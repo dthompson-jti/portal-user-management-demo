@@ -35,23 +35,52 @@
     flex-shrink: 0;
 }
 
-/* ── Summary stats strip ── */
-.statsBar {
-    padding: var(--spacing-2) var(--spacing-6);
+/* ── Search result chrome ── */
+.resultsChrome {
+    padding: var(--spacing-2) var(--spacing-4);
     background: var(--surface-bg-secondary-subtle);
     border-bottom: 1px solid var(--surface-border-primary);
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: var(--spacing-6);
+    justify-content: space-between;
+    gap: var(--spacing-4);
 }
 
-.statSpacer {
-    flex: 1;
+.resultsChromeFooter {
+    border-top: 1px solid var(--surface-border-primary);
+    border-bottom: none;
+}
+
+.resultsChromeMeta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.resultsChromeSummary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--spacing-2);
 }
 
 .resultCount {
-    font-size: var(--font-size-2xs);
-    color: var(--surface-fg-tertiary);
+    font-weight: 500;
+    color: var(--surface-fg-primary);
+    font-size: 13px;
+}
+
+.detailCaseLink {
+    color: var(--surface-fg-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-text-sm, 20px);
+}
+
+.panelEmptyState {
+    justify-content: flex-start;
+    padding-top: 32px;
 }
 
 /* ── Table area ── */
@@ -237,6 +266,38 @@
     color: var(--surface-fg-primary);
     line-height: 1.5;
     margin: 0;
+}
+
+.affectedRecords {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.affectedRecordsLabel {
+    font-size: var(--font-size-sm);
+    color: var(--surface-fg-secondary);
+    line-height: 1.4;
+}
+
+.affectedRecordsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1p5);
+}
+
+.affectedRecordName,
+.affectedRecordMore {
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-input);
+    background: var(--surface-bg-secondary);
+    color: var(--surface-fg-primary);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+}
+
+.affectedRecordMore {
+    color: var(--surface-fg-secondary);
 }
 
 .modalTitle {

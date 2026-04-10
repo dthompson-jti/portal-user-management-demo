@@ -5,6 +5,7 @@ import { isDetailPanelOpenAtom, panelWidthAtom } from '../../desktop/atoms';
 import { portalInspectedRecordAtom, portalSelectedCountAtom } from '../atoms';
 import { useTerminology } from '../hooks/useTerminology';
 import { Button } from '../../components/Button';
+import { LinkButton } from '../../components/LinkButton';
 import { Tooltip } from '../../components/Tooltip';
 import { LabelValueRow } from '../../components/LabelValueRow';
 import { SidePanelHeading } from '../../desktop/components/SidePanelHeading';
@@ -34,6 +35,14 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
     const handleClose = () => {
         setPanelOpen(false);
     };
+
+    const openCaseInNewWindow = useCallback((caseNumber: string) => {
+        window.open(
+            `${window.location.origin}${window.location.pathname}?case=${encodeURIComponent(caseNumber)}`,
+            '_blank',
+            'noopener,noreferrer'
+        );
+    }, []);
 
     // Resize handlers (same pattern as DetailPanel)
     const handleResizeStart = useCallback((e: React.MouseEvent) => {
@@ -136,7 +145,7 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
             {/* Content */}
             <div className={panelStyles.content}>
                 {!record ? (
-                    <div className={panelStyles.emptyState}>
+                    <div className={`${panelStyles.emptyState} ${styles.panelEmptyState}`}>
                         <span className={`material-symbols-rounded ${panelStyles.placeholderIcon}`}>
                             {selectedCount > 1 ? 'select_all' : 'touch_app'}
                         </span>
@@ -150,7 +159,18 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
                         <div className={panelStyles.section}>
                             <SidePanelHeading title="Case" />
                             <div className={panelStyles.metaStack}>
-                                <LabelValueRow label="Case number" value={record.caseNumber} />
+                                <LabelValueRow
+                                    label="Case number"
+                                    value={
+                                        <LinkButton
+                                            label={record.caseNumber}
+                                            variant="ghost"
+                                            external
+                                            className={styles.detailCaseLink}
+                                            onClick={() => openCaseInNewWindow(record.caseNumber)}
+                                        />
+                                    }
+                                />
                                 <LabelValueRow label="Case name" value={record.caseName} />
                                 <LabelValueRow label="Case type" value={record.caseType} />
                                 <LabelValueRow
@@ -171,6 +191,14 @@ export const AccessLedgerDetailPanel = ({ onResizeStart, onResizeEnd }: AccessLe
                                 <LabelValueRow label="Email" value={record.email} />
                                 <LabelValueRow label="Role" value={record.participantRole} />
                                 <LabelValueRow label="Access type" value={record.accessType} />
+                            </div>
+                        </div>
+
+                        <div className={panelStyles.section}>
+                            <SidePanelHeading title="Audit" />
+                            <div className={panelStyles.metaStack}>
+                                <LabelValueRow label="Who granted" value={record.author} />
+                                <LabelValueRow label="When granted" value={record.dateGranted} />
                             </div>
                         </div>
 
