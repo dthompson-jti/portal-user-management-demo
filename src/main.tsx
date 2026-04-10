@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'jotai'
+import { Analytics } from '@vercel/analytics/react'
 
 import DesktopApp from './desktop/App'
 import DesktopEnhancedApp from './desktop-enhanced/DesktopEnhancedApp'
@@ -44,6 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <HeartbeatManager />
       <LayoutOrchestrator />
       {getApp()}
+      <Analytics />
     </Provider>
   </React.StrictMode>,
 )

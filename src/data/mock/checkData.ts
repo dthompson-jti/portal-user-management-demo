@@ -1,4 +1,4 @@
-import { SafetyCheck, Resident } from '../../types';
+import { SafetyCheck } from '../../types';
 import { mockResidents } from './residentData';
 
 // Helper to group residents by their location for check creation
@@ -23,11 +23,11 @@ export const generateInitialChecks = (): SafetyCheck[] => {
     const scheduledStartTime = inNMinutes(offsetMinutes - DEFAULT_INTERVAL);
 
     return {
-      id: `chk_${location.toLowerCase().replace(/[\s']/g, '_')}`,
-      correlationGuid: `guid-init-${location.toLowerCase().replace(/[\s']/g, '_')}`,
+      id: `chk_${location.toLowerCase().replace(/[\s'()]/g, '_')}`,
+      correlationGuid: `guid-init-${location.toLowerCase().replace(/[\s'()]/g, '_')}`,
       type: 'scheduled',
       residents: residentsByLocation[location] || [],
-      status: 'pending', // Will be recalculated by atoms based on dueDate
+      status: 'pending', 
       scheduledStartTime,
       scheduledEndTime,
       dueDate: scheduledEndTime,
@@ -37,151 +37,24 @@ export const generateInitialChecks = (): SafetyCheck[] => {
     } as SafetyCheck;
   };
 
-  // --- STANDARD CHECKS ---
-  // Lifecycle stress test configuration:
-  // - A-Wing: Specifically staggered to test all lifecycle transitions.
-  // - Other Wings: Spread evenly within the 15m cap.
+  // --- THEMED CHECKS ---
+  
+  const themedChecks = [
+    // Star Wars
+    createCheck("Death Star Detention Block", -5), // Missed
+    createCheck("Star Destroyer Brigg", 2, [{ type: 'SW', details: 'Sith Lord monitoring required.', residentId: 'res_sw_6' }]),
+    createCheck("Bespin Carbonite Chamber", 8),
 
-  const standardChecks = [
-    // =================================================================
-    //               A-WING: LIFECYCLE STRESS TEST ZONE
-    // =================================================================
-    // Checks are positioned near transition boundaries (Missed, Due, Upcoming).
+    // Harry Potter
+    createCheck("Tower Top (Max Security)", -30, [{ type: 'SR', details: 'Animagus risk. Constant watch.', residentId: 'res_hp_1' }]), // 2 Missed
+    createCheck("Dungeon Level", 5),
+    createCheck("Common Holding Hall", 12),
 
-    // --- MISSED GROUP (Multi-cycle test) ---
-    createCheck("A1-101", -30),   // "2 Missed" (2 cycles)
-    createCheck("A1-102", -14.5), // "Missed" -> "2 Missed" in 30s
-    createCheck("A1-103", -1),    // "Missed" (just crossed 15m)
-
-    // --- DUE GROUP (Near-missed transition) ---
-    createCheck("A2-205", 0.5),   // "Due" -> "Missed" in 30s
-    createCheck("A2-206", 1.5),   // "Due" -> "Missed" in 90s
-
-    // --- UPCOMING -> DUE TRANSITION ---
-    createCheck("A3-301", 2.1, [{ type: 'CS', details: 'Separation from J. Miller', residentId: 'jdc_a3_1' }]),  // "Upcoming" -> "Due" in 6s
-    createCheck("A3-302", 2.5),   // "Upcoming" -> "Due" in 30s
-
-    // --- UPCOMING (Mid-range) ---
-    createCheck("A4-410", 5),
-    createCheck("A4-411", 8),
-
-    // --- UPCOMING (Fresh) ---
-    createCheck("A5-502", 12, [{ type: 'MW', details: 'Asthmatic, check inhaler', residentId: 'jdc_a5_1' }]),
-    createCheck("A5-503", 14),
-
-    // --- A6 (Stable, fresh) ---
-    createCheck("A6-601", 15, [{ type: 'SR', details: 'Active watch, 15-min checks', residentId: 'jdc_a6_1' }]),
-    createCheck("A6-602", 15),
-    createCheck("A6-604", 15, [
-      { type: 'SR', details: 'Both residents on suicide watch.', residentId: 'jdc_a6_4' },
-      { type: 'SR', details: 'Both residents on suicide watch.', residentId: 'jdc_a6_5' }
-    ]),
-
-    // =================================================================
-    //               OTHER WINGS: EVEN SPREAD (0-15m Cap)
-    // =================================================================
-
-    // JDC - B-Wing (Staggered)
-    createCheck("B1-101", 5),
-    createCheck("B1-102", 10),
-    createCheck("B2-201", 14),
-
-    // JDC - C-Wing (Staggered)
-    createCheck("C1-101", 3),
-    createCheck("C1-102", 8),
-
-    // Sci-Fi - Star Wars (Spread)
-    createCheck("Death Star Detention Block", 2),
-    createCheck("Emperor's Throne Room", 4, [
-      { type: 'SW', details: "High-risk Sith Lords. Approach with caution.", residentId: 'sw_palp' },
-      { type: 'SW', details: "High-risk Sith Lords. Approach with caution.", residentId: 'sw_vader' }
-    ]),
-    createCheck("Millennium Falcon", 6),
-    createCheck("Mos Eisley Cantina", 8),
-    createCheck("Tatooine Homestead", 10),
-    createCheck("Dagobah", 12),
-    createCheck("Bespin", 13),
-    createCheck("Jabba's Palace", 15),
-
-    // Sci-Fi - Harry Potter (Spread)
-    createCheck("Gryffindor Tower", 3),
-    createCheck("Headmaster's Office", 5, [{ type: 'SR', details: 'Monitor for phoenix activity.', residentId: 'hp_dumbledore' }]),
-    createCheck("Hufflepuff Common Room", 7),
-    createCheck("Potions Classroom", 9),
-    createCheck("The Great Hall", 11),
-    createCheck("Room of Requirement", 13),
-    createCheck("Slytherin Dungeon", 14),
-    createCheck("Ministry of Magic", 15, [{ type: 'MA', details: 'Requires MoM authorization.', residentId: 'hp_umbridge' }]),
-
-    // Sci-Fi - Terminator (Spread)
-    createCheck("Cyberdyne Annex", 4),
-    createCheck("Future Resistance Bunker", 6, [{ type: 'MA', details: 'Leadership check-in required.', residentId: 't_john' }]),
-    createCheck("Skynet Command Center", 8, [{ type: 'SW', details: 'Hostile cybernetic organism.', residentId: 't_t800_m101' }]),
-    createCheck("Pescadero State Hospital", 10),
-    createCheck("Tech-Noir Nightclub", 12),
-    createCheck("Cyberdyne Systems HQ", 15),
-
-    // Sci-Fi - Alien (Spread)
-    createCheck("LV-426 Medlab", 2, [{ type: 'SW', details: 'Xenomorph detected. High alert.', residentId: 'al_ripley' }]),
-    createCheck("Nostromo Galley", 5),
-    createCheck("Nostromo Cockpit", 7),
-    createCheck("LV-426 Operations Center", 9),
-    createCheck("LV-426 Ventilation Shafts", 11),
-    createCheck("Nostromo Hypersleep Chamber", 13, [{ type: 'SW', details: 'Synthetic. Behavioral monitoring.', residentId: 'al_ash' }]),
-    createCheck("USCSS Prometheus Bridge", 15),
-
-    // Sci-Fi - The Expanse (Spread)
-    createCheck("Rocinante Cockpit", 3),
-    createCheck("Rocinante Engineering", 6),
-    createCheck("Rocinante Galley", 9),
-    createCheck("UN-One", 11),
-    createCheck("Tycho Station Command", 13),
-    createCheck("Ceres Station Docks", 15),
+    // The Expanse
+    createCheck("Rocinante Airlock (Temporary)", 1, [{ type: 'MW', details: 'Monitor for Protomolecule symptoms.', residentId: 'res_ex_1' }]),
+    createCheck("Docking Bay 94", 4),
+    createCheck("Operations Center Detention", 14, [{ type: 'MA', details: 'High-level political oversight.', residentId: 'res_ex_6' }]),
   ];
-
-  // --- B-WING STRESS TEST DATA GENERATOR ---
-  // Group 1 (6 checks): Sequential Misses (5s apart) -> Tests individual toasts.
-  // Group 2 (6 checks): Simultaneous Misses (0s apart) -> Tests aggregation logic.
-
-  const bWingStressChecks: SafetyCheck[] = Array.from({ length: 12 }).map((_, i) => {
-    const isGroup2 = i >= 6;
-
-    // We want these to become MISSED shortly.
-    // Missed Threshold = Due Date + 7m.
-    // So if we want it to miss in 10s, Due Date must be (Now - 7m + 10s).
-
-    const startDelay = isGroup2 ? 70 : 10; // Group 1 starts in 10s, Group 2 in 70s
-    const stagger = isGroup2 ? 0 : (i % 6) * 5;
-
-    const secondsUntilMissed = startDelay + stagger;
-
-    // Due Date = Now - 7m (buffer) + secondsUntilMissed
-    const dueTimeMs = now.getTime() - (7 * 60 * 1000) + (secondsUntilMissed * 1000);
-
-    const locationName = `B1-Stress-${String(i + 1).padStart(2, '0')}`;
-
-    // Find the actual resident object to ensure ID matching
-    const residents = residentsByLocation[locationName];
-    const finalResidents = residents || [{
-      id: `res_stress_b_${i}`,
-      name: `Subject ${i + 1}`,
-      location: locationName
-    } as Resident];
-
-    return {
-      id: `chk_stress_b_${i}`,
-      correlationGuid: `guid-stress-b-${i}`,
-      type: 'scheduled',
-      residents: finalResidents,
-      status: 'pending', // Will be recalculated by atoms based on dueDate
-      scheduledStartTime: new Date(dueTimeMs - DEFAULT_INTERVAL * 60 * 1000).toISOString(),
-      scheduledEndTime: new Date(dueTimeMs).toISOString(),
-      dueDate: new Date(dueTimeMs).toISOString(),
-      specialClassifications: [],
-      generationId: 1,
-      baseInterval: DEFAULT_INTERVAL,
-    } as SafetyCheck;
-  });
 
   // Add some completed checks for history view
   const historyChecks = [
@@ -189,7 +62,7 @@ export const generateInitialChecks = (): SafetyCheck[] => {
       id: 'chk_completed_1',
       correlationGuid: 'guid-hist-1',
       type: 'scheduled',
-      residents: [mockResidents[0]],
+      residents: [mockResidents[0]], // Luke
       status: 'complete',
       scheduledStartTime: inNMinutes(-45),
       scheduledEndTime: inNMinutes(-30),
@@ -204,7 +77,7 @@ export const generateInitialChecks = (): SafetyCheck[] => {
       id: 'chk_completed_2',
       correlationGuid: 'guid-hist-2',
       type: 'scheduled',
-      residents: [mockResidents[1]],
+      residents: [mockResidents[12]], // Sirius
       status: 'complete',
       scheduledStartTime: inNMinutes(-75),
       scheduledEndTime: inNMinutes(-60),
@@ -219,11 +92,11 @@ export const generateInitialChecks = (): SafetyCheck[] => {
       id: 'chk_completed_3',
       correlationGuid: 'guid-hist-3',
       type: 'scheduled',
-      residents: [mockResidents[2]],
+      residents: [mockResidents[22]], // Holden
       status: 'completed-late',
       scheduledStartTime: inNMinutes(-105),
       scheduledEndTime: inNMinutes(-90),
-      completedTime: inNMinutes(-88), // Late by 2 mins
+      completedTime: inNMinutes(-88), 
       dueDate: inNMinutes(-90),
       lastChecked: inNMinutes(-88),
       generationId: 1,
@@ -232,8 +105,7 @@ export const generateInitialChecks = (): SafetyCheck[] => {
     } as SafetyCheck,
   ];
 
-  return [...standardChecks, ...bWingStressChecks, ...historyChecks];
+  return [...themedChecks, ...historyChecks];
 };
 
-// Cached initial checks for first load (generated at import time)
 export const initialChecks: SafetyCheck[] = generateInitialChecks();

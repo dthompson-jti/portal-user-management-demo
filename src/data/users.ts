@@ -14,11 +14,41 @@ export interface User {
 }
 
 export const MOCK_USERS: User[] = [
-    { username: 'bcorbin', displayName: 'Brett Corbin', initials: 'BC' },
-    { username: 'bcardile', displayName: 'Brian Cardile', initials: 'BC' },
-    { username: 'dthompson', displayName: 'Dave Thompson', initials: 'DT' },
-    { username: 'jmazmudar', displayName: 'Jalpa Mazmudar', initials: 'JM' },
-    { username: 'jsiemens', displayName: 'Jeff Siemens', initials: 'JS' },
+    // --- Star Wars ---
+    { username: 'mock_luke', displayName: 'Mock: Luke Skywalker', initials: 'LS' },
+    { username: 'mock_leia', displayName: 'Mock: Leia Organa', initials: 'LO' },
+    { username: 'mock_han', displayName: 'Mock: Han Solo', initials: 'HS' },
+    { username: 'mock_vader', displayName: 'Mock: Darth Vader', initials: 'DV' },
+    { username: 'mock_yoda', displayName: 'Mock: Master Yoda', initials: 'MY' },
+    { username: 'mock_kenobi', displayName: 'Mock: Obi-Wan Kenobi', initials: 'OK' },
+    { username: 'mock_ahsoka', displayName: 'Mock: Ahsoka Tano', initials: 'AT' },
+    { username: 'mock_thrawn', displayName: 'Mock: Grand Admiral Thrawn', initials: 'GT' },
+    { username: 'mock_boba', displayName: 'Mock: Boba Fett', initials: 'BF' },
+    { username: 'mock_mando', displayName: 'Mock: Din Djarin', initials: 'DD' },
+
+    // --- Harry Potter ---
+    { username: 'mock_harry', displayName: 'Mock: Harry Potter', initials: 'HP' },
+    { username: 'mock_hermione', displayName: 'Mock: Hermione Granger', initials: 'HG' },
+    { username: 'mock_ron', displayName: 'Mock: Ron Weasley', initials: 'RW' },
+    { username: 'mock_dumbledore', displayName: 'Mock: Albus Dumbledore', initials: 'AD' },
+    { username: 'mock_snape', displayName: 'Mock: Severus Snape', initials: 'SS' },
+    { username: 'mock_mcgonagall', displayName: 'Mock: Minerva McGonagall', initials: 'MM' },
+    { username: 'mock_draco', displayName: 'Mock: Draco Malfoy', initials: 'DM' },
+    { username: 'mock_luna', displayName: 'Mock: Luna Lovegood', initials: 'LL' },
+    { username: 'mock_neville', displayName: 'Mock: Neville Longbottom', initials: 'NL' },
+    { username: 'mock_hagrid', displayName: 'Mock: Rubeus Hagrid', initials: 'RH' },
+
+    // --- The Expanse ---
+    { username: 'mock_holden', displayName: 'Mock: James Holden', initials: 'JH' },
+    { username: 'mock_naomi', displayName: 'Mock: Naomi Nagata', initials: 'NN' },
+    { username: 'mock_amos', displayName: 'Mock: Amos Burton', initials: 'AB' },
+    { username: 'mock_alex', displayName: 'Mock: Alex Kamal', initials: 'AK' },
+    { username: 'mock_avasarala', displayName: 'Mock: Chrisjen Avasarala', initials: 'CA' },
+    { username: 'mock_miller', displayName: 'Mock: Joseph Miller', initials: 'JM' },
+    { username: 'mock_drummer', displayName: 'Mock: Camina Drummer', initials: 'CD' },
+    { username: 'mock_bobbie', displayName: 'Mock: Bobbie Draper', initials: 'BD' },
+    { username: 'mock_ashford', displayName: 'Mock: Klaes Ashford', initials: 'KA' },
+    { username: 'mock_inaros', displayName: 'Mock: Marco Inaros', initials: 'MI' },
 ];
 
 /**

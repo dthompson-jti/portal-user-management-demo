@@ -4,91 +4,45 @@ import { getStableHash, getOperationalState, getActiveStory } from './simulation
 
 const FACILITY_CONFIG = [
     {
-        group: 'Cedar',
-        units: ['Cedar Intake', 'Cedar Assessment']
+        group: 'Imperial',
+        units: ['Imperial Intake', 'Imperial Assessment']
     },
     {
-        group: 'Oak',
-        units: ['Oak Integrated', 'Oak Enhanced', 'Oak Secure']
+        group: 'Hogwarts',
+        units: ['Hogwarts Integrated', 'Hogwarts Enhanced', 'Hogwarts Secure']
     },
     {
-        group: 'Maple',
-        units: ['Maple General', 'Maple Transitional']
+        group: 'Tycho',
+        units: ['Tycho General', 'Tycho Transitional']
     },
     {
-        group: 'Pine',
-        units: ['Pine Honors', 'Pine Re-entry']
+        group: 'Rocinante',
+        units: ['Rocinante Honors', 'Rocinante Re-entry']
     }
 ];
 
 export const RESIDENT_NAMES = [
-    'James Wilson', 'Maria Garcia', 'Robert Taylor', 'Linda Johnson', 'Michael Brown',
-    'Elizabeth Davis', 'William Miller', 'Susan Wilson', 'David Moore', 'Jessica Taylor',
-    'John Anderson', 'Karen Thomas', 'Christopher Jackson', 'Nancy White', 'Matthew Harris',
-    'Sarah Martin', 'Daniel Thompson', 'Lisa Garcia', 'Anthony Martinez', 'Dorothy Robinson',
-    'Kevin Clark', 'Sandra Rodriguez', 'Paul Lewis', 'Donna Lee', 'Mark Walker',
-    'Betty Hall', 'George Allen', 'Margaret Young', 'Kenneth Hernandez', 'Ruth King',
-    'Edward Wright', 'Sharon Lopez', 'Ronald Hill', 'Michelle Scott', 'Timothy Green',
-    'Laura Adams', 'Jason Baker', 'Sarah Gonzalez', 'Jeffrey Nelson', 'Kimberly Carter',
-    'Gary Mitchell', 'Deborah Perez', 'Nicholas Roberts', 'Jessica Turner', 'Eric Phillips',
-    'Shirley Campbell', 'Stephen Parker', 'Cynthia Evans', 'Andrew Edwards', 'Angela Collins',
-    'Raymond Stewart', 'Melissa Sanchez', 'Joshua Morris', 'Brenda Rogers', 'Dennis Reed',
-    'Amy Cook', 'Jerry Morgan', 'Anna Bell', 'Tyler Murphy', 'Rebecca Bailey',
-    'Aaron Rivera', 'Virginia Cooper', 'Henry Richardson', 'Kathleen Cox', 'Douglas Howard',
-    'Martha Ward', 'Peter Torres', 'Debra Peterson', 'Walter Gray', 'Amanda Ramirez',
-    'Harold James', 'Stephanie Watson', 'Jose Brooks', 'Carolyn Kelly', 'Adam Sanders',
-    'Christine Price', 'Nathan Bennett', 'Janet Wood', 'Lawrence Chen', 'Catherine Barnes',
-    'Arthur Ross', 'Frances Henderson', 'Ryan Coleman', 'Ann Jenkins', 'Joe Perry',
-    'Alice Powell', 'Juan Long', 'Julie Patterson', 'Jack Hughes', 'Heather Flores',
-    'Albert Washington', 'Teresa Butler', 'Jonathan Simmons', 'Doris Foster', 'Justin Gonzales',
-    'Sara Bryant', 'Terry Alexander', 'Gloria Russell', 'Gerald Griffin', 'Evelyn Diaz',
-    'Keith Hayes', 'Jean Myers', 'Samuel Ford', 'Cheryl Hamilton', 'Willie Graham',
-    'Mildred Sullivan', 'Ralph Wallace', 'Katherine Woods', 'Roy Cole', 'Joan West',
-    'Benjamin Jordan', 'Ashley Owens', 'Bruce Reynolds', 'Judith Fisher', 'Brandon Ellis',
-    'Rose Harrison', 'Harry Gibson', 'Janice Mcdonald', 'Wayne Cruz', 'Kelly Marshall',
-    'Billy Ortiz', 'Nicole Gomez', 'Steve Murray', 'Judy Freeman', 'Louis Wells',
-    'Christina Webb', 'Eugene Simpson', 'Kathy Stevens', 'Russell Tucker', 'Theresa Porter',
-    'Bobby Hunter', 'Beverly Hicks', 'Philip Crawford', 'Denise Henry', 'Johnny Boyd',
-    'Marilyn Mason', 'Christian Morales', 'Amber Kennedy', 'Isaiah Warren', 'Danielle Dixon',
-    'Frank Ramos', 'Brittany Reyes', 'Scott Burns', 'Diana Gordon', 'Eric Shaw',
-    'Jane Holmes', 'Randy Rice', 'Lori Robertson', 'Victor Hunt', 'Tiffany Black',
-    'Roy Daniels', 'Crystal Palmer', 'Willie Mills', 'Julia Nichols', 'Ray Grant',
-    'Ruby Knight', 'Bobby Ferguson', 'Paula Rose', 'Jesse Stone', 'Kelly Meyer',
-    'Lillian Watkins', 'Ernest Jenkins', 'Annie Berry', 'Phillip Barker', 'Liza Andrews',
-    'Gregory Payne', 'Irene Pearson', 'Joshua Garrett', 'Bonnie Burton', 'Sean Fuller',
-    'Alice Lynch', 'Fred Dean', 'Jeanette Gilbert', 'Bradley Soto', 'Florence Vargas',
-    'Philip Moreno', 'Nellie Jimenez', 'Eugene Franklin', 'Hazel Lawson', 'Shawn Johnston',
-    'Mabel Lane', 'Stanley Mendez', 'Eileen Harvey', 'Jacob Little', 'Gladys Burton',
-    'Clarence Stanley', 'Edna Nguyen', 'Leonard Stephens', 'Bernice George', 'Franklin Hunt',
-    'Gertrude Chapman', 'Harvey Berry', 'Beulah Howell', 'Theodore Spencer', 'Ethel Gardner',
-    'Curtis Stephens', 'Vera Payne', 'Melvin Pierce', 'Charlene Watkins', 'Mitchell Murray',
-    'Bessie Simmons', 'Clinton Lucas', 'Dora Rhodes', 'Rufus Weaver', 'Edith Wagner',
-    'Gilbert Willis', 'Verna Foster', 'Gene Arnold', 'Lois Chapman', 'Willard Elliott',
-    'Inez Duncan', 'Lester Knight', 'Lorene Bishop', 'Horace Porter', 'Mamie Hudson',
-    'Duane Snyder', 'Lydia Perkins', 'Ross Mccoy', 'Nettie Oliver', 'Ivan Montgomery',
-    'Eula Blair', 'Guy Lawson', 'Sally Coleman', 'Max Wade', 'Estella Rhodes',
-    'Floyd Jennings', 'Olive Barker', 'Hubert Garrett', 'Phoebe Franklin', 'Alvin Stevenson',
-    'Lela Weber', 'Julian Yates', 'Vesta Glover', 'Herman Mcbride', 'Wilda Huffman',
-    'Everett Mckenzie', 'Goldie Goodman', 'Sidney Massey', 'Roxie Holloway', 'Chester Hubbard',
-    'Hattie Daniel', 'Oliver Vance', 'Leila Stark', 'Wesley Preston', 'Ollie Calhoun',
-    'Claude Rowland', 'Bertie Merritt', 'Leon Hull', 'Lottie Blackwell', 'Milton Sellers',
-    'Myra Gentry', 'Irving Sexton', 'Alta Calhoun', 'Percy Browning', 'Della Whitehead',
-    'Oscar Singleton', 'Callie Mayo', 'Felix Pate', 'Eula Bullock', 'Elmer Mcknight',
-    'Leona Cherry', 'Leland Moon', 'Iva Gamble', 'Arthur Kirby', 'Nelle Mcintosh',
-    'Julius Hardin', 'Etta Carver', 'Cecil Whitehead', 'Lula Dalton', 'Marshall Maynard',
-    'Effie Mcgee', 'Salvador Burgess', 'Lilly Small', 'Freddie Branch', 'Opal Hensley',
-    'Clifford Harmon', 'Ora Best', 'Emil Merritt', 'Essie Britt', 'Cornelius Davenport',
-    'Iva Christian', 'Aubrey Bond', 'Elnora Mcpherson', 'Wallace Glass', 'Fannie Bullock',
-    'Alonzo Pruitt', 'Ollie Shepherd', 'Roderick Vinson', 'Veda Dotson', 'Emmett House',
+    'Mock: Luke Skywalker', 'Mock: Leia Organa', 'Mock: Han Solo', 'Mock: Darth Vader', 'Mock: Master Yoda',
+    'Mock: Obi-Wan Kenobi', 'Mock: Ahsoka Tano', 'Mock: Grand Admiral Thrawn', 'Mock: Boba Fett', 'Mock: Din Djarin',
+    'Mock: Harry Potter', 'Mock: Hermione Granger', 'Mock: Ron Weasley', 'Mock: Albus Dumbledore', 'Mock: Severus Snape',
+    'Mock: Minerva McGonagall', 'Mock: Draco Malfoy', 'Mock: Luna Lovegood', 'Mock: Neville Longbottom', 'Mock: Rubeus Hagrid',
+    'Mock: James Holden', 'Mock: Naomi Nagata', 'Mock: Amos Burton', 'Mock: Alex Kamal', 'Mock: Chrisjen Avasarala',
+    'Mock: Joseph Miller', 'Mock: Camina Drummer', 'Mock: Bobbie Draper', 'Mock: Klaes Ashford', 'Mock: Marco Inaros',
+    'Mock: Palpatine', 'Mock: Lando Calrissian', 'Mock: Chewbacca', 'Mock: Padme Amidala', 'Mock: Anakin Skywalker',
+    'Mock: Mace Windu', 'Mock: Cad Bane', 'Mock: Asajj Ventress', 'Mock: Ezra Bridger', 'Mock: Sabine Wren',
+    'Mock: Sirius Black', 'Mock: Remus Lupin', 'Mock: Bellatrix Lestrange', 'Mock: Lucius Malfoy', 'Mock: Ginny Weasley',
+    'Mock: Fred Weasley', 'Mock: George Weasley', 'Mock: Molly Weasley', 'Mock: Arthur Weasley', 'Mock: Cedric Diggory',
+    'Mock: Fred Johnson', 'Mock: Filip Inaros', 'Mock: Clarissa Mao', 'Mock: Julie Mao', 'Mock: Praxidike Meng',
+    'Mock: Cotyar', 'Mock: Anderson Dawes', 'Mock: Errinwright', 'Mock: Mao-Kwikowski', 'Mock: Protogen'
 ];
 
 export const OFFICER_NAMES = [
-    'Brett Corbin', 'Jeff Siemens', 'Jalpa Mazmudar',
-    'Sarah Jenkins', 'John Doe', 'Alice Miller', 'Robert Smith'
+    'Mock: Albus Dumbledore', 'Mock: Minerva McGonagall', 'Mock: Chrisjen Avasarala',
+    'Mock: Obi-Wan Kenobi', 'Mock: Mace Windu', 'Mock: Camina Drummer', 'Mock: James Holden'
 ];
 
 export const REVIEWER_NAMES = [
-    'Dave Thompson', 'Sarah Jenkins', 'Jeff Siemens', 'Robert Smith', 'Admin User'
+    'Mock: Yoda', 'Mock: Dumbledore', 'Mock: Avasarala', 'Mock: Gandalf', 'Mock: Admin User'
 ];
 
 const NOTE_SNIPPETS = [

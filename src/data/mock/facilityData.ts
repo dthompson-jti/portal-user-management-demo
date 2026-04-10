@@ -13,23 +13,30 @@ export interface FacilityGroup {
 
 export const facilityData: FacilityGroup[] = [
   {
-    id: 'jdc',
-    name: 'Juvenile Detention Center',
+    id: 'imperial',
+    name: 'Imperial Detention Center',
     units: [
-      { id: 'a-wing', name: 'A-Wing' },
-      { id: 'b-wing', name: 'B-Wing' },
-      { id: 'c-wing', name: 'C-Wing' },
+      { id: 'death-star', name: 'Death Star Detention Block' },
+      { id: 'star-destroyer', name: 'Star Destroyer Brigg' },
+      { id: 'bespin', name: 'Bespin Carbonite Chamber' },
     ],
   },
   {
-    id: 'sci-fi',
-    name: 'Sci-Fi Detention Center',
+    id: 'azkaban',
+    name: 'Azkaban High Security',
     units: [
-      { id: 'star-wars', name: 'Star Wars Pod' },
-      { id: 'harry-potter', name: 'Harry Potter Pod' },
-      { id: 'terminator', name: 'Terminator Pod' },
-      { id: 'alien', name: 'Alien Pod' },
-      { id: 'expanse', name: 'The Expanse Pod' },
+      { id: 'tower-top', name: 'Tower Top (Max Security)' },
+      { id: 'dungeon', name: 'Dungeon Level' },
+      { id: 'common-hall', name: 'Common Holding Hall' },
+    ],
+  },
+  {
+    id: 'tycho',
+    name: 'Tycho Station Holding',
+    units: [
+      { id: 'rocinante', name: 'Rocinante Airlock (Temporary)' },
+      { id: 'docking-bay', name: 'Docking Bay 94' },
+      { id: 'ops', name: 'Operations Center Detention' },
     ],
   },
 ];
