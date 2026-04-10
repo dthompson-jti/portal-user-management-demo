@@ -1,13 +1,13 @@
 {
-  "name": "portal-management",
+  "name": "portal-user-management-demo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dthompson-jti/portal-management-public.git"
+    "url": "https://github.com/dthompson-jti/portal-user-management-demo.git"
   },
-  "homepage": "https://dthompson-jti.github.io/portal-management-public/",
+  "homepage": "https://dthompson-jti.github.io/portal-user-management-demo/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -143,7 +143,7 @@ export default function DesktopEnhancedApp() {
                                     <div className={styles.navRow2}>
                                         <h2 className={styles.pageTitle}>
                                             {isNoResults ? 'No search results' :
-                                             `Safeguard checks – ${view === 'live' ? 'Live view' : 'Historical view'}`}
+                                             `Portal management – ${view === 'live' ? 'Live view' : 'Historical view'}`}
                                         </h2>
 
                                         <div className={styles.row2Actions}>

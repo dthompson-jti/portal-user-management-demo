@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   // Configure the base path for GitHub Pages deployment.
   // This should be the name of your repository.
-  base: '/portal-management-public/',
+  base: '/portal-user-management-demo/',
   build: {
     rollupOptions: {
       input: {

@@ -19,7 +19,7 @@ export const DesktopHeader = ({ onTogglePanel, isPanelOpen }: DesktopHeaderProps
             {/* Left: Title */}
             <div className={styles.leftSection}>
                 <div className={styles.titleGroup}>
-                    <h1 className={styles.title}>Safeguard Room Checks</h1>
+                    <h1 className={styles.title}>Portal Access Management</h1>
                 </div>
             </div>
 
