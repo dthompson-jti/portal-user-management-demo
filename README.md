@@ -61,3 +61,21 @@ npm install
 npm run dev
 npm run build
 ```
+
+## Vercel Deployment
+
+This repo is now configured for a standard Vercel static deployment:
+
+- Framework preset: `Vite`
+- Root directory: `./`
+- Build command: `npm run build`
+- Output directory: `dist`
+
+Direct visits to client-side paths like `/alternate` are handled by [`vercel.json`](vercel.json), which rewrites non-file requests to `index.html`.
+
+If you ever need to build this app for a subpath host again, set `VITE_BASE_PATH` at build time. Example:
+
+```bash
+$env:VITE_BASE_PATH='portal-user-management-demo'
+npm run build
+```

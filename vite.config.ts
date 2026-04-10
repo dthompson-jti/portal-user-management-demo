@@ -4,15 +4,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const __dirname = resolve(fileURLToPath(new URL('.', import.meta.url)))
+const rawBasePath = process.env.VITE_BASE_PATH?.trim()
+const normalizedBasePath = !rawBasePath || rawBasePath === '/'
+  ? '/'
+  : `/${rawBasePath.replace(/^\/+|\/+$/g, '')}/`
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
   ],
-  // Configure the base path for GitHub Pages deployment.
-  // This should be the name of your repository.
-  base: '/portal-user-management-demo/',
+  // Default to a root deploy for Vercel, but allow an override for subpath hosting.
+  base: normalizedBasePath,
   build: {
     rollupOptions: {
       input: {
