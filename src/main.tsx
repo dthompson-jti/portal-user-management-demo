@@ -41,11 +41,11 @@ const getApp = () => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <Analytics />
     <Provider>
       <HeartbeatManager />
       <LayoutOrchestrator />
       {getApp()}
-      <Analytics />
     </Provider>
   </React.StrictMode>,
 )
