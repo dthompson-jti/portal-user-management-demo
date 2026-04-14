@@ -58,6 +58,28 @@ const seededRandom = (seed: number) => {
 
 const seededSecond = (seed: number) => Math.floor(seededRandom(seed) * 60);
 
+const getUniqueResidentName = (startIdx: number, usedNames: Set<string>) => {
+    for (let offset = 0; offset < RESIDENT_NAMES.length; offset++) {
+        const candidate = RESIDENT_NAMES[(startIdx + offset) % RESIDENT_NAMES.length];
+        if (!usedNames.has(candidate)) {
+            return candidate;
+        }
+    }
+
+    // The mock dataset can ask for more resident slots than the base catalog provides.
+    // Fall back to a suffixed variant so startup never deadlocks in the uniqueness loop.
+    const baseName = RESIDENT_NAMES[startIdx % RESIDENT_NAMES.length];
+    let duplicateNumber = 2;
+    let candidate = `${baseName} ${duplicateNumber}`;
+
+    while (usedNames.has(candidate)) {
+        duplicateNumber++;
+        candidate = `${baseName} ${duplicateNumber}`;
+    }
+
+    return candidate;
+};
+
 // Room Definition
 interface RoomDef {
     id: string;
@@ -103,12 +125,8 @@ const ROOMS: RoomDef[] = ((): RoomDef[] => {
                 const finalResidentCount = isForcedPaired ? 2 : residentCount;
 
                 for (let r = 0; r < finalResidentCount; r++) {
-                    // Pick names that haven't been used
-                    let nameIdx = (seed * 7 + r) % RESIDENT_NAMES.length;
-                    while (usedNames.has(RESIDENT_NAMES[nameIdx])) {
-                        nameIdx = (nameIdx + 1) % RESIDENT_NAMES.length;
-                    }
-                    const name = RESIDENT_NAMES[nameIdx];
+                    const nameIdx = (seed * 7 + r) % RESIDENT_NAMES.length;
+                    const name = getUniqueResidentName(nameIdx, usedNames);
                     usedNames.add(name);
 
                     // Assign High Risk
