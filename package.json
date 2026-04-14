@@ -32,7 +32,6 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tanstack/react-table": "^8.21.3",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/speed-insights": "^1.2.0",
     "cmdk": "^1.1.1",
     "framer-motion": "^12.23.22",
     "immer": "^10.1.3",
