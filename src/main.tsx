@@ -39,9 +39,14 @@ const getApp = () => {
   return <DesktopEnhancedApp />;
 };
 
+const shouldEnableAnalytics =
+  import.meta.env.PROD || import.meta.env.VITE_ENABLE_VERCEL_ANALYTICS_DEV === 'true';
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {import.meta.env.PROD ? <Analytics /> : null}
+    {shouldEnableAnalytics ? (
+      <Analytics mode={import.meta.env.PROD ? 'production' : 'development'} />
+    ) : null}
     <Provider>
       <HeartbeatManager />
       <LayoutOrchestrator />
