@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'jotai'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 import DesktopApp from './desktop/App'
 import DesktopEnhancedApp from './desktop-enhanced/DesktopEnhancedApp'
@@ -46,6 +47,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <LayoutOrchestrator />
       {getApp()}
       <Analytics />
+      <SpeedInsights />
     </Provider>
   </React.StrictMode>,
 )
