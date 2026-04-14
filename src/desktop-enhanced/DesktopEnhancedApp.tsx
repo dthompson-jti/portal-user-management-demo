@@ -33,6 +33,7 @@ import { Button } from '../components/Button';
 import { Tooltip } from '../components/Tooltip';
 // import { Popover } from '../components/Popover';
 import { useAppFont } from '../hooks/useAppFont';
+import { trackEvent } from '../analytics';
 import styles from './DesktopEnhancedApp.module.css';
 
 export default function DesktopEnhancedApp() {
@@ -56,9 +57,16 @@ export default function DesktopEnhancedApp() {
 
     const handleRefresh = useCallback(() => {
         if (isRefreshing) return;
+
+        trackEvent('refresh_requested', {
+            active_page: activePage,
+            button_style: refreshButtonStyle,
+            workspace_view: view,
+        });
+
         setIsRefreshing(true);
         setTimeout(() => setIsRefreshing(false), 2000);
-    }, [isRefreshing]);
+    }, [activePage, isRefreshing, refreshButtonStyle, view]);
 
     // Selection counts for panel empty states
     const [selectedLive, setSelectedLive] = useAtom(selectedLiveRowsAtom);
@@ -116,6 +124,26 @@ export default function DesktopEnhancedApp() {
     const showLedgerPanel = isLedger && isPanelOpen;
     const showPanel = isLedger ? showLedgerPanel : showChecksPanel;
     const [isResizing, setIsResizing] = useState(false);
+
+    const handlePanelToggle = useCallback(() => {
+        const nextState = !showPanel;
+
+        trackEvent('detail_panel_toggled', {
+            active_page: activePage,
+            selected_count: totalSelected,
+            workspace_view: view,
+            is_open: nextState,
+        });
+
+        if (showPanel) {
+            setIsPanelOpen(false);
+            setSelectedLive(new Set());
+            setSelectedHistory(new Set());
+            return;
+        }
+
+        setIsPanelOpen(true);
+    }, [activePage, setIsPanelOpen, setSelectedHistory, setSelectedLive, showPanel, totalSelected, view]);
 
     // Grid styling removed in favor of Flexbox optimization
     // const mainContainerStyle = ...
@@ -190,17 +218,7 @@ export default function DesktopEnhancedApp() {
                                                     size="s"
                                                     iconOnly
                                                     active={isPanelOpen}
-                                                    onClick={() => {
-                                                        if (showPanel) {
-                                                            // Close and Clear Selection
-                                                            setIsPanelOpen(false);
-                                                            setSelectedLive(new Set());
-                                                            setSelectedHistory(new Set());
-                                                        } else {
-                                                            // Open/Pin
-                                                            setIsPanelOpen(true);
-                                                        }
-                                                    }}
+                                                    onClick={handlePanelToggle}
                                                 >
                                                     <span className="material-symbols-rounded">
                                                         {showPanel ? 'right_panel_close' : 'right_panel_open'}

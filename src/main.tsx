@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'jotai'
-import { Analytics } from '@vercel/analytics/react'
 
 import DesktopApp from './desktop/App'
 import DesktopEnhancedApp from './desktop-enhanced/DesktopEnhancedApp'
 import { HeartbeatManager } from './data/HeartbeatManager'
 import { LayoutOrchestrator } from './components/LayoutOrchestrator'
+import { AppAnalytics } from './analytics'
 
 import './styles/index.css'
 import { STORAGE_PREFIX } from './config'
@@ -39,15 +39,10 @@ const getApp = () => {
   return <DesktopEnhancedApp />;
 };
 
-const shouldEnableAnalytics =
-  import.meta.env.PROD || import.meta.env.VITE_ENABLE_VERCEL_ANALYTICS_DEV === 'true';
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {shouldEnableAnalytics ? (
-      <Analytics mode={import.meta.env.PROD ? 'production' : 'development'} />
-    ) : null}
     <Provider>
+      <AppAnalytics />
       <HeartbeatManager />
       <LayoutOrchestrator />
       {getApp()}

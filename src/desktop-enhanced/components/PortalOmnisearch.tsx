@@ -12,6 +12,7 @@ import { addToastAtom } from '../../data/toastAtoms';
 import { activePageAtom } from '../../data/activePageAtom';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
+import { getResultCountBucket, trackEvent } from '../../analytics';
 import styles from './PortalEmailSearch.module.css'; // Reusing CSS
 
 type AccessAction = 'grant' | 'revoke';
@@ -158,11 +159,21 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                 r.caseName.toLowerCase().includes(q)
             );
         });
+
+        trackEvent('portal_search_executed', {
+            match_mode: matchMode,
+            query_context: context,
+            query_length: q.length,
+            result_bucket: getResultCountBucket(matches.length),
+            result_count: matches.length,
+            search_mode: mode ?? 'auto',
+        });
+
         window.setTimeout(() => {
             setVisibleResults(matches);
             setIsSearchPending(false);
         }, 1000);
-    }, [results]);
+    }, [matchMode, mode, results]);
 
     const finalResults = useMemo(() => {
         let current = visibleResults;
@@ -203,6 +214,13 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
         setVisibleResults(prev => prev.map(r => 
             ids.includes(r.id) ? { ...r, status: nextStatus } : r
         ));
+
+        trackEvent('portal_access_updated', {
+            action: pendingAction,
+            record_count: ids.length,
+            result_context: queryContext ?? mode ?? 'unknown',
+            resulting_status: nextStatus,
+        });
 
         setIsExecuting(false);
         setPendingActionIds([]);
