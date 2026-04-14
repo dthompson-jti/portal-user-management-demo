@@ -41,7 +41,7 @@ const getApp = () => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Analytics />
+    {import.meta.env.PROD ? <Analytics /> : null}
     <Provider>
       <HeartbeatManager />
       <LayoutOrchestrator />
