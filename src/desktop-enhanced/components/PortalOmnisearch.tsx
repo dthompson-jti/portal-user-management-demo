@@ -609,7 +609,7 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                         {pendingAction === 'revoke' && (
                             <div className={styles.warningBannerYellow}>
                                 <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
-                                <span>Access will be removed from the selected records. You can add access again later if needed.</span>
+                                <span>Please be advised that this action will result in the removal of portal access for all records you have selected.</span>
                             </div>
                         )}
                         <p className={styles.confirmText}>
@@ -619,26 +619,53 @@ export const PortalOmnisearch: React.FC<PortalOmnisearchProps> = ({
                 </Modal.Content>
                 <Modal.Footer>
                     <div className={styles.footerActions}>
-                        <Button
-                            variant="primary"
-                            size="m"
-                            onClick={() => {
-                                setIsActionConfirmOpen(false);
-                                void handleAccessChange();
-                            }}
-                            loading={isExecuting}
-                        >
-                            <span className="material-symbols-rounded">{pendingActionIcon}</span>
-                            {pendingActionLabel}
-                        </Button>
-                        <Button 
-                            variant="secondary" 
-                            size="m" 
-                            onClick={() => setIsActionConfirmOpen(false)}
-                            disabled={isExecuting}
-                        >
-                            {cancelLabel}
-                        </Button>
+                        {pendingAction === 'grant' ? (
+                            <>
+                                <Button 
+                                    variant="secondary" 
+                                    size="m" 
+                                    onClick={() => setIsActionConfirmOpen(false)}
+                                    disabled={isExecuting}
+                                >
+                                    {cancelLabel}
+                                </Button>
+                                <Button
+                                    variant="primary"
+                                    size="m"
+                                    onClick={() => {
+                                        setIsActionConfirmOpen(false);
+                                        void handleAccessChange();
+                                    }}
+                                    loading={isExecuting}
+                                >
+                                    <span className="material-symbols-rounded">{pendingActionIcon}</span>
+                                    {pendingActionLabel}
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button
+                                    variant="primary"
+                                    size="m"
+                                    onClick={() => {
+                                        setIsActionConfirmOpen(false);
+                                        void handleAccessChange();
+                                    }}
+                                    loading={isExecuting}
+                                >
+                                    <span className="material-symbols-rounded">{pendingActionIcon}</span>
+                                    {pendingActionLabel}
+                                </Button>
+                                <Button 
+                                    variant="secondary" 
+                                    size="m" 
+                                    onClick={() => setIsActionConfirmOpen(false)}
+                                    disabled={isExecuting}
+                                >
+                                    {cancelLabel}
+                                </Button>
+                            </>
+                        )}
                     </div>
                 </Modal.Footer>
             </Modal>

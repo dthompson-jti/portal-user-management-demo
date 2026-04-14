@@ -1,0 +1,10 @@
+- [x] **Phase 1: Component Implementation**
+    - [x] Add example search terms to `PortalLandingPage.tsx`
+    - [x] Implement `handleCopy` logic
+- [x] **Phase 2: Styling**
+    - [x] Update `PortalLandingPage.module.css` with modern styling for examples
+- [x] **Phase 3: Verification**
+    - [x] Run `npm run lint`
+    - [x] Verify functionality (manual check in browser view)
+- [x] **Phase 4: Wrap-up**
+    - [/] Call `/wrap-up`

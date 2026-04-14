@@ -84,6 +84,50 @@
     margin-top: auto;
 }
 
+.exampleSection {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.exampleLabel {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(120, 112, 103, 0.54);
+}
+
+.exampleList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.exampleItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px 6px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(150, 140, 127, 0.12);
+    transition: all 0.2s ease;
+}
+
+.exampleItem:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(150, 140, 127, 0.24);
+    box-shadow: 0 4px 12px rgba(89, 73, 48, 0.04);
+}
+
+.code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    color: rgba(69, 63, 55, 0.88);
+}
+
 @media (max-width: 900px) {
     .page {
         padding: 28px 20px;

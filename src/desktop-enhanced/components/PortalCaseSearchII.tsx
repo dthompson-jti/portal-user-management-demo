@@ -295,7 +295,7 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
                         {pendingAction === 'revoke' && (
                             <div className={styles.warningBannerYellow}>
                                 <span className={`material-symbols-rounded ${styles.warningBannerIconYellow}`}>warning</span>
-                                <span>Access will be removed from the selected records. You can add access again later if needed.</span>
+                                <span>Please be advised that this action will result in the removal of portal access for all records you have selected.</span>
                             </div>
                         )}
                         <p className={styles.confirmText}>
@@ -306,22 +306,45 @@ export const PortalCaseSearchII: React.FC<PortalCaseSearchIIProps> = ({
                 </Modal.Content>
                 <Modal.Footer>
                     <div className={styles.footerActions}>
-                        <Button
-                            variant="primary"
-                            size="m"
-                            onClick={() => { void handleBulkAction(); }}
-                            loading={isExecuting}
-                        >
-                            {pendingActionLabel}
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            size="m"
-                            onClick={() => setIsConfirmOpen(false)}
-                            disabled={isExecuting}
-                        >
-                            Cancel
-                        </Button>
+                        {pendingAction === 'grant' ? (
+                            <>
+                                <Button
+                                    variant="secondary"
+                                    size="m"
+                                    onClick={() => setIsConfirmOpen(false)}
+                                    disabled={isExecuting}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    variant="primary"
+                                    size="m"
+                                    onClick={() => { void handleBulkAction(); }}
+                                    loading={isExecuting}
+                                >
+                                    {pendingActionLabel}
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button
+                                    variant="primary"
+                                    size="m"
+                                    onClick={() => { void handleBulkAction(); }}
+                                    loading={isExecuting}
+                                >
+                                    {pendingActionLabel}
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    size="m"
+                                    onClick={() => setIsConfirmOpen(false)}
+                                    disabled={isExecuting}
+                                >
+                                    Cancel
+                                </Button>
+                            </>
+                        )}
                     </div>
                 </Modal.Footer>
             </Modal>

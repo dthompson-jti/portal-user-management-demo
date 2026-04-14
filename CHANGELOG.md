@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Filter Row Background**:
     - Updated the "Find within results" filter row (`.quickFilterRow`) in `PortalCaseSearch` and `PortalEmailSearch` to use the `surface-bg-secondary` background token.
     - Improved visual hierarchy by distinguishing the secondary filter row from the primary search results.
+- **Example Search Terms (Landing Page)**:
+    - Added interactive example search terms (Case IDs and Emails) to each scenario card on the `PortalLandingPage`.
+    - Implemented monospace styling and hover-state backgrounds for examples.
+    - Added "Copy" functionality to each example for quick onboarding.
 - **Access Ledger Detail Panel Behavior**:
     - Restricted the side panel visibility to purely manual control via the header toggle button.
     - Removed "auto-open" behavior that previously triggered whenever a single record was selected.
