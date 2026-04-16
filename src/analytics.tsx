@@ -56,6 +56,9 @@ export const AppAnalytics = () => {
   const previousViewRef = useRef(view);
   const virtualRoute = useMemo(() => getVirtualRoute(activePage, view), [activePage, view]);
 
+  // Enable debug mode in development to see events in console
+  const isDebug = !import.meta.env.PROD;
+
   useEffect(() => {
     if (previousViewRef.current === view) {
       return;
@@ -71,6 +74,9 @@ export const AppAnalytics = () => {
   }, [activePage, view]);
 
   if (!isAnalyticsEnabled) {
+    if (isDebug) {
+      console.log('[Analytics] Local tracking skipped (isAnalyticsEnabled is false)');
+    }
     return null;
   }
 
@@ -79,6 +85,7 @@ export const AppAnalytics = () => {
       mode={analyticsMode}
       route={virtualRoute.route}
       path={virtualRoute.path}
+      debug={isDebug}
     />
   );
 };

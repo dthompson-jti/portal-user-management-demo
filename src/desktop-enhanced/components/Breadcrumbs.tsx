@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai';
 import { desktopEnhancedSelectionAtom, SelectionType } from '../atoms';
 import { TreeGroup, TreeUnit, useTreeData } from '../hooks/useTreeData';
+import { trackEvent } from '../../analytics';
 import styles from './Breadcrumbs.module.css';
 
 export const Breadcrumbs = () => {
@@ -36,6 +37,16 @@ export const Breadcrumbs = () => {
 
     const parts = getParts();
 
+    const handleBreadcrumbClick = (part: { name: string, id: string, type: SelectionType }) => {
+        trackEvent('breadcrumb_navigated', {
+            target_id: part.id,
+            target_type: part.type,
+            target_name: part.name,
+            current_selection_type: selection.type
+        });
+        setSelection({ type: part.type, id: part.id });
+    };
+
     return (
         <div className={styles.breadcrumbs}>
             <div className={styles.parts}>
@@ -43,7 +54,7 @@ export const Breadcrumbs = () => {
                     <div key={index} className={styles.part}>
                         <button
                             className={styles.text}
-                            onClick={() => setSelection({ type: part.type, id: part.id })}
+                            onClick={() => handleBreadcrumbClick(part)}
                         >
                             {part.name}
                         </button>
