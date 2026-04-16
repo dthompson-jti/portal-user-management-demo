@@ -2,6 +2,7 @@ import { useAtomValue } from 'jotai';
 import { useEffect, useMemo, useRef } from 'react';
 import { track } from '@vercel/analytics';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import { activePageAtom } from './data/activePageAtom';
 import { desktopViewAtom } from './desktop/atoms';
@@ -81,11 +82,14 @@ export const AppAnalytics = () => {
   }
 
   return (
-    <Analytics
-      mode={analyticsMode}
-      route={virtualRoute.route}
-      path={virtualRoute.path}
-      debug={isDebug}
-    />
+    <>
+      <Analytics
+        mode={analyticsMode}
+        route={virtualRoute.route}
+        path={virtualRoute.path}
+        debug={isDebug}
+      />
+      <SpeedInsights />
+    </>
   );
 };
