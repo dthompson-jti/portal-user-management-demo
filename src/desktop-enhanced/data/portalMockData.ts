@@ -370,5 +370,99 @@ export const INITIAL_PORTAL_RESULTS: PortalAccessRecord[] = [
         sharedWith: 'Case participant account',
         purpose: 'Factual advisor',
         accessGroup: 'With portal access'
+    },
+    {
+        id: 'ex-per-003',
+        caseNumber: 'EX-PER-24-001',
+        caseName: "Avasarala v High Consulate of Mars",
+        caseType: 'Civil',
+        participantRole: 'Legal Advisor Hermione Granger',
+        accessType: 'Delegated access',
+        status: 'Active',
+        email: 'mock_hermione@hogwarts.edu',
+        dateGranted: '2024-01-25',
+        author: 'UN Court',
+        sharedWith: 'Professional representative',
+        purpose: 'Legal strategy for Avasarala',
+        accessGroup: 'With portal access'
+    },
+
+    // =================================================================
+    //   ADDITIONAL CASES FOR HERMIONE (Management Task Padding)
+    // =================================================================
+    {
+        id: 'gen-006',
+        caseNumber: 'GEN-CIV-24-006',
+        caseName: "Potter v Malfoy (Property Dispute)",
+        caseType: 'Civil',
+        participantRole: 'Solicitor for Plaintiff',
+        accessType: 'Delegated access',
+        status: 'Active',
+        email: 'mock_hermione@hogwarts.edu',
+        dateGranted: '2024-11-01',
+        author: 'Ministry Records',
+        sharedWith: 'Professional representative',
+        purpose: 'Legal counsel',
+        accessGroup: 'With portal access'
+    },
+    {
+        id: 'gen-007',
+        caseNumber: 'GEN-CIV-24-007',
+        caseName: "Drummer v Inaros (Commercial Arbitration)",
+        caseType: 'Civil',
+        participantRole: 'Mediator',
+        accessType: 'Direct access',
+        status: 'Active',
+        email: 'mock_hermione@hogwarts.edu',
+        dateGranted: '2024-11-05',
+        author: 'Tycho Registry',
+        sharedWith: 'Professional representative',
+        purpose: 'Neutral mediation',
+        accessGroup: 'With portal access'
+    },
+    {
+        id: 'gen-008',
+        caseNumber: 'GEN-CIV-24-008',
+        caseName: "Arrakis Mining Appeal",
+        caseType: 'Civil',
+        participantRole: 'Legal Consultant',
+        accessType: 'Delegated access',
+        status: 'Active',
+        email: 'mock_hermione@hogwarts.edu',
+        dateGranted: '2024-11-10',
+        author: 'High Tribunal',
+        sharedWith: 'Professional representative',
+        purpose: 'Regulatory compliance',
+        accessGroup: 'With portal access'
+    },
+    {
+        id: 'gen-009',
+        caseNumber: 'GEN-CIV-24-010',
+        caseName: "Stark v Lannister (Inheritance)",
+        caseType: 'Civil',
+        participantRole: 'Solicitor',
+        accessType: 'Delegated access',
+        status: 'Active',
+        email: 'mock_hermione@hogwarts.edu',
+        dateGranted: '2024-11-15',
+        author: 'King\'s Landing Court',
+        sharedWith: 'Professional representative',
+        purpose: 'Legal counsel',
+        accessGroup: 'With portal access'
+    },
+    {
+        id: 'gen-010',
+        caseNumber: 'GEN-CIV-24-011',
+        caseName: "Weyland-Yutani Compliance Review",
+        caseType: 'Civil',
+        participantRole: 'Special Advisor',
+        accessType: 'Direct access',
+        status: 'Active',
+        email: 'mock_hermione@hogwarts.edu',
+        dateGranted: '2024-11-20',
+        author: 'Inter-Colonial Agency',
+        sharedWith: 'Professional representative',
+        purpose: 'Specialized oversight',
+        accessGroup: 'With portal access'
     }
 ];

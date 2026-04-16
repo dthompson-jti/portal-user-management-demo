@@ -18,8 +18,9 @@ Sandra Okafor is a Court Operations Administrator at a mid-sized regional court.
 
 A typical request looks like:
 
-> *"Can you set up portal access for `saul.goodman@outlook.com.au` on CIV-24-0000019?"*
-> *"Can you check what portal access `davecthompson@gmail.com` has across our cases?"*
+> *"Can you set up portal access for `mock_luke@rebelalliance.org` on SW-CIV-24-001?"*
+> *"Can you check what portal access `mock_hermione@hogwarts.edu` has across our cases?"*
+> *"Can you remove all case access for `mock_hermione@hogwarts.edu`?"*
 
 Sandra copies email addresses and case numbers from source documents and looks them up in the system. Granting access to the wrong person or the wrong case is a compliance risk — and Sandra knows it. The system needs to help her be certain she has the right record before she acts.
 
@@ -38,9 +39,9 @@ The prototype supports two primary tasks:
 
 Use the following data to interact with it:
 
-**Cases:** `CIV-24-0000016` `CIV-24-0000017` `CIV-24-0000018` `CIV-24-0000019`
+**Cases:** `SW-CIV-24-001` `HP-CIV-24-002` `EX-CIV-24-003` `MULT-CIV-24-999`
 
-**Emails:** `saul.goodman@outlook.com.au` · `davecthompson@gmail.com` · `aisha.merino@harbourlegal.com.au` · `trina.kerr@metroclaims.com.au` · `kirsty.ware@outlook.com`
+**Emails:** `mock_luke@rebelalliance.org` · `mock_harry@hogwarts.edu` · `mock_hermione@hogwarts.edu` · `mock_holden@rocinante.space` · `mock_avasarala@un.gov`
 
 **Access the prototype here: [LINK]**
 
@@ -50,7 +51,7 @@ Use the following data to interact with it:
 
 **Evaluate the experience** from Sandra's perspective. Where does the interface create friction, uncertainty, or risk for someone in her role completing a routine task?
 
-**Propose a design direction** that addresses what you found. This should be a coherent point of view, not a list of fixes. Any fidelity is fine — annotated wireframes, a rough Figma sketch, or a written brief with supporting diagrams. A clickable prototype is welcome but not required.
+**Propose a design direction** that addresses what you found. We value both your **'macro' thinking** (the overall strategy) and your **'micro' execution** (fixing specific friction points). Ideally, specific fixes should be presented as part of a broader design point of view that ties them together. Any fidelity is fine — annotated wireframes, a rough Figma sketch, or a written brief with supporting diagrams. A clickable prototype is welcome but not required.
 
 ---
 
