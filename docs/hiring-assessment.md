@@ -57,7 +57,7 @@ Use the following data to interact with it:
 
 ## Deliverables
 
-Please send the following to [email] at least one day before your interview:
+Please send the following to kwestphal@journaltech.com at least one day before your interview:
 
 - Your evaluation of the current experience
 - Your proposed design direction and the reasoning behind your key decisions
